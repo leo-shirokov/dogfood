@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import Banner from "./components/Banner/Banner";
 import ProductSection from "./components/ProductSection/ProductSection";
 
 function App() {
@@ -30,9 +31,10 @@ function App() {
     }, []);
 
     return (
-        <div className="max-w-[90rem] mx-auto flex flex-col bg-rose-100">
+        <div className="max-w-[90rem] mx-auto flex flex-col">
             <Header cart={cart} />
-            <div className="w-4/5 mx-auto flex-initial md:w-full">
+            <div className="w-4/5 mx-auto flex-initial md:w-11/12">
+                <Banner />
                 <ProductSection
                     products={products.slice(0, 4)}
                     putProdToCart={putProdToCart}
