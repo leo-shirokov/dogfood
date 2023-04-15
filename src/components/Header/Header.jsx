@@ -10,9 +10,7 @@ function Header() {
     return (
         <div className="w-full h-[41.1563rem] bg-yellow-300 px-4 py-9 flex flex-col gap-y-28">
             <div className="flex justify-between gap-x-8">
-                <div className="w-60 shrink">
-                    <Logo />
-                </div>
+                <Logo />
                 <div className="grow">
                     <Search />
                 </div>
