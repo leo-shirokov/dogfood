@@ -3,7 +3,7 @@ import ProductCard from "../ProductCard/ProductCard";
 
 function ProductSection({ products, putProdToCart }) {
     return (
-        <div className="flex justify-between max-h-max bg-yellow-100 p-5 md:flex-col">
+        <div className="flex justify-between bg-yellow-100 p-5 md:flex-col">
             {products.map((product) => (
                 <ProductCard
                     key={product.id}

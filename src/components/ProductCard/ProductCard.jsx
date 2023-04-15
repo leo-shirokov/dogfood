@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 function ProductCard({ data, putProdToCart }) {
     const { title, image, description, price, id } = data;
     return (
-        <div className="grid justify-items-center w-60 p-3">
+        <div className="flex flex-col items-center justify-between gap-y-5 w-1/4 p-3 md:w-full md:mb-10">
             <div>
                 <img className="w-28" src={image} alt={title} />
             </div>
