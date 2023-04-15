@@ -1,0 +1,20 @@
+import React from 'react';
+import ProductCard from '../ProductCard/ProductCard';
+
+function ProductSection({ products, putProdToCart }) {
+    return (
+        <div className="flex justify-between max-h-max bg-yellow-100 p-5">
+            {products.map((product) => (
+                <ProductCard
+                    key={product.id}
+                    data={product}
+                    putProdToCart={putProdToCart}
+                />
+            ))}
+        </div>
+    );
+}
+
+export default ProductSection;
+
+// className="w-3xl flex justify-between flex-nowrap items-center g-4 p-5 bg-yellow-50"
