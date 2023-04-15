@@ -30,9 +30,9 @@ function App() {
     }, []);
 
     return (
-        <div className="max-w-[90rem] mx-auto">
+        <div className="max-w-[90rem] mx-auto flex flex-col bg-rose-100">
             <Header cart={cart} />
-            <div className="w-[62rem] mx-auto">
+            <div className="w-4/5 mx-auto flex-initial">
                 <ProductSection
                     products={products.slice(0, 4)}
                     putProdToCart={putProdToCart}
