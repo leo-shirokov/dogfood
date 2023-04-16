@@ -16,5 +16,3 @@ function ProductSection({ products, putProdToCart }) {
 }
 
 export default ProductSection;
-
-// className="w-3xl flex justify-between flex-nowrap items-center g-4 p-5 bg-yellow-50"
