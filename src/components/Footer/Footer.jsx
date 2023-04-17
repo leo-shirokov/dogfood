@@ -4,10 +4,11 @@ import whatsapp from "./img/whatsapp.svg";
 import viber from "./img/viber.svg";
 import instagram from "./img/instagram.svg";
 import telegram from "./img/telegram.svg";
+import links from "../../links";
 
 function Footer() {
     return (
-        <div className="w-full h-[12.125rem] bg-yellow-300 px-4 py-9 md:shrink">
+        <div className="w-full h-[12.125rem] bg-yellow-300 px-4 py-9 mt-20 md:shrink">
             <div
                 className="max-w-[62rem] mx-auto flex justify-between items-center 
             md:justify-center md:text-center"
@@ -20,18 +21,20 @@ function Footer() {
                         © "Интернет-магазин Dogfood.ru"
                     </p>
                 </div>
-                <div className="grid gap-y-3 md:hidden">
-                    <a href="/">Каталог</a>
-                    <a href="/">Акции</a>
-                    <a href="/">Новости</a>
-                    <a href="/">Отзывы</a>
-                </div>
-                <div className="grid gap-y-3 md:hidden">
-                    <a href="/">Оплата и доставка</a>
-                    <a href="/">Часто спрашивают</a>
-                    <a href="/">Обратная связь</a>
-                    <a href="/">Контакты</a>
-                </div>
+                <ul className="grid gap-y-3 md:hidden">
+                    {links.slice(0, 4).map((link) => (
+                        <li key={link.id}>
+                            <a href={link.src}>{link.name}</a>
+                        </li>
+                    ))}
+                </ul>
+                <ul className="grid gap-y-3 md:hidden">
+                    {links.slice(4).map((link) => (
+                        <li key={link.id}>
+                            <a href={link.src}>{link.name}</a>
+                        </li>
+                    ))}
+                </ul>
                 <div className="grid gap-y-3">
                     <h3>Мы на связи</h3>
                     <a href="tel:+7999000000">8(999)123-45-67</a>

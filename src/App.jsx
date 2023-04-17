@@ -3,6 +3,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Banner from "./components/Banner/Banner";
 import ProductSection from "./components/ProductSection/ProductSection";
+import TwoBanners from "./components/Banner/TwoBanners";
 
 function App() {
     const [products, setProducts] = useState([]);
@@ -33,17 +34,18 @@ function App() {
     return (
         <div className="max-w-[90rem] mx-auto flex flex-col">
             <Header cart={cart} />
-            <div className="w-4/5 mx-auto flex-initial md:w-11/12">
-                <Banner />
+            <div className="w-4/6 mx-auto flex-initial md:w-11/12">
+                <Banner index={0} />
                 <ProductSection
                     products={products.slice(0, 4)}
                     putProdToCart={putProdToCart}
                 />
-                <p>реклама</p>
+                <TwoBanners banIndex1={0} banIndex2={1} />
                 <ProductSection
                     products={products.slice(4, 8)}
                     putProdToCart={putProdToCart}
                 />
+                <TwoBanners banIndex1={2} banIndex2={3} />
                 {loading && <p>Loading...</p>}
             </div>
             <Footer />
