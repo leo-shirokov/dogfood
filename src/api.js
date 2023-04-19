@@ -4,16 +4,16 @@
 // PATCH https://api.react-learning.ru/products/:productId //редактирование товара по id
 // DELETE https://api.react-learning.ru/products/:productId //удаление товара по id
 // POST https://api.react-learning.ru/products // создание нового товара
-// {
-//     "available": true, // boolean
-//     "pictures": "https://react-learning.ru/image-compressed/2.jpg", // string
-//     "name": "Куриные желудочки для собак", // string, обязательное
-//     "price": 450, // number, обязательное
-//     "discount": 10, // number
-//     "stock": 10, // number
-//     "wight": "100 г", // string
-//     "description": "Описание demo", // string, обязательное
-// }
+// const newProduct = {
+//     available: true, // boolean
+//     pictures: "https://react-learning.ru/image-compressed/2.jpg", // string
+//     name: "Куриные желудочки для собак", // string, обязательное
+//     price: 450, // number, обязательное
+//     discount: 10, // number
+//     stock: 10, // number
+//     wight: "100 г", // string
+//     description: "Описание demo", // string, обязательное
+// };
 // PUT https://api.react-learning.ru/products/likes/:productId // установка лайка по id
 // DELETE https://api.react-learning.ru/products/likes/:productId // снятие лайка по id
 // POST https://api.react-learning.ru/products/review/:productId // добавление отзыва по id
@@ -52,29 +52,38 @@ export const getAllProducts = async () => {
     return printError(res);
 };
 
-export const addProduct = async (product) => {
+export const searchProducts = async (path) => {
+    const res = await fetch(`${baseUrl}search?query=${path}`, {
+        headers: {
+            authorization: auth,
+        },
+    });
+    return printError(res);
+};
+
+export const addProduct = async (newProduct) => {
     const res = await fetch(baseUrl, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             authorization: auth,
         },
-        body: JSON.stringify(product),
+        body: JSON.stringify(newProduct),
     });
     return printError(res);
 };
 
-// export const updateProduct = async () => {
-//     const res = await fetch(`${baseUrl}${id}`, {
-//         method: "PUT",
-//         headers: {
-//             "Content-Type": "application/json",
-//             authorization: auth,
-//         },
-//         body: JSON.stringify(),
-//     });
-//     return printError(res);
-// };
+export const updateProduct = async (id) => {
+    const res = await fetch(`${baseUrl}${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            authorization: auth,
+        },
+        body: JSON.stringify(),
+    });
+    return printError(res);
+};
 
 export const getProductByID = async (id) => {
     const res = await fetch(`${baseUrl}${id}`, {
@@ -97,8 +106,9 @@ export const deleteProduct = async (id) => {
 
 const exports = {
     getAllProducts,
+    searchProducts,
     addProduct,
-    // updateProduct,
+    updateProduct,
     getProductByID,
     deleteProduct,
 };

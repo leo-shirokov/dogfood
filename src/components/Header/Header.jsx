@@ -6,13 +6,13 @@ import iconDog from "./img/dog.svg";
 import iconMenu from "./img/menu.svg";
 import { Search } from "./Search/Search";
 
-function Header() {
+function Header({ setSearch }) {
     return (
         <div className="w-full h-[41.1563rem] bg-yellow-300 px-4 py-9 flex flex-col gap-y-28">
             <div className="flex justify-between items-center gap-x-8">
                 <Logo />
                 <div className="grow">
-                    <Search />
+                    <Search setSearch={setSearch} />
                 </div>
                 <div className="flex gap-x-10 justify-between">
                     <img
