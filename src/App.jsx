@@ -5,10 +5,13 @@ import Banner from "./components/Banner/Banner";
 import ProductSection from "./components/ProductSection/ProductSection";
 import TwoBanners from "./components/Banner/TwoBanners";
 
+import { getAllProducts } from "./api";
+
 function App() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [cart, setCart] = useState([]);
+    const [search, setSearch] = useState("");
 
     const putProdToCart = (e) => {
         const callerId = e.target.value;
@@ -20,9 +23,8 @@ function App() {
         (async () => {
             try {
                 setLoading(true);
-                const res = await fetch("http://fakestoreapi.com/products");
-                const prods = await res.json();
-                setProducts(prods);
+                const result = await getAllProducts();
+                setProducts(result?.products ?? []);
             } catch (error) {
                 console.error(error.message);
             } finally {
@@ -33,7 +35,7 @@ function App() {
 
     return (
         <div className="max-w-[90rem] mx-auto flex flex-col">
-            <Header cart={cart} />
+            <Header setSearch={setSearch} cart={cart} />
             <div className="w-4/6 mx-auto flex-initial md:w-11/12">
                 <Banner index={0} />
                 <ProductSection

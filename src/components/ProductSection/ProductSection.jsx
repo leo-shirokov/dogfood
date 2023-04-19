@@ -6,7 +6,7 @@ function ProductSection({ products, putProdToCart }) {
         <div className="flex justify-between p-5 md:flex-col">
             {products.map((product) => (
                 <ProductCard
-                    key={product.id}
+                    key={product._id}
                     data={product}
                     putProdToCart={putProdToCart}
                 />
