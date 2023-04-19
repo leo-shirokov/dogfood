@@ -18,7 +18,8 @@ function Footer() {
                         <Logo />
                     </div>
                     <p className="text-xs opacity-50">
-                        © "Интернет-магазин Dogfood.ru"
+                        © "Интернет-магазин Dogfood.ru"&nbsp;
+                        <span>{new Date().getFullYear()}</span>
                     </p>
                 </div>
                 <ul className="grid gap-y-3 md:hidden">
