@@ -16,8 +16,7 @@ const CreateProductForm = () => {
     const createProduct = async (e) => {
         e.preventDefault();
 
-        const res = await addProduct(newProduct);
-        console.log(res);
+        await addProduct(newProduct);
     };
     //тут закрыть модалку или очистить поля формы
     return (

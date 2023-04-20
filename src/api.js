@@ -73,6 +73,26 @@ export const addProduct = async (newProduct) => {
     return printError(res);
 };
 
+export const addLike = async (id) => {
+    const res = await fetch(`${baseUrl}likes/${id}`, {
+        method: "PUT",
+        headers: {
+            authorization: auth,
+        },
+    });
+    return printError(res);
+};
+
+export const deleteLike = async (id) => {
+    const res = await fetch(`${baseUrl}likes/${id}`, {
+        method: "DELETE",
+        headers: {
+            authorization: auth,
+        },
+    });
+    return printError(res);
+};
+
 export const updateProduct = async (id) => {
     const res = await fetch(`${baseUrl}${id}`, {
         method: "PUT",
