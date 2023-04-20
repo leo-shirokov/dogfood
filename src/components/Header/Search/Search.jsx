@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 export const Search = ({ setSearch }) => {
     return (
         <input
@@ -7,4 +9,18 @@ export const Search = ({ setSearch }) => {
             onChange={(e) => setSearch(e.target.value)}
         />
     );
+};
+
+export const useDebounce = (path) => {
+    const [debounceValue, setDebounceValue] = useState(path);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setDebounceValue(path);
+        }, 400);
+
+        return () => clearTimeout(timeout);
+    }, [path]);
+
+    return debounceValue;
 };

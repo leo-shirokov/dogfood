@@ -8,12 +8,15 @@ import ProductSection from "./components/ProductSection/ProductSection";
 
 import { getAllProducts } from "./api";
 import { searchProducts } from "./api";
+import { useDebounce } from "./components/Header/Search/Search";
 
 function App() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [cart, setCart] = useState([]);
     const [search, setSearch] = useState("");
+    const debounceValueInApp = useDebounce(search);
+    // console.log(debounceValueInApp);
 
     const putProdToCart = (e) => {
         const callerId = e.target.value;
@@ -27,7 +30,7 @@ function App() {
                 setLoading(true);
                 const result = !search?.trim()
                     ? (await getAllProducts())?.products
-                    : await searchProducts(search);
+                    : await searchProducts(debounceValueInApp);
                 setProducts(result ?? []);
             } catch (error) {
                 console.error(error.message);
@@ -35,7 +38,7 @@ function App() {
                 setLoading(false);
             }
         })();
-    }, [search]);
+    }, [debounceValueInApp]);
 
     return (
         <div className="max-w-[90rem] mx-auto flex flex-col">
