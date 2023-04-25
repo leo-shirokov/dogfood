@@ -4,7 +4,7 @@ import iconLike from "./img/favorites.svg";
 import iconCart from "./img/cart.svg";
 import iconDog from "./img/dog.svg";
 import iconMenu from "./img/menu.svg";
-import { Search } from "./Search/Search";
+import { Search } from "../Search/Search";
 
 function Header({ setSearch }) {
     return (

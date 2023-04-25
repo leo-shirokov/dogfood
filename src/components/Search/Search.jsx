@@ -11,16 +11,16 @@ export const Search = ({ setSearch }) => {
     );
 };
 
-export const useDebounce = (path) => {
-    const [debounceValue, setDebounceValue] = useState(path);
+export const useInterval = (path) => {
+    const [intervalValue, setIntervalValue] = useState(path);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            setDebounceValue(path);
+            setIntervalValue(path);
         }, 400);
 
         return () => clearTimeout(timeout);
     }, [path]);
 
-    return debounceValue;
+    return intervalValue;
 };
