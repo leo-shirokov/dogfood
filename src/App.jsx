@@ -19,6 +19,18 @@ function App() {
     const [search, setSearch] = useState("");
     const intervalSearch = useInterval(search);
 
+    const onSort = (sordId) => {
+        console.log(sordId);
+        if (sordId === "cheapest") {
+            const sortedProducts = products.sort((a, b) => a.price - b.price);
+            setProducts([...sortedProducts]);
+        }
+        if (sordId === "most-expensive") {
+            const sortedProducts = products.sort((a, b) => b.price - a.price);
+            setProducts([...sortedProducts]);
+        }
+    };
+
     const putProdToCart = (e) => {
         const callerId = e.target.value;
         const prod = products.find((p) => p._id === Number(callerId));
@@ -55,6 +67,8 @@ function App() {
                                     <>
                                         <ProductSection
                                             products={products.slice(0, 4)}
+                                            search={search}
+                                            onSort={onSort}
                                             putProdToCart={putProdToCart}
                                         />
                                         <TwoBanners
@@ -63,6 +77,10 @@ function App() {
                                         />
                                         <ProductSection
                                             products={products.slice(4, 8)}
+                                            putProdToCart={putProdToCart}
+                                        />
+                                        <ProductSection
+                                            products={products.slice(8, 12)}
                                             putProdToCart={putProdToCart}
                                         />
                                     </>
