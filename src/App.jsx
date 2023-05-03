@@ -3,7 +3,9 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Banner from "./components/Banner/Banner";
 import TwoBanners from "./components/Banner/TwoBanners";
+import Product from "./components/Product/Product";
 import ProductSection from "./components/ProductSection/ProductSection";
+import { Route, Routes } from "react-router-dom";
 // import CreateProductForm from "./AddProduct/AddProduct";
 
 import { getAllProducts } from "./api";
@@ -46,15 +48,28 @@ function App() {
                 <Banner index={0} />
                 {products.length > 0 ? (
                     <>
-                        <ProductSection
-                            products={products.slice(0, 4)}
-                            putProdToCart={putProdToCart}
-                        />
-                        <TwoBanners banIndex1={0} banIndex2={1} />
-                        <ProductSection
-                            products={products.slice(4, 8)}
-                            putProdToCart={putProdToCart}
-                        />
+                        <Routes>
+                            <Route
+                                index
+                                element={
+                                    <>
+                                        <ProductSection
+                                            products={products.slice(0, 4)}
+                                            putProdToCart={putProdToCart}
+                                        />
+                                        <TwoBanners
+                                            banIndex1={0}
+                                            banIndex2={1}
+                                        />
+                                        <ProductSection
+                                            products={products.slice(4, 8)}
+                                            putProdToCart={putProdToCart}
+                                        />
+                                    </>
+                                }
+                            />
+                            <Route path="/product" element={<Product />} />
+                        </Routes>
                     </>
                 ) : (
                     <p>No data</p>
