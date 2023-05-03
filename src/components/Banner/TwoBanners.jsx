@@ -10,12 +10,12 @@ function TwoBanners({ banIndex1, banIndex2 }) {
     return (
         <div className="w-full flex justify-between gap-3 lg:justify-center">
             <img
-                className="object-contain shrink w-[28.75rem]"
+                className="object-contain w-1/2"
                 src={banners[banIndex1]}
                 alt="banner 1"
             />
             <img
-                className="object-contain shrink w-[28.75rem] lg:hidden"
+                className="object-contain w-1/2 lg:hidden"
                 src={banners[banIndex2]}
                 alt="banner 2"
             />

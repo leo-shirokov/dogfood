@@ -44,7 +44,7 @@ function App() {
     return (
         <div className="max-w-[90rem] mx-auto flex flex-col">
             <Header setSearch={setSearch} cart={cart} />
-            <div className="w-4/6 mx-auto flex-initial md:w-11/12">
+            <div className="w-4/6 mx-auto flex-initial lg:w-4/5 md:w-11/12">
                 <Banner index={0} />
                 {products.length > 0 ? (
                     <>

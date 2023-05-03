@@ -33,8 +33,8 @@ function ProductCard({ data, putProdToCart }) {
     };
 
     return (
-        <div className="flex flex-col gap-y-2 w-1/4 p-3 relative md:w-full md:mb-10">
-            <div className="flex justify-centermb-4">
+        <div className="flex flex-col gap-y-2 p-3 relative md:w-full md:mb-10">
+            <div className="flex justify-center mb-4">
                 <Link to={`/product/${data._id}`}>
                     <img
                         className="object-scale-down w-60 h-48"

@@ -3,7 +3,7 @@ import ProductCard from "../ProductCard/ProductCard";
 
 function ProductSection({ products, putProdToCart }) {
     return (
-        <div className="flex justify-between p-5 md:flex-col">
+        <div className="flex justify-between my-5 md:flex-col">
             {products.map((product) => (
                 <ProductCard
                     key={product._id}
