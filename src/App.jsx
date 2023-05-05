@@ -95,8 +95,9 @@ function App() {
                                             ))}
                                         </div>
                                         <div className="flex justify-start flex-wrap">
-                                            {displayedProducts?.map(
-                                                (product) => (
+                                            {displayedProducts
+                                                ?.slice(0, 16)
+                                                .map((product) => (
                                                     <ProductCard
                                                         key={product._id}
                                                         data={product}
@@ -104,8 +105,7 @@ function App() {
                                                             putProdToCart
                                                         }
                                                     />
-                                                )
-                                            )}
+                                                ))}
                                         </div>
                                     </>
                                 }
