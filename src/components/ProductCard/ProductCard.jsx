@@ -17,9 +17,6 @@ function ProductCard({ data, putProdToCart }) {
 
     useEffect(() => {
         (async () => {
-            // обратиться к API: если текущий пользователь лайкнул уже данный товар
-            // то установить переменную like в состояние true
-
             if (data.likes.includes(userId)) setLike(true);
             else setLike(false);
         })();
@@ -35,7 +32,7 @@ function ProductCard({ data, putProdToCart }) {
     };
 
     return (
-        <div className="flex flex-col gap-y-2 p-3 relative md:w-full md:mb-10">
+        <div className="w-1/4 flex flex-col gap-y-2 p-3 relative md:w-1/3 sm:w-1/2 md:mb-10">
             <div className="flex justify-center mb-4">
                 <Link to={`/product/${data._id}`}>
                     <img

@@ -1,18 +1,60 @@
 import { useState, useContext } from "react";
+import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Banner from "./components/Banner/Banner";
 import TwoBanners from "./components/Banner/TwoBanners";
 import Product from "./components/Product/Product";
-import ProductSection from "./components/ProductSection/ProductSection";
+import ProductCard from "./components/ProductCard/ProductCard";
 import ProductFavorite from "./components/ProductFavorite/ProductFavorite";
-import { Route, Routes } from "react-router-dom";
+import Error404 from "./components/Error404/Error404";
 import CreateProductForm from "./components/CreateProductForm/CreateProductForm";
 import productsContext from "./context/productsContext";
 
 function App() {
     const [cart, setCart] = useState([]);
-    const { loading, displayedProducts } = useContext(productsContext);
+
+    const {
+        loading,
+        displayedProducts,
+        setDisplayedProducts,
+        allProducts,
+        searchItem,
+    } = useContext(productsContext);
+
+    const sortOptions = [
+        { group: "all", title: "Все" },
+        { group: "most-popular", title: "По популярности" },
+        { group: "newest", title: "Новинки" },
+        { group: "cheapest", title: "Сначала дешевые" },
+        { group: "most-expensive", title: "Сначала дорогие" },
+        { group: "highest-rated", title: "По рейтингу" },
+        { group: "discounted", title: "По скидке" },
+    ];
+
+    const onSort = (group) => {
+        if (group === "all") {
+            const sortedProducts = allProducts.sort(
+                (a, b) => a.order - b.order
+            );
+            setDisplayedProducts([...sortedProducts]);
+        } else if (group === "cheapest") {
+            const sortedProducts = allProducts.sort(
+                (a, b) => a.price - b.price
+            );
+            setDisplayedProducts([...sortedProducts]);
+        } else if (group === "most-expensive") {
+            const sortedProducts = allProducts.sort(
+                (a, b) => b.price - a.price
+            );
+            setDisplayedProducts([...sortedProducts]);
+        } else if (group === "discounted") {
+            const sortedProducts = allProducts.sort(
+                (a, b) => b.discount - a.discount
+            );
+            setDisplayedProducts([...sortedProducts]);
+        }
+    };
 
     const putProdToCart = (e) => {
         const callerId = e.target.value;
@@ -32,31 +74,39 @@ function App() {
                                 index
                                 element={
                                     <>
-                                        <ProductSection
-                                            products={displayedProducts.slice(
-                                                0,
-                                                4
+                                        {searchItem && (
+                                            <p>
+                                                Количество товаров, найденных по
+                                                вашему запросу:{" "}
+                                                {displayedProducts.length}
+                                            </p>
+                                        )}
+                                        <div className="flex justify-start items-center gap-x-4 mb-10 md:flex-col">
+                                            {sortOptions.map((item) => (
+                                                <span
+                                                    key={item.group}
+                                                    onClick={() =>
+                                                        onSort(item.group)
+                                                    }
+                                                    className="text-md whitespace-nowrap text-gray-500 cursor-pointer md:text-sm"
+                                                >
+                                                    {item.title}
+                                                </span>
+                                            ))}
+                                        </div>
+                                        <div className="flex justify-start flex-wrap">
+                                            {displayedProducts?.map(
+                                                (product) => (
+                                                    <ProductCard
+                                                        key={product._id}
+                                                        data={product}
+                                                        putProdToCart={
+                                                            putProdToCart
+                                                        }
+                                                    />
+                                                )
                                             )}
-                                            putProdToCart={putProdToCart}
-                                        />
-                                        <TwoBanners
-                                            banIndex1={0}
-                                            banIndex2={1}
-                                        />
-                                        <ProductSection
-                                            products={displayedProducts.slice(
-                                                4,
-                                                8
-                                            )}
-                                            putProdToCart={putProdToCart}
-                                        />
-                                        <ProductSection
-                                            products={displayedProducts.slice(
-                                                8,
-                                                12
-                                            )}
-                                            putProdToCart={putProdToCart}
-                                        />
+                                        </div>
                                     </>
                                 }
                             />
@@ -65,6 +115,7 @@ function App() {
                                 path="/favorite"
                                 element={<ProductFavorite />}
                             />
+                            <Route path="*" element={<Error404 />} />
                         </Routes>
                     </>
                 ) : (
