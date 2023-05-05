@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { getProductByID } from "../../api";
 import { useState, useEffect } from "react";
@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 function Product() {
     const [product, setProduct] = useState({});
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!id) return;
@@ -20,9 +21,9 @@ function Product() {
 
     return (
         <>
-            <Link to="/">
-                <span>назад</span>
-            </Link>
+            <span className="cursor-pointer" onClick={() => navigate(-1)}>
+                назад
+            </span>
             <div>{product?.name}</div>
         </>
     );

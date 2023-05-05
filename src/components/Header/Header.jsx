@@ -1,4 +1,3 @@
-import React from "react";
 import Logo from "../Logo/Logo";
 import iconLike from "./img/favorites.svg";
 import iconCart from "./img/cart.svg";
@@ -6,25 +5,29 @@ import iconDog from "./img/dog.svg";
 import iconMenu from "./img/menu.svg";
 import { Search } from "../Search/Search";
 import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function Header({ setSearch }) {
+function Header() {
     const location = useLocation();
-
     return (
         <div className="w-full h-[41.1563rem] bg-yellow-300 px-4 py-9 flex flex-col gap-y-28">
             <div className="flex justify-between items-center gap-x-8">
+                {/* <Link to="/"> */}
                 <Logo />
+                {/* </Link> */}
+
                 <div className="grow">
-                    {location.pathname === "/" && (
-                        <Search setSearch={setSearch} />
-                    )}
+                    {location.pathname === "/" && <Search />}
                 </div>
-                <div className="flex gap-x-10 justify-between">
-                    <img
-                        className="w-6 md:hidden"
-                        src={iconLike}
-                        alt="favorite"
-                    />
+                <div className="flex gap-x-10 justify-between items-center">
+                    <Link to="/favorite">
+                        {" "}
+                        <img
+                            className="w-6 md:hidden"
+                            src={iconLike}
+                            alt="favorite"
+                        />
+                    </Link>
                     <img className="w-6 md:hidden" src={iconCart} alt="cart" />
                     <img className="w-6 md:hidden" src={iconDog} alt="dog" />
                     <img

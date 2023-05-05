@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { addLike, deleteLike } from "../../api";
 import { Link } from "react-router-dom";
+import productsContext from "../../context/productsContext";
 
 function stylePrice(arg) {
     return new Intl.NumberFormat("ru-RU", {
@@ -12,12 +13,13 @@ function stylePrice(arg) {
 
 function ProductCard({ data, putProdToCart }) {
     const [like, setLike] = useState(false);
+    const { userId } = useContext(productsContext);
 
     useEffect(() => {
         (async () => {
             // обратиться к API: если текущий пользователь лайкнул уже данный товар
             // то установить переменную like в состояние true
-            const userId = "643ed1453291d790b3f34cd2";
+
             if (data.likes.includes(userId)) setLike(true);
             else setLike(false);
         })();
