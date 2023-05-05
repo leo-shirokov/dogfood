@@ -1,6 +1,5 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ProductSection from "../ProductSection/ProductSection";
 import productsContext from "../../context/productsContext";
 
 function ProductFavorite() {

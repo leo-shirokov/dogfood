@@ -22,7 +22,6 @@ function ProductsProvider({ children }) {
                         order: i,
                         favourite: p?.likes?.includes(userId),
                     })) ?? [];
-                console.log(orderedProducts[0]);
                 setTotal(data.total);
                 setAllProducts(orderedProducts);
                 setDisplayedProducts(orderedProducts);
