@@ -1,20 +1,8 @@
-import { useState, useEffect, useContext } from "react";
-import { searchProducts } from "../../api";
+import { useContext } from "react";
 import productsContext from "../../context/productsContext";
 
 export const Search = () => {
-    const { setDisplayedProducts, products, searchItem, setSearchItem } =
-        useContext(productsContext);
-    const intervalSearch = useInterval(searchItem);
-
-    useEffect(() => {
-        (async () => {
-            const searchResult = await searchProducts(intervalSearch);
-            if (searchResult && searchResult.length > 0)
-                setDisplayedProducts(searchResult);
-            else setDisplayedProducts(products);
-        })();
-    }, [intervalSearch, setDisplayedProducts, products]);
+    const { searchItem, setSearchItem } = useContext(productsContext);
 
     return (
         <input
@@ -25,19 +13,4 @@ export const Search = () => {
             onChange={(e) => setSearchItem(e.target.value)}
         />
     );
-};
-
-export const useInterval = (searchItem) => {
-    const path = searchItem?.trim();
-    const [intervalValue, setIntervalValue] = useState(path);
-
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setIntervalValue(path);
-        }, 400);
-
-        return () => clearTimeout(timeout);
-    }, [path]);
-
-    return intervalValue;
 };

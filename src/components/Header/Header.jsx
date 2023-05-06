@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 
 function Header() {
     const location = useLocation();
+
     return (
         <div className="w-full h-[41.1563rem] bg-yellow-300 px-4 py-9 flex flex-col gap-y-28">
             <div className="flex justify-between items-center gap-x-8">

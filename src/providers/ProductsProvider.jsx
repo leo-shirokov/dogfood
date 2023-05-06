@@ -1,52 +1,59 @@
 import { useState, useEffect, useMemo } from "react";
 import ProductsContext from "../context/productsContext";
-import { getAllProducts } from "../api";
+import { getAllProducts, searchProducts } from "../api";
 
 function ProductsProvider({ children }) {
     const [allProducts, setAllProducts] = useState([]);
     const [total, setTotal] = useState(0);
-    const [displayedProducts, setDisplayedProducts] = useState([]);
     const [searchItem, setSearchItem] = useState("");
     const [userId, setUserId] = useState("643ed1453291d790b3f34cd2");
-
     const [loading, setLoading] = useState(false);
+    const [render, setRender] = useState(0);
+
+    const trimmedItem = searchItem.trim();
 
     useEffect(() => {
         (async () => {
             try {
                 setLoading(true);
-                const data = await getAllProducts();
+                let products;
+                if (trimmedItem) {
+                    const data = await searchProducts(trimmedItem);
+                    products = data;
+                    setTotal(products?.length ?? 0);
+                } else {
+                    const data = await getAllProducts();
+                    products = data?.products;
+                    setTotal(data.total);
+                }
                 const orderedProducts =
-                    data?.products?.map((p, i) => ({
+                    products?.map((p, i) => ({
                         ...p,
                         order: i,
-                        favourite: p?.likes?.includes(userId),
                     })) ?? [];
-                setTotal(data.total);
                 setAllProducts(orderedProducts);
-                setDisplayedProducts(orderedProducts);
             } catch (error) {
                 console.error(error.message);
             } finally {
                 setLoading(false);
             }
         })();
-    }, []);
+    }, [trimmedItem]);
 
     const value = useMemo(
         () => ({
             allProducts,
             setAllProducts,
-            displayedProducts,
-            setDisplayedProducts,
             total,
             loading,
             searchItem,
             setSearchItem,
             userId,
             setUserId,
+            render,
+            setRender,
         }),
-        [allProducts, loading, displayedProducts, total, searchItem, userId]
+        [allProducts, loading, total, searchItem, userId, render]
     );
 
     return (

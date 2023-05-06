@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { addLike, deleteLike } from "../../api";
 import { Link } from "react-router-dom";
@@ -11,24 +11,32 @@ function stylePrice(arg) {
     }).format(arg);
 }
 
-function ProductCard({ data, putProdToCart }) {
-    const [like, setLike] = useState(false);
-    const { userId } = useContext(productsContext);
+function ProductCard({
+    data,
+    putProdToCart,
+    ActiveImage = FaHeart,
+    InactiveImage = FaRegHeart,
+}) {
+    const { userId, setAllProducts, setRender } = useContext(productsContext);
+    const isLiked = data?.likes?.includes(userId);
 
-    useEffect(() => {
-        (async () => {
-            if (data.likes.includes(userId)) setLike(true);
-            else setLike(false);
-        })();
-    }, []);
-
-    const toggleLike = async (e) => {
-        if (!like) {
-            await addLike(data._id);
-        } else {
+    const toggleLike = async () => {
+        setRender((ren) => ren + 1);
+        setAllProducts((products) => {
+            const product = products.find((p) => p._id === data._id);
+            if (isLiked) {
+                const likesIndex = product.likes.indexOf(userId);
+                product.likes.splice(likesIndex, 1);
+            } else {
+                product.likes.push(userId);
+            }
+            return products;
+        });
+        if (isLiked) {
             await deleteLike(data._id);
+        } else {
+            await addLike(data._id);
         }
-        setLike((prev) => !prev);
     };
 
     return (
@@ -75,10 +83,10 @@ function ProductCard({ data, putProdToCart }) {
             )}
 
             <button onClick={toggleLike}>
-                {like ? (
-                    <FaHeart className="text-red-500 text-xl absolute top-2 right-2" />
+                {isLiked ? (
+                    <ActiveImage className="text-red-500 text-xl absolute top-2 right-2" />
                 ) : (
-                    <FaRegHeart className="text-red-500 text-xl absolute top-2 right-2" />
+                    <InactiveImage className="text-red-500 text-xl absolute top-2 right-2" />
                 )}
             </button>
             <div className="">

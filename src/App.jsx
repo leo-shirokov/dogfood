@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useCallback } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -10,17 +10,13 @@ import ProductFavorite from "./components/ProductFavorite/ProductFavorite";
 import Error404 from "./components/Error404/Error404";
 import CreateProductForm from "./components/CreateProductForm/CreateProductForm";
 import productsContext from "./context/productsContext";
+import { NativeSelect } from "@mantine/core";
 
 function App() {
     const [cart, setCart] = useState([]);
+    const [sortMode, setSortMode] = useState("all");
 
-    const {
-        loading,
-        displayedProducts,
-        setDisplayedProducts,
-        allProducts,
-        searchItem,
-    } = useContext(productsContext);
+    const { loading, allProducts, searchItem } = useContext(productsContext);
 
     const sortOptions = [
         { group: "all", title: "Все" },
@@ -32,61 +28,74 @@ function App() {
         { group: "discounted", title: "По скидке" },
     ];
 
-    const onSort = (group) => {
-        if (group === "all") {
-            const sortedProducts = allProducts.sort(
-                (a, b) => a.order - b.order
+    const sort = useCallback(() => {
+        let sortedProducts;
+        if (sortMode === "all") {
+            sortedProducts = allProducts.sort((a, b) => a.order - b.order);
+        } else if (sortMode === "most-popular") {
+            sortedProducts = allProducts.sort(
+                (a, b) => b.likes.length - a.likes.length
             );
-            setDisplayedProducts([...sortedProducts]);
-        } else if (group === "cheapest") {
-            const sortedProducts = allProducts.sort(
-                (a, b) => a.price - b.price
+        } else if (sortMode === "newest") {
+            sortedProducts = allProducts.sort(
+                (a, b) =>
+                    new Date(b.created_at).getTime() -
+                    new Date(a.created_at).getTime()
             );
-            setDisplayedProducts([...sortedProducts]);
-        } else if (group === "most-expensive") {
-            const sortedProducts = allProducts.sort(
-                (a, b) => b.price - a.price
-            );
-            setDisplayedProducts([...sortedProducts]);
-        } else if (group === "discounted") {
-            const sortedProducts = allProducts.sort(
+        } else if (sortMode === "cheapest") {
+            sortedProducts = allProducts.sort((a, b) => a.price - b.price);
+        } else if (sortMode === "most-expensive") {
+            sortedProducts = allProducts.sort((a, b) => b.price - a.price);
+        } else if (sortMode === "highest-rated") {
+            sortedProducts = allProducts.sort((a, b) => {
+                const raitingA = a.reviews.reduce(
+                    (prev, el) => (prev + el.rating) / a.reviews.length,
+                    0
+                );
+                const raitingB = b.reviews.reduce(
+                    (prev, el) => (prev + el.rating) / b.reviews.length,
+                    0
+                );
+                return raitingA - raitingB;
+            });
+        } else if (sortMode === "discounted") {
+            sortedProducts = allProducts.sort(
                 (a, b) => b.discount - a.discount
             );
-            setDisplayedProducts([...sortedProducts]);
         }
-    };
+        return sortedProducts;
+    }, [allProducts, sortMode]);
 
-    const putProdToCart = (e) => {
-        const callerId = e.target.value;
-        const prod = displayedProducts.find((p) => p._id === Number(callerId));
-        setCart((prev) => [...prev, prod]);
-    };
+    // const putProdToCart = (e) => {
+    //     const callerId = e.target.value;
+    //     const prod = displayedProducts.find((p) => p._id === Number(callerId));
+    //     setCart((prev) => [...prev, prod]);
+    // };
 
     return (
         <div className="max-w-[90rem] mx-auto flex flex-col">
             <Header cart={cart} />
             <div className="w-4/6 mx-auto flex-initial lg:w-4/5 md:w-11/12">
                 <Banner index={0} />
-                {displayedProducts?.length > 0 ? (
+                {sort()?.length > 0 ? (
                     <>
                         <Routes>
                             <Route
                                 index
                                 element={
                                     <>
-                                        {searchItem && (
+                                        {searchItem?.trim() && (
                                             <p>
                                                 Количество товаров, найденных по
-                                                вашему запросу:{" "}
-                                                {displayedProducts.length}
+                                                вашему запросу: {sort()?.length}
                                             </p>
                                         )}
-                                        <div className="flex justify-start items-center gap-x-4 mb-10 md:flex-col">
+                                        <div className="flex justify-start items-center gap-x-4 mb-10 md:hidden">
                                             {sortOptions.map((item) => (
                                                 <span
                                                     key={item.group}
                                                     onClick={() =>
-                                                        onSort(item.group)
+                                                        setSortMode(item.group)
                                                     }
                                                     className="text-md whitespace-nowrap text-gray-500 cursor-pointer md:text-sm"
                                                 >
@@ -94,16 +103,34 @@ function App() {
                                                 </span>
                                             ))}
                                         </div>
+
+                                        <div className="flex justify-center items-center mb-10 md:block lg:hidden xl:hidden 2xl:hidden">
+                                            <NativeSelect
+                                                data={sortOptions.map(
+                                                    (item) => ({
+                                                        label: item.title,
+                                                        value: item.group,
+                                                    })
+                                                )}
+                                                onChange={(event) =>
+                                                    setSortMode(
+                                                        event.currentTarget
+                                                            .value
+                                                    )
+                                                }
+                                            />
+                                        </div>
+
                                         <div className="flex justify-start flex-wrap">
-                                            {displayedProducts
+                                            {sort()
                                                 ?.slice(0, 16)
                                                 .map((product) => (
                                                     <ProductCard
                                                         key={product._id}
                                                         data={product}
-                                                        putProdToCart={
-                                                            putProdToCart
-                                                        }
+                                                        // putProdToCart={
+                                                        //     putProdToCart
+                                                        // }
                                                     />
                                                 ))}
                                         </div>
