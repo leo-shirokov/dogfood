@@ -1,10 +1,9 @@
-import { useState, useContext, useMemo, useCallback } from "react";
+import { useState, useContext, useCallback } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import TwoBanners from "./components/Banner/TwoBanners";
 import Product from "./components/Product/Product";
-import ProductCard from "./components/ProductCard/ProductCard";
 import ProductFavorite from "./components/ProductFavorite/ProductFavorite";
 import Catalog from "./components/Catalog/Catalog";
 import Promotions from "./components/Promotions/Promotions";
@@ -18,15 +17,17 @@ import Error404 from "./components/Error404/Error404";
 import CreateProductForm from "./components/CreateProductForm/CreateProductForm";
 import productsContext from "./context/productsContext";
 import { NativeSelect } from "@mantine/core";
-import { Pagination } from "@mantine/core";
+import Products from "./components/Products";
+import Pagination from "./components/Pagination";
+import usePagination from "./hooks/usePagination";
 
 function App() {
     const [cart, setCart] = useState([]);
     const [sortMode, setSortMode] = useState("all");
 
-    const { loading, allProducts, searchItem, activePage, setActivePage } =
+    const { loading, allProducts, searchItem, render } =
         useContext(productsContext);
-
+    // варианты сортировки
     const sortOptions = [
         { group: "all", title: "Все" },
         { group: "most-popular", title: "По популярности" },
@@ -36,7 +37,7 @@ function App() {
         { group: "highest-rated", title: "По рейтингу" },
         { group: "discounted", title: "По скидке" },
     ];
-
+    // функция сортировки в зависимости от варианта сортировки
     const sort = useCallback(() => {
         let sortedProducts;
         if (sortMode === "all") {
@@ -73,25 +74,22 @@ function App() {
             );
         }
         return sortedProducts;
-    }, [allProducts, sortMode]);
+    }, [allProducts, sortMode, render]);
+
+    const paginatedProds = usePagination(sort());
 
     // const putProdToCart = (e) => {
     //     const callerId = e.target.value;
     //     const prod = displayedProducts.find((p) => p._id === Number(callerId));
     //     setCart((prev) => [...prev, prod]);
     // };
-    const currentProductsData = useMemo(() => {
-        const firstPageIndex = (activePage - 1) * 12;
-        const lastPageIndex = firstPageIndex + 12;
-        return sort().slice(firstPageIndex, lastPageIndex);
-    }, [activePage, sort]);
 
     return (
         <div className="max-w-[90rem] h-full mx-auto flex flex-col">
             <Header cart={cart} />
 
             <div className="w-4/6 mx-auto flex-initial py-16 lg:w-4/5 md:w-11/12 md:py-8">
-                {currentProductsData.length > 0 ? (
+                {paginatedProds.length > 0 ? (
                     <>
                         <Routes>
                             <Route
@@ -104,11 +102,11 @@ function App() {
                                                 <span className="font-bold">
                                                     {searchItem}
                                                 </span>{" "}
-                                                найдено{" "}
-                                                {currentProductsData.length}{" "}
+                                                найдено {paginatedProds.length}{" "}
                                                 товаров
                                             </p>
                                         )}
+                                        {/* сортировка при поиске товаров */}
                                         {searchItem?.trim() && (
                                             <div className="flex justify-start items-center gap-x-4 mb-10 md:hidden">
                                                 {sortOptions.map((item) => (
@@ -126,6 +124,7 @@ function App() {
                                                 ))}
                                             </div>
                                         )}
+                                        {/* сортировка через select при поиске товаров на мобильном устройстве */}
                                         {searchItem?.trim() && (
                                             <div className="flex justify-center items-center my-4 md:block lg:hidden xl:hidden 2xl:hidden">
                                                 <NativeSelect
@@ -144,30 +143,10 @@ function App() {
                                                 />
                                             </div>
                                         )}
-
-                                        <div className="flex justify-start flex-wrap">
-                                            {currentProductsData.map(
-                                                (product) => (
-                                                    <ProductCard
-                                                        key={product._id}
-                                                        data={product}
-                                                        // putProdToCart={
-                                                        //     putProdToCart
-                                                        // }
-                                                    />
-                                                )
-                                            )}
-                                        </div>
-                                        <div className="flex justify-center my-10">
-                                            {!searchItem && (
-                                                <Pagination
-                                                    value={activePage}
-                                                    onChange={setActivePage}
-                                                    total={15}
-                                                    color="yellow"
-                                                />
-                                            )}
-                                        </div>
+                                        {/* вывод товаров на главной странице */}
+                                        <Products products={paginatedProds} />
+                                        {/* настройки пагинации */}
+                                        <Pagination />
                                     </>
                                 }
                             />
@@ -193,7 +172,10 @@ function App() {
                 ) : (
                     <p>...</p>
                 )}
+
                 <TwoBanners banIndex1={2} banIndex2={3} />
+
+                {/* loader */}
                 {loading && (
                     <div
                         className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-secondary motion-reduce:animate-[spin_1.5s_linear_infinite]"
