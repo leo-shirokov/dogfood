@@ -3,6 +3,7 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { addLike, deleteLike } from "../../api";
 import { Link } from "react-router-dom";
 import productsContext from "../../context/productsContext";
+import { useLocation } from "react-router-dom";
 
 function stylePrice(arg) {
     return new Intl.NumberFormat("ru-RU", {
@@ -19,6 +20,7 @@ function ProductCard({
 }) {
     const { userId, setAllProducts, setRender } = useContext(productsContext);
     const isLiked = data?.likes?.includes(userId);
+    const location = useLocation();
 
     const toggleLike = async () => {
         setRender((ren) => ren + 1);
@@ -89,15 +91,17 @@ function ProductCard({
                     <InactiveImage className="text-red-500 text-xl absolute top-2 right-2" />
                 )}
             </button>
-            <div className="">
-                <button
-                    className="bg-yellow-300 px-4 py-2 rounded-3xl text-sm font-semibold"
-                    value={data._id}
-                    onClick={putProdToCart}
-                >
-                    В корзину
-                </button>
-            </div>
+            {location.pathname === "/" && (
+                <div className="">
+                    <button
+                        className="bg-yellow-300 px-4 py-2 rounded-3xl text-sm font-semibold"
+                        value={data._id}
+                        onClick={putProdToCart}
+                    >
+                        В корзину
+                    </button>
+                </div>
+            )}
         </div>
     );
 }

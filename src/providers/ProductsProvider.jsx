@@ -9,6 +9,7 @@ function ProductsProvider({ children }) {
     const [userId, setUserId] = useState("643ed1453291d790b3f34cd2");
     const [loading, setLoading] = useState(false);
     const [render, setRender] = useState(0);
+    const [activePage, setActivePage] = useState(1);
 
     const trimmedItem = searchItem.trim();
 
@@ -40,6 +41,11 @@ function ProductsProvider({ children }) {
         })();
     }, [trimmedItem]);
 
+    const favourites = useMemo(
+        () => allProducts?.filter((prod) => prod.likes.includes(userId)),
+        [render, allProducts, userId]
+    );
+
     const value = useMemo(
         () => ({
             allProducts,
@@ -52,8 +58,20 @@ function ProductsProvider({ children }) {
             setUserId,
             render,
             setRender,
+            favourites,
+            activePage,
+            setActivePage,
         }),
-        [allProducts, loading, total, searchItem, userId, render]
+        [
+            allProducts,
+            loading,
+            total,
+            searchItem,
+            userId,
+            render,
+            favourites,
+            activePage,
+        ]
     );
 
     return (

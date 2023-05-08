@@ -1,15 +1,17 @@
-import { useNavigate } from "react-router-dom";
+import Back from "../Back/Back";
 import { useParams } from "react-router-dom";
 import { getProductByID } from "../../api";
 import { useState, useEffect } from "react";
-import { BiArrowBack } from "react-icons/bi";
+import { Modal } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 
 import quality from "./img/quality.svg";
+import track from "./img/Truck.svg";
 
 function Product() {
     const [product, setProduct] = useState({});
     const { id } = useParams();
-    const navigate = useNavigate();
+    const [opened, { open, close }] = useDisclosure(false);
 
     function stylePrice(arg) {
         return new Intl.NumberFormat("ru-RU", {
@@ -31,24 +33,34 @@ function Product() {
 
     return (
         <>
-            <div
-                className="inline-flex justify-start items-center cursor-pointer flex-nowrap text-sm text-gray-500"
-                onClick={() => navigate(-1)}
-            >
-                <BiArrowBack />
-                &nbsp;назад
-            </div>
+            <Back />
             <h1 className="text-xl font-bold">{product?.name}</h1>
 
-            <div className="w-full flex gap-x-10 py-10 md:flex-col">
-                <div className="w-1/2">
+            <div className="bw-full flex gap-x-10 py-10 md:flex-col">
+                <div className="w-1/2 md:w-full cursor-pointer">
                     <img
                         className="object-scale-down"
                         src={product.pictures}
                         alt={product.name}
+                        onClick={open}
                     />
                 </div>
-                <div className="flex flex-col w-1/2 gap-y-10">
+                <Modal
+                    opened={opened}
+                    onClose={close}
+                    title={product?.name}
+                    size="calc(100vw - 3rem)"
+                    centered
+                >
+                    <div className="w-full flex justify-center md:w-full cursor-pointer">
+                        <img
+                            className="object-scale-down w-[37.5rem]"
+                            src={product.pictures}
+                            alt={product.name}
+                        />
+                    </div>
+                </Modal>
+                <div className="flex flex-col w-1/2 gap-y-10 md:w-full">
                     <div>
                         {product.discount > 0 ? (
                             <div className="relative">
@@ -76,19 +88,34 @@ function Product() {
                             В корзину
                         </button>
                     </div>
-                    <div className="flex justify-start flex-col gap-y-3 bg-gray-100 rounded-xl px-5 py-3">
-                        <div className="flex flex-row items-center gap-x-3">
+                    <div className="flex fle-col justify-start items-start gap-4 bg-gray-100 rounded-xl px-5 py-3">
+                        <div className="w-20">
                             <img src={quality} alt="quality" />
+                        </div>
+                        <div>
                             <h2 className="text-md font-semibold">
                                 Гарантия качества
                             </h2>
-                        </div>
-                        <div>
                             <p className="text-sm">
                                 Если Вам не понравилось качество нашей
                                 продукции, мы вернем деньги, либо сделаем все
                                 возможное, чтобы удовлетворить ваши нужды.
                             </p>
+                        </div>
+                    </div>
+                    <div className="flex fle-col justify-start items-start gap-4 bg-gray-100 rounded-xl px-5 py-3">
+                        <div className="w-8">
+                            <img src={track} alt="quality" />
+                        </div>
+                        <div>
+                            <h2 className="text-md font-semibold">
+                                Доставка по всему миру
+                            </h2>
+                            <br />
+                            <div className="text-sm leading-7">
+                                <p>Доставка курьером — от 399 ₽</p>
+                                <p>Доставка в пункт выдачи — от 199</p>
+                            </div>
                         </div>
                     </div>
                 </div>

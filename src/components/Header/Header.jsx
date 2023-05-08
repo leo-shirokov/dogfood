@@ -6,48 +6,77 @@ import iconMenu from "./img/menu.svg";
 import { Search } from "../Search/Search";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
+import productsContext from "../../context/productsContext";
+import { Badge } from "@mantine/core";
+import HeaderIndex from "./HeaderIndex";
 
 function Header() {
+    const { favourites } = useContext(productsContext);
     const location = useLocation();
+    const [hidden, setHidden] = useState(true);
+
+    useEffect(() => {
+        const setVisibility = (e) => {
+            if (window.innerWidth < 768) setHidden(true);
+            else setHidden(false);
+        };
+        setVisibility();
+        window.addEventListener("resize", setVisibility);
+    }, []);
 
     return (
-        <div className="w-full h-[41.1563rem] bg-yellow-300 px-4 py-9 flex flex-col gap-y-28">
-            <div className="flex justify-between items-center gap-x-8">
-                <Logo />
+        <>
+            <div className="w-full h-20 bg-yellow-300 flex justify-between items-center gap-x-8 px-4 py-10">
+                <div className="md:w-10">
+                    <Logo />
+                </div>
                 <div className="grow">
                     {location.pathname === "/" && <Search />}
                 </div>
                 <div className="flex gap-x-10 justify-between items-center">
-                    <Link to="/favorite">
-                        {" "}
-                        <img
-                            className="w-6 md:hidden"
-                            src={iconLike}
-                            alt="favorite"
-                        />
-                    </Link>
-                    <img className="w-6 md:hidden" src={iconCart} alt="cart" />
-                    <img className="w-6 md:hidden" src={iconDog} alt="dog" />
-                    <img
-                        className="w-12 hidden md:block"
-                        src={iconMenu}
-                        alt="menu"
-                    />
+                    {hidden ? (
+                        <Link to="/">
+                            <img
+                                className="w-12 md:w-10"
+                                src={iconMenu}
+                                alt="menu"
+                            />
+                        </Link>
+                    ) : (
+                        <>
+                            <Link to="/favorite" className="relative">
+                                {" "}
+                                <img
+                                    className="w-6"
+                                    src={iconLike}
+                                    alt="favorite"
+                                />
+                                <Badge
+                                    color="green"
+                                    size="xs"
+                                    variant="filled"
+                                    className="absolute -top-2 left-4 border border-yellow-300"
+                                >
+                                    {favourites.length}
+                                </Badge>
+                            </Link>
+                            <Link to="/">
+                                <img
+                                    className="w-6"
+                                    src={iconCart}
+                                    alt="cart"
+                                />
+                            </Link>
+                            <Link to="/">
+                                <img className="w-6" src={iconDog} alt="dog" />
+                            </Link>
+                        </>
+                    )}
                 </div>
             </div>
-            <div className="w-4/5 mx-auto flex flex-col">
-                <h1 className="text-4xl font-extrabold mb-5 shrink">
-                    Крафтовые <br /> лакомства для <br /> собак
-                </h1>
-                <p className="font-extralight mb-10 shrink">
-                    Всегда свежие лакомства ручной <br /> работы с доставкой по
-                    России и Миру
-                </p>
-                <button className="w-40 shrink rounded-[3.75rem] bg-white px-7 py-4 shadow-md font-bold">
-                    Каталог
-                </button>
-            </div>
-        </div>
+            {location.pathname === "/" && <HeaderIndex />}
+        </>
     );
 }
 

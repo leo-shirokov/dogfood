@@ -1,35 +1,21 @@
-import { useNavigate } from "react-router-dom";
-import { useContext, useMemo } from "react";
+import Back from "../Back/Back";
+import { useContext } from "react";
 import productsContext from "../../context/productsContext";
-import { BiArrowBack } from "react-icons/bi";
 import { BiTrashAlt } from "react-icons/bi";
 import ProductCard from "../ProductCard/ProductCard";
 
 function ProductFavorite() {
-    const navigate = useNavigate();
-    const { allProducts, userId, render } = useContext(productsContext);
-
-    const products = useMemo(
-        () => allProducts?.filter((prod) => prod.likes.includes(userId)),
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [render, allProducts, userId]
-    );
+    const { favourites } = useContext(productsContext);
 
     return (
         <div>
-            <div
-                className="inline-flex justify-start items-center cursor-pointer flex-nowrap text-sm text-gray-500"
-                onClick={() => navigate(-1)}
-            >
-                <BiArrowBack />
-                &nbsp;назад
-            </div>
+            <Back />
 
-            <h2 className="text-xl font-semibold">Избранное</h2>
+            <h2 className="text-xl font-semibold mb-6">Избранное</h2>
             <div className="flex justify-start flex-wrap">
-                {products?.length > 0 ? (
+                {favourites?.length > 0 ? (
                     <>
-                        {products.map((product) => (
+                        {favourites.map((product) => (
                             <ProductCard
                                 key={product._id}
                                 data={product}

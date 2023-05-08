@@ -1,22 +1,31 @@
-import { useState, useContext, useCallback } from "react";
+import { useState, useContext, useMemo, useCallback } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import Banner from "./components/Banner/Banner";
 import TwoBanners from "./components/Banner/TwoBanners";
 import Product from "./components/Product/Product";
 import ProductCard from "./components/ProductCard/ProductCard";
 import ProductFavorite from "./components/ProductFavorite/ProductFavorite";
+import Catalog from "./components/Catalog/Catalog";
+import Promotions from "./components/Promotions/Promotions";
+import News from "./components/News/News";
+import Rewiews from "./components/Reviews/Reviews";
+import Payment from "./components/Payment/Payment";
+import Faq from "./components/Faq/Faq";
+import Feedback from "./components/Feedback/Feedback";
+import Contacts from "./components/Contacts/Contacts";
 import Error404 from "./components/Error404/Error404";
 import CreateProductForm from "./components/CreateProductForm/CreateProductForm";
 import productsContext from "./context/productsContext";
 import { NativeSelect } from "@mantine/core";
+import { Pagination } from "@mantine/core";
 
 function App() {
     const [cart, setCart] = useState([]);
     const [sortMode, setSortMode] = useState("all");
 
-    const { loading, allProducts, searchItem } = useContext(productsContext);
+    const { loading, allProducts, searchItem, activePage, setActivePage } =
+        useContext(productsContext);
 
     const sortOptions = [
         { group: "all", title: "Все" },
@@ -71,13 +80,18 @@ function App() {
     //     const prod = displayedProducts.find((p) => p._id === Number(callerId));
     //     setCart((prev) => [...prev, prod]);
     // };
+    const currentProductsData = useMemo(() => {
+        const firstPageIndex = (activePage - 1) * 12;
+        const lastPageIndex = firstPageIndex + 12;
+        return sort().slice(firstPageIndex, lastPageIndex);
+    }, [activePage, sort]);
 
     return (
-        <div className="max-w-[90rem] mx-auto flex flex-col">
+        <div className="max-w-[90rem] h-full mx-auto flex flex-col">
             <Header cart={cart} />
-            <div className="w-4/6 mx-auto flex-initial lg:w-4/5 md:w-11/12">
-                <Banner index={0} />
-                {sort()?.length > 0 ? (
+
+            <div className="w-4/6 mx-auto flex-initial py-16 lg:w-4/5 md:w-11/12 md:py-8">
+                {currentProductsData.length > 0 ? (
                     <>
                         <Routes>
                             <Route
@@ -85,46 +99,55 @@ function App() {
                                 element={
                                     <>
                                         {searchItem?.trim() && (
-                                            <p>
-                                                Количество товаров, найденных по
-                                                вашему запросу: {sort()?.length}
+                                            <p className="text-gray-700 text-lg mb-5">
+                                                По запросу{" "}
+                                                <span className="font-bold">
+                                                    {searchItem}
+                                                </span>{" "}
+                                                найдено{" "}
+                                                {currentProductsData.length}{" "}
+                                                товаров
                                             </p>
                                         )}
-                                        <div className="flex justify-start items-center gap-x-4 mb-10 md:hidden">
-                                            {sortOptions.map((item) => (
-                                                <span
-                                                    key={item.group}
-                                                    onClick={() =>
-                                                        setSortMode(item.group)
+                                        {searchItem?.trim() && (
+                                            <div className="flex justify-start items-center gap-x-4 mb-10 md:hidden">
+                                                {sortOptions.map((item) => (
+                                                    <span
+                                                        key={item.group}
+                                                        onClick={() =>
+                                                            setSortMode(
+                                                                item.group
+                                                            )
+                                                        }
+                                                        className="text-md whitespace-nowrap text-gray-500 cursor-pointer md:text-sm"
+                                                    >
+                                                        {item.title}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
+                                        {searchItem?.trim() && (
+                                            <div className="flex justify-center items-center my-4 md:block lg:hidden xl:hidden 2xl:hidden">
+                                                <NativeSelect
+                                                    data={sortOptions.map(
+                                                        (item) => ({
+                                                            label: item.title,
+                                                            value: item.group,
+                                                        })
+                                                    )}
+                                                    onChange={(event) =>
+                                                        setSortMode(
+                                                            event.currentTarget
+                                                                .value
+                                                        )
                                                     }
-                                                    className="text-md whitespace-nowrap text-gray-500 cursor-pointer md:text-sm"
-                                                >
-                                                    {item.title}
-                                                </span>
-                                            ))}
-                                        </div>
-
-                                        <div className="flex justify-center items-center mb-10 md:block lg:hidden xl:hidden 2xl:hidden">
-                                            <NativeSelect
-                                                data={sortOptions.map(
-                                                    (item) => ({
-                                                        label: item.title,
-                                                        value: item.group,
-                                                    })
-                                                )}
-                                                onChange={(event) =>
-                                                    setSortMode(
-                                                        event.currentTarget
-                                                            .value
-                                                    )
-                                                }
-                                            />
-                                        </div>
+                                                />
+                                            </div>
+                                        )}
 
                                         <div className="flex justify-start flex-wrap">
-                                            {sort()
-                                                ?.slice(0, 16)
-                                                .map((product) => (
+                                            {currentProductsData.map(
+                                                (product) => (
                                                     <ProductCard
                                                         key={product._id}
                                                         data={product}
@@ -132,7 +155,18 @@ function App() {
                                                         //     putProdToCart
                                                         // }
                                                     />
-                                                ))}
+                                                )
+                                            )}
+                                        </div>
+                                        <div className="flex justify-center my-10">
+                                            {!searchItem && (
+                                                <Pagination
+                                                    value={activePage}
+                                                    onChange={setActivePage}
+                                                    total={15}
+                                                    color="yellow"
+                                                />
+                                            )}
                                         </div>
                                     </>
                                 }
@@ -142,11 +176,22 @@ function App() {
                                 path="/favorite"
                                 element={<ProductFavorite />}
                             />
+                            <Route path="/catalog" element={<Catalog />} />
+                            <Route
+                                path="/promotions"
+                                element={<Promotions />}
+                            />
+                            <Route path="/news" element={<News />} />
+                            <Route path="/rewiews" element={<Rewiews />} />
+                            <Route path="/payments" element={<Payment />} />
+                            <Route path="/faq" element={<Faq />} />
+                            <Route path="/feedback" element={<Feedback />} />
+                            <Route path="/contacts" element={<Contacts />} />
                             <Route path="*" element={<Error404 />} />
                         </Routes>
                     </>
                 ) : (
-                    <p>No data</p>
+                    <p>...</p>
                 )}
                 <TwoBanners banIndex1={2} banIndex2={3} />
                 {loading && (
@@ -155,7 +200,7 @@ function App() {
                         role="status"
                     >
                         <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-                            Loading...
+                            Загрузка...
                         </span>
                     </div>
                 )}
