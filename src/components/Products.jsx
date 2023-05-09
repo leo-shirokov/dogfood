@@ -2,8 +2,6 @@ import ProductCard from "./ProductCard/ProductCard";
 import usePagination from "../hooks/usePagination";
 
 function Products({ products = [] }) {
-    // const paginatedProds = usePagination(products);
-
     return (
         <div>
             {/* вывод товаров на главной странице */}
