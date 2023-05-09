@@ -2,12 +2,16 @@ import { useContext } from "react";
 import productsContext from "../../context/productsContext";
 
 export const Search = () => {
-    const { searchItem, setSearchItem, setActivePage } =
+    const { searchItem, setSearchItem, setActivePage, setSortMode } =
         useContext(productsContext);
 
     const onChange = (e) => {
-        setSearchItem(e.target.value);
+        const searchText = e.target.value;
+        setSearchItem(searchText);
         setActivePage(1);
+        if (searchText === "") {
+            setSortMode("all");
+        }
     };
     return (
         <input

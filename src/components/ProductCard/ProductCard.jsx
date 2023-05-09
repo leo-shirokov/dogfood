@@ -1,9 +1,9 @@
+import productsContext from "../../context/productsContext";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { addLike, deleteLike } from "../../api";
-import { Link } from "react-router-dom";
-import productsContext from "../../context/productsContext";
-import { useLocation } from "react-router-dom";
 
 function stylePrice(arg) {
     return new Intl.NumberFormat("ru-RU", {

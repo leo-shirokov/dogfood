@@ -1,5 +1,4 @@
 import ProductCard from "./ProductCard/ProductCard";
-import usePagination from "../hooks/usePagination";
 
 function Products({ products = [] }) {
     return (

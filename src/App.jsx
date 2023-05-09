@@ -23,8 +23,9 @@ import usePagination from "./hooks/usePagination";
 
 function App() {
     const [cart, setCart] = useState([]);
-    const [sortMode, setSortMode] = useState("all");
-    const { loading, allProducts, searchItem } = useContext(productsContext);
+
+    const { loading, allProducts, searchItem, sortMode, setSortMode } =
+        useContext(productsContext);
 
     // варианты сортировки
     const sortOptions = [

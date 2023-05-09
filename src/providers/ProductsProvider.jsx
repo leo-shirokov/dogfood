@@ -10,6 +10,7 @@ function ProductsProvider({ children }) {
     const [loading, setLoading] = useState(false);
     const [render, setRender] = useState(0);
     const [activePage, setActivePage] = useState(1);
+    const [sortMode, setSortMode] = useState("all");
 
     const trimmedItem = searchItem.trim();
 
@@ -61,6 +62,8 @@ function ProductsProvider({ children }) {
             favourites,
             activePage,
             setActivePage,
+            sortMode,
+            setSortMode,
         }),
         [
             allProducts,
@@ -71,6 +74,7 @@ function ProductsProvider({ children }) {
             render,
             favourites,
             activePage,
+            sortMode,
         ]
     );
 

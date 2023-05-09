@@ -32,7 +32,9 @@ function Header() {
                     <Logo />
                 </div>
                 <div className="grow">
-                    {location.pathname === "/" && <Search />}
+                    {["/", "/catalog"].includes(location.pathname) && (
+                        <Search />
+                    )}
                 </div>
                 <div className="flex gap-x-10 justify-between items-center">
                     {hidden ? (
