@@ -8,106 +8,146 @@ export const printError = async (res) => {
 };
 
 export const getAllProducts = async () => {
-    const res = await fetch(baseUrl, {
-        headers: {
-            authorization: auth,
-        },
-    });
-    return printError(res);
+    try {
+        const res = await fetch(baseUrl, {
+            headers: {
+                authorization: auth,
+            },
+        });
+        return printError(res);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const searchProducts = async (path) => {
-    const res = await fetch(`${baseUrl}search?query=${path}`, {
-        headers: {
-            authorization: auth,
-        },
-    });
-    return printError(res);
+    try {
+        const res = await fetch(`${baseUrl}search?query=${path}`, {
+            headers: {
+                authorization: auth,
+            },
+        });
+        return printError(res);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const addProduct = async (newProduct) => {
-    const res = await fetch(baseUrl, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            authorization: auth,
-        },
-        body: JSON.stringify(newProduct),
-    });
-    return printError(res);
+    try {
+        const res = await fetch(baseUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                authorization: auth,
+            },
+            body: JSON.stringify(newProduct),
+        });
+        return printError(res);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const addLike = async (id) => {
-    const res = await fetch(`${baseUrl}likes/${id}`, {
-        method: "PUT",
-        headers: {
-            authorization: auth,
-        },
-    });
-    return printError(res);
+    try {
+        const res = await fetch(`${baseUrl}likes/${id}`, {
+            method: "PUT",
+            headers: {
+                authorization: auth,
+            },
+        });
+        return printError(res);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const deleteLike = async (id) => {
-    const res = await fetch(`${baseUrl}likes/${id}`, {
-        method: "DELETE",
-        headers: {
-            authorization: auth,
-        },
-    });
-    return printError(res);
+    try {
+        const res = await fetch(`${baseUrl}likes/${id}`, {
+            method: "DELETE",
+            headers: {
+                authorization: auth,
+            },
+        });
+        return printError(res);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const updateProduct = async (id) => {
-    const res = await fetch(`${baseUrl}${id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-            authorization: auth,
-        },
-        body: JSON.stringify(),
-    });
-    return printError(res);
+    try {
+        const res = await fetch(`${baseUrl}${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                authorization: auth,
+            },
+            body: JSON.stringify(),
+        });
+        return printError(res);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const getProductByID = async (id) => {
-    const res = await fetch(`${baseUrl}${id}`, {
-        headers: {
-            authorization: auth,
-        },
-    });
-    return printError(res);
+    try {
+        const res = await fetch(`${baseUrl}${id}`, {
+            headers: {
+                authorization: auth,
+            },
+        });
+        return printError(res);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const deleteProduct = async (id) => {
-    const res = await fetch(`${baseUrl}${id}`, {
-        method: "DELETE",
-        headers: {
-            authorization: auth,
-        },
-    });
-    return printError(res);
+    try {
+        const res = await fetch(`${baseUrl}${id}`, {
+            method: "DELETE",
+            headers: {
+                authorization: auth,
+            },
+        });
+        return printError(res);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const addReviewById = async (id, review) => {
-    const res = await fetch(`${baseUrl}review/${id}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            authorization: auth,
-        },
-        body: JSON.stringify(id, review),
-    });
-    return printError(res);
+    try {
+        const res = await fetch(`${baseUrl}review/${id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                authorization: auth,
+            },
+            body: JSON.stringify({ id, review }),
+        });
+        return printError(res);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const deleteReviewById = async (id, prodId) => {
-    const res = await fetch(`${baseUrl}review/${id}/${prodId}`, {
-        method: "DELETE",
-        headers: {
-            authorization: auth,
-        },
-    });
-    return printError(res);
+    try {
+        const res = await fetch(`${baseUrl}review/${id}/${prodId}`, {
+            method: "DELETE",
+            headers: {
+                authorization: auth,
+            },
+        });
+        return printError(res);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 const exports = {

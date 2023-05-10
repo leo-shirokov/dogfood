@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { Menu, Burger } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import { Link } from "react-router-dom";
 
 function BurgerMenu() {
-    const [{ toggle }] = useDisclosure(false);
     const [opened, setOpened] = useState(false);
-
+    const toggle = () => setOpened((curr) => !curr);
     return (
         <Menu shadow="md" width={200} onChange={setOpened}>
             <Menu.Target>
