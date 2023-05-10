@@ -8,6 +8,7 @@ import productsContext from "../../context/productsContext";
 function Catalog() {
     const { allProducts } = useContext(productsContext);
     const products = usePagination(allProducts);
+    console.log(allProducts);
     return (
         <>
             <Back />

@@ -1,17 +1,20 @@
 import Back from "../Back/Back";
 import { useParams } from "react-router-dom";
-import { getProductByID } from "../../api";
+import { getProductByID, addReviewById } from "../../api";
 import { useState, useEffect } from "react";
-import { Modal } from "@mantine/core";
+import { Modal, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { Rating } from "@mantine/core";
+import { Textarea } from "@mantine/core";
 
 import quality from "./img/quality.svg";
 import track from "./img/Truck.svg";
 
 function Product() {
-    const [product, setProduct] = useState({});
+    const [product, setProduct] = useState({ reviews: [] });
     const { id } = useParams();
     const [opened, { open, close }] = useDisclosure(false);
+    const [textarea, setTextarea] = useState("");
 
     function stylePrice(arg) {
         return new Intl.NumberFormat("ru-RU", {
@@ -144,7 +147,57 @@ function Product() {
                         </div>
                     </div>
                 </div>
+
+                {/* отображение отзывов по товару */}
+                <h3 className="text-xl font-semibold">Отзывы</h3>
+                {product?.reviews?.length > 0 && (
+                    <>
+                        {product.reviews.map((review) => (
+                            <div key={review._id}>
+                                <span className="font-semibold">
+                                    {review.author.name}&nbsp;
+                                </span>
+                                <span className="font-normal text-xs text-gray-500">
+                                    {new Date(
+                                        review.created_at
+                                    ).toLocaleDateString("ru-RU", {
+                                        day: "numeric",
+                                        month: "long",
+                                        year: "numeric",
+                                    })}
+                                </span>
+                                <Rating
+                                    className="mb-2"
+                                    value={review.rating}
+                                    size="xs"
+                                    readOnly
+                                />
+                                <p>{review.text}</p>
+                            </div>
+                        ))}
+                    </>
+                )}
+
+                {/* создание нового отзыва, API не дает добавить отзыв, выбрасывается ошибка */}
+                <Textarea
+                    placeholder="Введите текст"
+                    label="Новый отзыв"
+                    withAsterisk
+                    autosize
+                    minRows={2}
+                    value={textarea}
+                    onChange={(e) => setTextarea(e.currentTarget.value)}
+                />
             </div>
+            <Button
+                type="button"
+                onClick={() => addReviewById(id, textarea)}
+                variant="outline"
+                color="gray"
+                compact
+            >
+                Добавить
+            </Button>
         </>
     );
 }

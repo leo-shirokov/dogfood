@@ -150,6 +150,19 @@ export const deleteReviewById = async (id, prodId) => {
     }
 };
 
+export const getReviewById = async (prodId) => {
+    try {
+        const res = await fetch(`${baseUrl}review/${prodId}`, {
+            headers: {
+                authorization: auth,
+            },
+        });
+        return printError(res);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 const exports = {
     getAllProducts,
     searchProducts,
@@ -157,5 +170,10 @@ const exports = {
     updateProduct,
     getProductByID,
     deleteProduct,
+    addReviewById,
+    deleteReviewById,
+    getReviewById,
+    addLike,
+    deleteLike,
 };
 export default exports;
