@@ -161,7 +161,7 @@ function App() {
                                 element={<Promotions />}
                             />
                             <Route path="/news" element={<News />} />
-                            <Route path="/rewiews" element={<Rewiews />} />
+                            <Route path="/reviews" element={<Rewiews />} />
                             <Route path="/payments" element={<Payment />} />
                             <Route path="/faq" element={<Faq />} />
                             <Route path="/feedback" element={<Feedback />} />

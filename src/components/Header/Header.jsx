@@ -2,7 +2,6 @@ import Logo from "../Logo/Logo";
 import iconLike from "./img/favorites.svg";
 import iconCart from "./img/cart.svg";
 import iconDog from "./img/dog.svg";
-import iconMenu from "./img/menu.svg";
 import { Search } from "../Search/Search";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -10,6 +9,7 @@ import { useContext, useState, useEffect } from "react";
 import productsContext from "../../context/productsContext";
 import { Badge } from "@mantine/core";
 import HeaderIndex from "./HeaderIndex";
+import BurgerMenu from "../Burger/BurgerMenu";
 
 function Header() {
     const { favourites } = useContext(productsContext);
@@ -31,22 +31,20 @@ function Header() {
                 <div className="md:w-10">
                     <Logo />
                 </div>
+                {/* поле поиска */}
                 <div className="grow">
                     {["/", "/catalog"].includes(location.pathname) && (
                         <Search />
                     )}
                 </div>
+
                 <div className="flex gap-x-10 justify-between items-center">
+                    {/* влючение меню бургер на мобильных устройствах */}
                     {hidden ? (
-                        <Link to="/">
-                            <img
-                                className="w-12 md:w-10"
-                                src={iconMenu}
-                                alt="menu"
-                            />
-                        </Link>
+                        <BurgerMenu />
                     ) : (
                         <>
+                            {/* меню в header на больших экранах */}
                             <Link to="/favorite" className="relative">
                                 {" "}
                                 <img

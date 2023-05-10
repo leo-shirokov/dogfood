@@ -27,7 +27,7 @@ function Footer() {
                     <Link to="/catalog">Каталог</Link>
                     <Link to="/promotions">Акции</Link>
                     <Link to="/news">Новости</Link>
-                    <Link to="/rewiews">Отзывы</Link>
+                    <Link to="/reviews">Отзывы</Link>
                 </div>
                 <div className="grid gap-y-3 md:hidden">
                     <Link to="/payments">Оплата и доставка</Link>
