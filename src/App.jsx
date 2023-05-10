@@ -1,4 +1,4 @@
-import { useState, useContext, useCallback } from "react";
+import { useContext, useCallback } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -14,6 +14,8 @@ import Faq from "./components/Faq/Faq";
 import Feedback from "./components/Feedback/Feedback";
 import Contacts from "./components/Contacts/Contacts";
 import Error404 from "./components/Error404/Error404";
+import Cart from "./components/Cart/Cart";
+import Profile from "./components/Profile/Profile";
 import CreateProductForm from "./components/CreateProductForm/CreateProductForm";
 import productsContext from "./context/productsContext";
 import { NativeSelect } from "@mantine/core";
@@ -22,8 +24,6 @@ import Pagination from "./components/Pagination";
 import usePagination from "./hooks/usePagination";
 
 function App() {
-    const [cart, setCart] = useState([]);
-
     const { loading, allProducts, searchItem, sortMode, setSortMode } =
         useContext(productsContext);
 
@@ -78,15 +78,9 @@ function App() {
 
     const paginatedProds = usePagination(sort());
 
-    // const putProdToCart = (e) => {
-    //     const callerId = e.target.value;
-    //     const prod = displayedProducts.find((p) => p._id === Number(callerId));
-    //     setCart((prev) => [...prev, prod]);
-    // };
-
     return (
         <div className="max-w-[90rem] h-full mx-auto flex flex-col">
-            <Header cart={cart} />
+            <Header />
 
             <div className="w-4/6 mx-auto flex-initial py-16 lg:w-4/5 md:w-11/12 md:py-8">
                 {paginatedProds.length > 0 ? (
@@ -166,6 +160,8 @@ function App() {
                             <Route path="/faq" element={<Faq />} />
                             <Route path="/feedback" element={<Feedback />} />
                             <Route path="/contacts" element={<Contacts />} />
+                            <Route path="/cart" element={<Cart />} />
+                            <Route path="/profile" element={<Profile />} />
                             <Route path="*" element={<Error404 />} />
                         </Routes>
                     </>

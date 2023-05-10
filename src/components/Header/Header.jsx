@@ -61,14 +61,14 @@ function Header() {
                                     {favourites.length}
                                 </Badge>
                             </Link>
-                            <Link to="/">
+                            <Link to="/cart">
                                 <img
                                     className="w-6"
                                     src={iconCart}
                                     alt="cart"
                                 />
                             </Link>
-                            <Link to="/">
+                            <Link to="/profile">
                                 <img className="w-6" src={iconDog} alt="dog" />
                             </Link>
                         </>
