@@ -128,7 +128,7 @@ export const addReviewById = async (id, review) => {
                 "Content-Type": "application/json",
                 authorization: auth,
             },
-            body: JSON.stringify({ id, review }),
+            body: JSON.stringify({ text: review }),
         });
         return printError(res);
     } catch (error) {
@@ -136,9 +136,9 @@ export const addReviewById = async (id, review) => {
     }
 };
 
-export const deleteReviewById = async (id, prodId) => {
+export const deleteReviewById = async (prodId, reviewId) => {
     try {
-        const res = await fetch(`${baseUrl}review/${id}/${prodId}`, {
+        const res = await fetch(`${baseUrl}review/${prodId}/${reviewId}`, {
             method: "DELETE",
             headers: {
                 authorization: auth,

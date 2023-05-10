@@ -1,7 +1,7 @@
 import Back from "../Back/Back";
 import { useParams } from "react-router-dom";
 import { getProductByID, addReviewById } from "../../api";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Modal, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Rating } from "@mantine/core";
@@ -23,16 +23,28 @@ function Product() {
         }).format(arg);
     }
 
-    useEffect(() => {
+    // загружает информацию о продукте из API
+    const loadProduct = useCallback(async () => {
         if (!id) return;
-        (async () => {
-            try {
-                setProduct(await getProductByID(id));
-            } catch (error) {
-                console.log(error);
-            }
-        })();
+        try {
+            setProduct(await getProductByID(id));
+        } catch (error) {
+            console.log(error);
+        }
     }, [id]);
+
+    // при загрузке компонента загрузить один раз информацию о продукте
+    useEffect(() => {
+        loadProduct();
+    }, [loadProduct]);
+
+    // обработчик кнопки "Добавить отзыв". Добавляет отзыв в API;
+    // снова вызывает ф-цию загрузки продукта чтобы обновить инфо о продукте
+    const addReview = async () => {
+        await addReviewById(id, textarea);
+        loadProduct();
+        setTextarea("");
+    };
 
     return (
         <>
@@ -178,7 +190,7 @@ function Product() {
                     </>
                 )}
 
-                {/* создание нового отзыва, API не дает добавить отзыв, выбрасывается ошибка */}
+                {/* создание нового отзыва */}
                 <Textarea
                     placeholder="Введите текст"
                     label="Новый отзыв"
@@ -191,7 +203,7 @@ function Product() {
             </div>
             <Button
                 type="button"
-                onClick={() => addReviewById(id, textarea)}
+                onClick={addReview}
                 variant="outline"
                 color="gray"
                 compact
