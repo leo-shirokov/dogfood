@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { Badge } from "@mantine/core";
 import { addLike, deleteLike } from "../../api";
 
 function stylePrice(arg) {
@@ -42,7 +43,7 @@ function ProductCard({
     };
 
     return (
-        <div className="w-1/4 flex flex-col gap-y-2 p-3 relative md:w-1/3 sm:w-1/2 md:mb-10">
+        <div className="w-1/4 flex flex-col gap-y-2 p-3 relative md:w-1/3 sm:w-1/2 md:mb-10 hover:border hover:border-gray-100 hover:rounded-md hover:shadow-md">
             <div className="flex justify-center mb-4">
                 <Link to={`/product/${data._id}`}>
                     <img
@@ -83,18 +84,25 @@ function ProductCard({
                     <p className="text-xs text-white">{` - ${data.discount}% `}</p>
                 </div>
             )}
+            {data.tags[0] !== "new" ? (
+                <div className="hidden"></div>
+            ) : (
+                <div className="bg-lime-600 opacity-90 rounded px-3 py-0.5 absolute left-3 bottom-44 -rotate-12">
+                    <p className="text-xs text-white">{data.tags[0]}</p>
+                </div>
+            )}
 
             <button onClick={toggleLike}>
                 {isLiked ? (
                     <ActiveImage className="text-red-500 text-xl absolute top-2 right-2" />
                 ) : (
-                    <InactiveImage className="text-red-500 text-xl absolute top-2 right-2" />
+                    <InactiveImage className="text-gray-400 text-xl absolute top-2 right-2" />
                 )}
             </button>
             {location.pathname === "/" && (
                 <div className="">
                     <button
-                        className="bg-yellow-300 px-4 py-2 rounded-3xl text-sm font-semibold"
+                        className="bg-yellow-300 px-4 py-2 rounded-3xl text-sm font-semibold shadow-md"
                         value={data._id}
                         onClick={putProdToCart}
                     >

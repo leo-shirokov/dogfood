@@ -29,7 +29,6 @@ function App() {
 
     // варианты сортировки
     const sortOptions = [
-        { group: "all", title: "Все" },
         { group: "most-popular", title: "По популярности" },
         { group: "newest", title: "Новинки" },
         { group: "cheapest", title: "Сначала дешевые" },
@@ -40,38 +39,46 @@ function App() {
     // функция сортировки в зависимости от варианта сортировки
     const sort = useCallback(() => {
         let sortedProducts;
-        if (sortMode === "all") {
-            sortedProducts = allProducts.sort((a, b) => a.order - b.order);
-        } else if (sortMode === "most-popular") {
-            sortedProducts = allProducts.sort(
-                (a, b) => b.likes.length - a.likes.length
-            );
-        } else if (sortMode === "newest") {
-            sortedProducts = allProducts.sort(
-                (a, b) =>
-                    new Date(b.created_at).getTime() -
-                    new Date(a.created_at).getTime()
-            );
-        } else if (sortMode === "cheapest") {
-            sortedProducts = allProducts.sort((a, b) => a.price - b.price);
-        } else if (sortMode === "most-expensive") {
-            sortedProducts = allProducts.sort((a, b) => b.price - a.price);
-        } else if (sortMode === "highest-rated") {
-            sortedProducts = allProducts.sort((a, b) => {
-                const raitingA = a.reviews.reduce(
-                    (prev, el) => (prev + el.rating) / a.reviews.length,
-                    0
+        switch (sortMode) {
+            case "most-popular":
+                sortedProducts = allProducts.sort(
+                    (a, b) => b.likes.length - a.likes.length
                 );
-                const raitingB = b.reviews.reduce(
-                    (prev, el) => (prev + el.rating) / b.reviews.length,
-                    0
+                break;
+            case "newest":
+                sortedProducts = allProducts.sort(
+                    (a, b) =>
+                        new Date(b.created_at).getTime() -
+                        new Date(a.created_at).getTime()
                 );
-                return raitingA - raitingB;
-            });
-        } else if (sortMode === "discounted") {
-            sortedProducts = allProducts.sort(
-                (a, b) => b.discount - a.discount
-            );
+                break;
+            case "cheapest":
+                sortedProducts = allProducts.sort((a, b) => a.price - b.price);
+                break;
+            case "most-expensive":
+                sortedProducts = allProducts.sort((a, b) => b.price - a.price);
+                break;
+            case "highest-rated":
+                sortedProducts = allProducts.sort((a, b) => {
+                    const raitingA = a.reviews.reduce(
+                        (prev, el) => (prev + el.rating) / a.reviews.length,
+                        0
+                    );
+                    const raitingB = b.reviews.reduce(
+                        (prev, el) => (prev + el.rating) / b.reviews.length,
+                        0
+                    );
+                    return raitingA - raitingB;
+                });
+                break;
+            case "discounted":
+                sortedProducts = allProducts.sort(
+                    (a, b) => b.discount - a.discount
+                );
+                break;
+            default:
+                sortedProducts = allProducts.sort((a, b) => a.order - b.order);
+                break;
         }
         return sortedProducts;
     }, [allProducts, sortMode]);
@@ -102,7 +109,7 @@ function App() {
                                         )}
                                         {/* сортировка при поиске товаров */}
                                         {searchItem?.trim() && (
-                                            <div className="flex justify-start items-center gap-x-4 mb-10 md:hidden">
+                                            <div className="flex justify-start items-center gap-x-4 border border-gray-50 shadow-md px-4 py-1 rounded-md mb-10 md:hidden">
                                                 {sortOptions.map((item) => (
                                                     <span
                                                         key={item.group}
@@ -111,7 +118,7 @@ function App() {
                                                                 item.group
                                                             )
                                                         }
-                                                        className="text-md whitespace-nowrap text-gray-500 cursor-pointer md:text-sm"
+                                                        className="text-md whitespace-nowrap text-gray-500 cursor-pointer hover:text-gray-700 md:text-sm"
                                                     >
                                                         {item.title}
                                                     </span>

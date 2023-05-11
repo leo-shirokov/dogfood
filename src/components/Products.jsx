@@ -4,7 +4,7 @@ function Products({ products = [] }) {
     return (
         <div>
             {/* вывод товаров на главной странице */}
-            <div className="flex justify-start flex-wrap">
+            <div className="flex justify-start flex-wrap gap-y-5">
                 {products.map((product) => (
                     <ProductCard
                         key={product._id}
