@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Menu, Burger } from "@mantine/core";
 import { Link } from "react-router-dom";
-// import { MenuDivider } from "@mantine/core/lib/Menu/MenuDivider/MenuDivider";
-// import { MenuItem } from "@mantine/core/lib/Menu/MenuItem/MenuItem";
 
 function BurgerMenu() {
     const [opened, setOpened] = useState(false);

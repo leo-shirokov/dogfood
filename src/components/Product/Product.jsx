@@ -6,6 +6,9 @@ import { Modal, Paper, Text, NumberInput, Rating } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Delivery from "./Delivery";
 import Reviews from "./Reviews";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
+import productsContext from "../../context/productsContext";
+import { useContext } from "react";
 
 function Product() {
     const { id } = useParams();
@@ -13,6 +16,8 @@ function Product() {
     const [opened, { open, close }] = useDisclosure(false);
     const [textarea, setTextarea] = useState("");
     const [rating, setRating] = useState(5);
+
+    const { toggleLike, userId } = useContext(productsContext);
 
     function stylePrice(arg) {
         return new Intl.NumberFormat("ru-RU", {
@@ -98,6 +103,22 @@ function Product() {
                             </div>
                         )}
                     </div>
+
+                    <div className="relative">
+                        <button
+                            onClick={async () => {
+                                await toggleLike(product);
+                                await loadProduct();
+                            }}
+                        >
+                            {product?.likes?.includes(userId) ? (
+                                <FaHeart className="text-red-500 text-xl absolute top-2 right-2" />
+                            ) : (
+                                <FaRegHeart className="text-gray-400 text-xl absolute top-2 right-2" />
+                            )}
+                        </button>
+                    </div>
+
                     <div className="flex justify-start items-center gap-x-10">
                         <NumberInput
                             className="w-20"

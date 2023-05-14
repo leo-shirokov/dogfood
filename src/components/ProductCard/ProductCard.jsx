@@ -3,7 +3,6 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { addLike, deleteLike } from "../../api";
 
 function stylePrice(arg) {
     return new Intl.NumberFormat("ru-RU", {
@@ -18,28 +17,9 @@ function ProductCard({
     ActiveImage = FaHeart,
     InactiveImage = FaRegHeart,
 }) {
-    const { userId, setAllProducts, setRender } = useContext(productsContext);
+    const { userId, toggleLike } = useContext(productsContext);
     const isLiked = data?.likes?.includes(userId);
     const location = useLocation();
-
-    const toggleLike = async () => {
-        setRender((ren) => ren + 1);
-        setAllProducts((products) => {
-            const product = products.find((p) => p._id === data._id);
-            if (isLiked) {
-                const likesIndex = product.likes.indexOf(userId);
-                product.likes.splice(likesIndex, 1);
-            } else {
-                product.likes.push(userId);
-            }
-            return products;
-        });
-        if (isLiked) {
-            await deleteLike(data._id);
-        } else {
-            await addLike(data._id);
-        }
-    };
 
     return (
         <div className="w-1/4 flex flex-col gap-y-2 px-3 py-6 relative md:w-1/3 sm:w-1/2 md:mb-10 hover:border hover:border-gray-100 hover:rounded-md hover:shadow-md">
@@ -104,7 +84,7 @@ function ProductCard({
                 </div>
             )}
 
-            <button onClick={toggleLike}>
+            <button onClick={() => toggleLike(data)}>
                 {isLiked ? (
                     <ActiveImage className="text-red-500 text-xl absolute top-2 right-2" />
                 ) : (

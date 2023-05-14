@@ -1,6 +1,6 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import ProductsContext from "../context/productsContext";
-import { getAllProducts, searchProducts } from "../api";
+import { getAllProducts, searchProducts, deleteLike, addLike } from "../api";
 
 function ProductsProvider({ children }) {
     const [allProducts, setAllProducts] = useState([]);
@@ -42,9 +42,31 @@ function ProductsProvider({ children }) {
         })();
     }, [trimmedItem]);
 
-    const favourites = useMemo(
-        () => allProducts?.filter((prod) => prod.likes.includes(userId)),
-        [render, allProducts, userId]
+    const favourites = allProducts?.filter((prod) =>
+        prod.likes.includes(userId)
+    );
+
+    const toggleLike = useCallback(
+        async (productData) => {
+            setRender((ren) => ren + 1);
+            const isLiked = productData?.likes?.includes(userId);
+            setAllProducts((products) => {
+                const product = products.find((p) => p._id === productData._id);
+                if (isLiked) {
+                    const likesIndex = product.likes.indexOf(userId);
+                    product.likes.splice(likesIndex, 1);
+                } else {
+                    product.likes.push(userId);
+                }
+                return products;
+            });
+            if (isLiked) {
+                await deleteLike(productData._id);
+            } else {
+                await addLike(productData._id);
+            }
+        },
+        [userId]
     );
 
     const value = useMemo(
@@ -64,6 +86,7 @@ function ProductsProvider({ children }) {
             setActivePage,
             sortMode,
             setSortMode,
+            toggleLike,
         }),
         [
             allProducts,
@@ -75,6 +98,7 @@ function ProductsProvider({ children }) {
             favourites,
             activePage,
             sortMode,
+            toggleLike,
         ]
     );
 
