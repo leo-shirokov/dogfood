@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
     return (
-        <div className="w-full h-[12.125rem] bg-yellow-300 px-4 py-9 mt-20 md:shrink">
+        <div className="w-full h-[12.125rem] bg-yellow-300 px-4 py-10 mt-20 md:shrink">
             <div
                 className="max-w-[62rem] mx-auto flex justify-between items-center 
             md:justify-center md:text-center"

@@ -1,4 +1,5 @@
 export const baseUrl = "https://api.react-learning.ru/products/";
+export const regUrl = "https://api.react-learning.ru/";
 export const auth =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDNlZDE0NTMyOTFkNzkwYjNmMzRjZDIiLCJncm91cCI6Imdyb3VwLTEyIiwiaWF0IjoxNjgxODM4NDc0LCJleHAiOjE3MTMzNzQ0NzR9.GX6DSN6V_eJJ85fLMO_0T5J5KRD2a2pvmtYjHow3yRg";
 
@@ -120,7 +121,7 @@ export const deleteProduct = async (id) => {
     }
 };
 
-export const addReviewById = async (id, review) => {
+export const addReviewById = async (id, review, rating) => {
     try {
         const res = await fetch(`${baseUrl}review/${id}`, {
             method: "POST",
@@ -128,7 +129,7 @@ export const addReviewById = async (id, review) => {
                 "Content-Type": "application/json",
                 authorization: auth,
             },
-            body: JSON.stringify({ text: review }),
+            body: JSON.stringify({ text: review, rating: rating }),
         });
         return printError(res);
     } catch (error) {
@@ -163,6 +164,56 @@ export const getReviewById = async (prodId) => {
     }
 };
 
+// регистрация пользователей
+export const signupUser = async (newUser) => {
+    try {
+        const res = await fetch(`${regUrl}signup`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                // authorization: auth,
+            },
+            body: JSON.stringify(newUser),
+        });
+        return printError(res);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+// авторизация пользователей
+export const signinUser = async (user) => {
+    try {
+        const res = await fetch(`${regUrl}signin`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                // authorization: auth,
+            },
+            body: JSON.stringify(user),
+        });
+        return printError(res);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+// получение информации о пользователе
+export const getUserInfo = async (groupId) => {
+    try {
+        const res = await fetch(`${regUrl}v2/${groupId}/users/me`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                authorization: auth,
+            },
+        });
+        return printError(res);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 const exports = {
     getAllProducts,
     searchProducts,
@@ -175,5 +226,8 @@ const exports = {
     getReviewById,
     addLike,
     deleteLike,
+    signupUser,
+    signinUser,
+    getUserInfo,
 };
 export default exports;

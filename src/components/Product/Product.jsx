@@ -1,20 +1,18 @@
 import Back from "../Back/Back";
 import { useParams } from "react-router-dom";
-import { getProductByID, addReviewById } from "../../api";
+import { getProductByID } from "../../api";
 import { useState, useEffect, useCallback } from "react";
-import { Modal, Button } from "@mantine/core";
+import { Modal, Paper, Text, NumberInput, Rating } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Rating } from "@mantine/core";
-import { Textarea } from "@mantine/core";
-
-import quality from "./img/quality.svg";
-import track from "./img/Truck.svg";
+import Delivery from "./Delivery";
+import Reviews from "./Reviews";
 
 function Product() {
-    const [product, setProduct] = useState({ reviews: [] });
     const { id } = useParams();
+    const [product, setProduct] = useState({ reviews: [] });
     const [opened, { open, close }] = useDisclosure(false);
     const [textarea, setTextarea] = useState("");
+    const [rating, setRating] = useState(5);
 
     function stylePrice(arg) {
         return new Intl.NumberFormat("ru-RU", {
@@ -38,21 +36,21 @@ function Product() {
         loadProduct();
     }, [loadProduct]);
 
-    // обработчик кнопки "Добавить отзыв". Добавляет отзыв в API;
-    // снова вызывает ф-цию загрузки продукта чтобы обновить инфо о продукте
-    const addReview = async () => {
-        await addReviewById(id, textarea);
-        loadProduct();
-        setTextarea("");
-    };
-
     return (
         <>
             <Back />
-            <h1 className="text-xl font-bold">{product?.name}</h1>
+            <h1 className="text-xl font-bold mb-2">{product?.name}</h1>
+            <div className="flex justify-start items-center gap-x-5">
+                <Rating className="" value={rating} size="xs" readOnly />
+
+                <a
+                    href="#reviews"
+                    className="text-xs text-yellow-600 hover:underline"
+                >{`отзывов: ${product.reviews.length}`}</a>
+            </div>
 
             <div className="bw-full flex gap-x-10 py-10 md:flex-col">
-                <div className="w-1/2 md:w-full cursor-pointer">
+                <div className="w-1/2 md:w-full rounded-lg cursor-pointer hover:border hover:border-gray-100 hover:shadow-md">
                     <img
                         className="object-scale-down"
                         src={product.pictures}
@@ -60,6 +58,7 @@ function Product() {
                         onClick={open}
                     />
                 </div>
+
                 <Modal
                     opened={opened}
                     onClose={close}
@@ -75,6 +74,7 @@ function Product() {
                         />
                     </div>
                 </Modal>
+
                 <div className="flex flex-col w-1/2 gap-y-10 md:w-full">
                     <div>
                         {product.discount > 0 ? (
@@ -98,52 +98,42 @@ function Product() {
                             </div>
                         )}
                     </div>
-                    <div>
-                        <button className="w-40 shrink rounded-[3.75rem] bg-yellow-300 px-7 py-4 shadow-md font-bold">
-                            В корзину
-                        </button>
-                    </div>
-                    <div className="flex fle-col justify-start items-start gap-4 bg-gray-100 rounded-xl px-5 py-3">
-                        <div className="w-20">
-                            <img src={quality} alt="quality" />
-                        </div>
+                    <div className="flex justify-start items-center gap-x-10">
+                        <NumberInput
+                            className="w-20"
+                            defaultValue={10}
+                            type="number"
+                            placeholder="1"
+                            radius="xl"
+                            size="md"
+                            // onChange={}
+                            min={1}
+                            max={99}
+                        />
                         <div>
-                            <h2 className="text-md font-semibold">
-                                Гарантия качества
-                            </h2>
-                            <p className="text-sm">
-                                Если Вам не понравилось качество нашей
-                                продукции, мы вернем деньги, либо сделаем все
-                                возможное, чтобы удовлетворить ваши нужды.
-                            </p>
+                            <button className="w-26 shrink rounded-[3.75rem] bg-yellow-300 px-6 py-3 shadow-md font-bold">
+                                В корзину
+                            </button>
                         </div>
                     </div>
-                    <div className="flex fle-col justify-start items-start gap-4 bg-gray-100 rounded-xl px-5 py-3">
-                        <div className="w-8">
-                            <img src={track} alt="quality" />
-                        </div>
-                        <div>
-                            <h2 className="text-md font-semibold">
-                                Доставка по всему миру
-                            </h2>
-                            <br />
-                            <div className="text-sm leading-7">
-                                <p>Доставка курьером — от 399 ₽</p>
-                                <p>Доставка в пункт выдачи — от 199</p>
-                            </div>
-                        </div>
-                    </div>
+
+                    {/* Выведение информации о доставке и гарантии качества */}
+                    <Delivery />
                 </div>
             </div>
 
-            <div className="flex flex-col gap-y-10 py-10">
-                <div>
-                    <h2 className="text-xl font-semibold">Описание</h2>
-                    <p className="text-md font-normal">{product.description}</p>
-                </div>
+            <div className="flex flex-col gap-y-10 py-20">
+                <Paper shadow="xs" p="sm">
+                    <h2 className="text-xl font-semibold mb-2">Описание</h2>
+                    <Text className="text-md font-normal">
+                        {product.description}
+                    </Text>
+                </Paper>
 
-                <div>
-                    <h2 className="text-xl font-semibold">Характеристики</h2>
+                <Paper shadow="xs" p="sm">
+                    <h2 className="text-xl font-semibold mb-2">
+                        Характеристики
+                    </h2>
                     <div className="flex flex-start gap-x-5">
                         <div className="text-gray-600">
                             <p>Вес &nbsp;</p>
@@ -158,58 +148,17 @@ function Product() {
                             </p>
                         </div>
                     </div>
-                </div>
-
-                {/* отображение отзывов по товару */}
-                <h3 className="text-xl font-semibold">Отзывы</h3>
-                {product?.reviews?.length > 0 && (
-                    <>
-                        {product.reviews.map((review) => (
-                            <div key={review._id}>
-                                <span className="font-semibold">
-                                    {review.author.name}&nbsp;
-                                </span>
-                                <span className="font-normal text-xs text-gray-500">
-                                    {new Date(
-                                        review.created_at
-                                    ).toLocaleDateString("ru-RU", {
-                                        day: "numeric",
-                                        month: "long",
-                                        year: "numeric",
-                                    })}
-                                </span>
-                                <Rating
-                                    className="mb-2"
-                                    value={review.rating}
-                                    size="xs"
-                                    readOnly
-                                />
-                                <p>{review.text}</p>
-                            </div>
-                        ))}
-                    </>
-                )}
-
-                {/* создание нового отзыва */}
-                <Textarea
-                    placeholder="Введите текст"
-                    label="Новый отзыв"
-                    withAsterisk
-                    autosize
-                    minRows={2}
-                    value={textarea}
-                    onChange={(e) => setTextarea(e.currentTarget.value)}
-                />
+                </Paper>
             </div>
-            <Button
-                type="button"
-                onClick={addReview}
-                variant="outline"
-                color="gray"
-                compact
-            >
-                Добавить
-            </Button>
+
+            <Reviews
+                product={product}
+                loadProduct={loadProduct}
+                textarea={textarea}
+                setTextarea={setTextarea}
+                rating={rating}
+                setRating={setRating}
+            />
         </>
     );
 }

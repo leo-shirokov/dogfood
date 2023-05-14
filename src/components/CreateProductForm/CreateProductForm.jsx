@@ -1,114 +1,120 @@
 import { useState } from "react";
 import { addProduct } from "../../api";
+import { NumberInput, TextInput, Checkbox } from "@mantine/core";
 
 const CreateProductForm = () => {
-    const [newProduct, setNewProduct] = useState({
-        available: false,
-        pictures: "",
-        name: "",
-        price: 0,
-        discount: 0,
-        stock: 0,
-        wight: "",
-        description: "",
-    });
+    const [available, setAvailable] = useState(false);
+    const [pictures, setPictures] = useState("");
+    const [name, setName] = useState("");
+    const [price, setPrice] = useState(0);
+    const [discount, setDiscount] = useState(0);
+    const [stock, setStock] = useState(0);
+    const [wight, setWight] = useState("");
+    const [description, setDescription] = useState("");
 
     const createProduct = async (e) => {
         e.preventDefault();
-
-        await addProduct(newProduct);
+        await addProduct({
+            available,
+            pictures,
+            name,
+            price,
+            discount,
+            stock,
+            wight,
+            description,
+        });
+        setAvailable(false);
+        setPictures("");
+        setName("");
+        setPrice(0);
+        setDiscount(0);
+        setStock(0);
+        setWight("");
+        setDescription("");
     };
-    //тут закрыть модалку или очистить поля формы
+
     return (
-        <form
-            className="grid max-w-[90rem] mx-auto mt-10 p-5 border-2"
-            onSubmit={createProduct}
-        >
-            <input
-                type="checkbox"
-                placeholder="Описание*"
-                onChange={(e) =>
-                    setNewProduct((prev) => ({
-                        ...prev,
-                        available: e.target.value,
-                    }))
-                }
-                value={newProduct.available}
-            />
-            <input
-                placeholder="Сслыка на изображение"
-                onChange={(e) =>
-                    setNewProduct((prev) => ({
-                        ...prev,
-                        pictures: e.target.value,
-                    }))
-                }
-                value={newProduct.pictures}
-            />
-            <input
-                placeholder="Название продукта*"
-                onChange={(e) =>
-                    setNewProduct((prev) => ({
-                        ...prev,
-                        name: e.target.value,
-                    }))
-                }
-                value={newProduct.name}
-            />
-            <input
-                placeholder="Цена*"
-                onChange={(e) =>
-                    setNewProduct((prev) => ({
-                        ...prev,
-                        price: e.target.value,
-                    }))
-                }
-                value={newProduct.price}
-            />
-            <input
-                placeholder="Скидка"
-                onChange={(e) =>
-                    setNewProduct((prev) => ({
-                        ...prev,
-                        discount: e.target.value,
-                    }))
-                }
-                value={newProduct.discount}
-            />
-            <input
-                placeholder="Количество в наличии"
-                onChange={(e) =>
-                    setNewProduct((prev) => ({
-                        ...prev,
-                        stock: e.target.value,
-                    }))
-                }
-                value={newProduct.stock}
-            />
-            <input
-                placeholder="Вес"
-                onChange={(e) =>
-                    setNewProduct((prev) => ({
-                        ...prev,
-                        wight: e.target.value,
-                    }))
-                }
-                value={newProduct.wight}
-            />
-            <input
-                placeholder="Описание*"
-                onChange={(e) =>
-                    setNewProduct((prev) => ({
-                        ...prev,
-                        description: e.target.value,
-                    }))
-                }
-                value={newProduct.description}
-            />
-            <button className="bg-gray-100" type="submit">
-                Сохранить
-            </button>
-        </form>
+        <>
+            <h2 className="text-lg font-semibold mb-10">
+                Форма добавления товара
+            </h2>
+            <form
+                className="w-full mx-auto flex flex-col gap-y-5"
+                onSubmit={createProduct}
+            >
+                <TextInput
+                    label="Название продукта"
+                    description="Введите название продукта"
+                    onChange={(event) => setName(event.currentTarget.value)}
+                    value={name}
+                    required
+                />
+                <TextInput
+                    label="Изображение продукта"
+                    description="Введите url ссылку на фото продукта"
+                    onChange={(event) => setPictures(event.currentTarget.value)}
+                    value={pictures}
+                    required
+                />
+                <Checkbox
+                    checked={available}
+                    label="Товар имеется в наличии"
+                    onChange={(event) =>
+                        setAvailable(event.currentTarget.checked)
+                    }
+                    required
+                />
+                <NumberInput
+                    label="Цена продукта"
+                    description="Укажите цену продукта"
+                    placeholder="Цена*"
+                    onChange={setPrice}
+                    value={price}
+                    required
+                />
+                <NumberInput
+                    label="Скидка на продукт"
+                    description="Укажите размер скидки на продукт"
+                    placeholder="Скидка"
+                    onChange={setDiscount}
+                    value={discount}
+                />
+                <NumberInput
+                    label="Количество товара"
+                    description="Укажите количество товара"
+                    value={stock}
+                    type="number"
+                    placeholder="0"
+                    onChange={setStock}
+                    min={0}
+                    max={999}
+                />
+                <TextInput
+                    label="Вес продукта"
+                    description="Введите вес продукта в граммах"
+                    onChange={(event) => setWight(event.currentTarget.value)}
+                    value={wight}
+                />
+                <TextInput
+                    label="Описание продукта"
+                    description="Подробное описание продукта"
+                    onChange={(event) =>
+                        setDescription(event.currentTarget.value)
+                    }
+                    value={description}
+                    required
+                />
+                <div className="flex justify-start my-5">
+                    <button
+                        className="bg-gray-100 px-4 py-1 rounded-md text-sm hover:bg-gray-200"
+                        type="submit"
+                    >
+                        Сохранить
+                    </button>
+                </div>
+            </form>
+        </>
     );
 };
 

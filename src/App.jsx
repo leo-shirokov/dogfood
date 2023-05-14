@@ -169,6 +169,10 @@ function App() {
                             <Route path="/contacts" element={<Contacts />} />
                             <Route path="/cart" element={<Cart />} />
                             <Route path="/profile" element={<Profile />} />
+                            <Route
+                                path="/addproduct"
+                                element={<CreateProductForm />}
+                            />
                             <Route path="*" element={<Error404 />} />
                         </Routes>
                     </>
@@ -190,7 +194,6 @@ function App() {
                     </div>
                 )}
             </div>
-            {/* <CreateProductForm /> */}
             <Footer />
         </div>
     );

@@ -23,7 +23,9 @@ function Feedback() {
     return (
         <>
             <Back />
-            <h2 className="text-xl font-semibold mb-10">Форма обраной связи</h2>
+            <h2 className="text-xl font-semibold mb-10">
+                Форма обратной связи
+            </h2>
             <form
                 action={FORM_ENDPOINT}
                 onSubmit={handleSubmit}

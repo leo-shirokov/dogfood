@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Menu, Burger } from "@mantine/core";
 import { Link } from "react-router-dom";
+// import { MenuDivider } from "@mantine/core/lib/Menu/MenuDivider/MenuDivider";
+// import { MenuItem } from "@mantine/core/lib/Menu/MenuItem/MenuItem";
 
 function BurgerMenu() {
     const [opened, setOpened] = useState(false);
@@ -39,6 +41,14 @@ function BurgerMenu() {
                 </Menu.Item>
                 <Menu.Item>
                     <Link to="/contacts">Контакты</Link>
+                </Menu.Item>
+                <Menu.Divider />
+                <Menu.Label>Управление</Menu.Label>
+                <Menu.Item>
+                    <Link to="/profile">Профиль</Link>
+                </Menu.Item>
+                <Menu.Item>
+                    <Link to="/addproduct">Добавить товар</Link>
                 </Menu.Item>
             </Menu.Dropdown>
         </Menu>
