@@ -19,6 +19,7 @@ function Product() {
 
     const { toggleLike, userId } = useContext(productsContext);
 
+    // принимаеv цену в виде числа и возвращает ее в формате валюты
     function stylePrice(arg) {
         return new Intl.NumberFormat("ru-RU", {
             style: "currency",
@@ -26,7 +27,7 @@ function Product() {
         }).format(arg);
     }
 
-    // загружает информацию о продукте из API
+    // загружаем информацию о продукте из API по его id при помощи функции getProductByID, сохраняем результат в product
     const loadProduct = useCallback(async () => {
         if (!id) return;
         try {

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 
+// форматируем отображаемую цену продукта с помощью Intl.NumberFormat
 function stylePrice(arg) {
     return new Intl.NumberFormat("ru-RU", {
         style: "currency",

@@ -27,7 +27,7 @@ function App() {
     const { loading, allProducts, searchItem, sortMode, setSortMode } =
         useContext(productsContext);
 
-    // варианты сортировки
+    // определяем варианты сортировки
     const sortOptions = [
         { group: "most-popular", title: "По популярности" },
         { group: "newest", title: "Новинки" },
@@ -36,7 +36,7 @@ function App() {
         { group: "highest-rated", title: "По рейтингу" },
         { group: "discounted", title: "По скидке" },
     ];
-    // функция сортировки в зависимости от варианта сортировки
+    // определяем функцию сортировки в зависимости от варианта сортировки
     const sort = useCallback(() => {
         let sortedProducts;
         switch (sortMode) {

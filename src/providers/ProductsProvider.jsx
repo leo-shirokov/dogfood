@@ -3,6 +3,7 @@ import ProductsContext from "../context/productsContext";
 import { getAllProducts, searchProducts, deleteLike, addLike } from "../api";
 
 function ProductsProvider({ children }) {
+    // Инициализируем состояния
     const [allProducts, setAllProducts] = useState([]);
     const [total, setTotal] = useState(0);
     const [searchItem, setSearchItem] = useState("");
@@ -12,8 +13,12 @@ function ProductsProvider({ children }) {
     const [activePage, setActivePage] = useState(1);
     const [sortMode, setSortMode] = useState("all");
 
+    // Обрезаем поисковый запрос от пробелов
     const trimmedItem = searchItem.trim();
 
+    // Создаем useEffect, который запускается при изменении состояния trimmedItem и вызывает асинхронную функцию,
+    // которая получает все продукты из базы данных если пользователем не активирован поиск, иначе - ищет продукты, соответствующие запросу в строке поиска;
+    // полученные данные записываются в state allProducts; общее количество продуктов записывается в состояние total
     useEffect(() => {
         (async () => {
             try {
@@ -42,10 +47,14 @@ function ProductsProvider({ children }) {
         })();
     }, [trimmedItem]);
 
+    // Создаем состояние favourites, которое фильтрует все продукты на те, которые были добавлены в избранное пользователем с id, хранящимся в состоянии userId
     const favourites = allProducts?.filter((prod) =>
         prod.likes.includes(userId)
     );
 
+    // Создаем колбэк toggleLike, который принимает объект productData и вызывается при нажатии на кнопку добавления в избранное для продукта;
+    // функция изменяет состояние allProducts, чтобы обновить список избранных продуктов; если продукт уже был добавлен в избранное, он удаляется из списка, иначе - добавляется;
+    // функция также отправляет запрос на сервер, чтобы изменения были сохранены
     const toggleLike = useCallback(
         async (productData) => {
             setRender((ren) => ren + 1);
@@ -69,6 +78,7 @@ function ProductsProvider({ children }) {
         [userId]
     );
 
+    // Кэшируем контекст для оптимизации производительности
     const value = useMemo(
         () => ({
             allProducts,
@@ -103,6 +113,7 @@ function ProductsProvider({ children }) {
     );
 
     return (
+        // Создаем контекст ProductsContext, в который передаем объект value
         <ProductsContext.Provider value={value}>
             {children}
         </ProductsContext.Provider>

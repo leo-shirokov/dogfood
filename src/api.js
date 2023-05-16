@@ -1,13 +1,18 @@
+// доступ к RESTful API и взаимодействие с ним
 export const baseUrl = "https://api.react-learning.ru/products/";
 export const regUrl = "https://api.react-learning.ru/";
+
+// Константа аутентификации — JSON web token (JWT), который отправляется в качестве заголовка аутентификации с каждым запросом API
 export const auth =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDNlZDE0NTMyOTFkNzkwYjNmMzRjZDIiLCJncm91cCI6Imdyb3VwLTEyIiwiaWF0IjoxNjgxODM4NDc0LCJleHAiOjE3MTMzNzQ0NzR9.GX6DSN6V_eJJ85fLMO_0T5J5KRD2a2pvmtYjHow3yRg";
 
+// служебная функция, проверяющая имеет ли объект ответа из API код состояния ошибки
 export const printError = async (res) => {
     if (!res.ok) throw new Error("Ошибка");
     return res.json();
 };
 
+// отправляет запрос GET на baseUrl для получения всех продуктов с сервера
 export const getAllProducts = async () => {
     try {
         const res = await fetch(baseUrl, {
@@ -21,6 +26,7 @@ export const getAllProducts = async () => {
     }
 };
 
+// отправляет запрос GET на baseUrl для поиска продуктов, соответствующих заданному поисковому запросу
 export const searchProducts = async (path) => {
     try {
         const res = await fetch(`${baseUrl}search?query=${path}`, {
@@ -34,6 +40,7 @@ export const searchProducts = async (path) => {
     }
 };
 
+// отправляет запрос POST на baseUrl, чтобы добавить новый продукт на сервер
 export const addProduct = async (newProduct) => {
     try {
         const res = await fetch(baseUrl, {
@@ -50,6 +57,7 @@ export const addProduct = async (newProduct) => {
     }
 };
 
+// отправляет запрос PUT на baseUrl, чтобы добавить лайк к продукту с заданным идентификатором
 export const addLike = async (id) => {
     try {
         const res = await fetch(`${baseUrl}likes/${id}`, {
@@ -64,6 +72,7 @@ export const addLike = async (id) => {
     }
 };
 
+// отправляет запрос DELETE на baseUrl для удаления лайка с товара с заданным ID
 export const deleteLike = async (id) => {
     try {
         const res = await fetch(`${baseUrl}likes/${id}`, {
@@ -78,6 +87,7 @@ export const deleteLike = async (id) => {
     }
 };
 
+// отправляет запрос PUT на baseUrl для обновления продукта с заданным идентификатором
 export const updateProduct = async (id) => {
     try {
         const res = await fetch(`${baseUrl}${id}`, {
@@ -94,6 +104,7 @@ export const updateProduct = async (id) => {
     }
 };
 
+// отправляет запрос GET на baseUrl для получения продукта с заданным идентификатором
 export const getProductByID = async (id) => {
     try {
         const res = await fetch(`${baseUrl}${id}`, {
@@ -107,6 +118,7 @@ export const getProductByID = async (id) => {
     }
 };
 
+// отправляет запрос DELETE на baseUrl для удаления продукта с заданным идентификатором
 export const deleteProduct = async (id) => {
     try {
         const res = await fetch(`${baseUrl}${id}`, {
@@ -121,6 +133,7 @@ export const deleteProduct = async (id) => {
     }
 };
 
+// отправляет POST-запрос на baseUrl, чтобы добавить отзыв к продукту с заданным идентификатором
 export const addReviewById = async (id, review, rating) => {
     try {
         const res = await fetch(`${baseUrl}review/${id}`, {
@@ -137,6 +150,7 @@ export const addReviewById = async (id, review, rating) => {
     }
 };
 
+// отправляет запрос DELETE на baseUrl для удаления отзыва с заданным идентификатором для продукта с заданным идентификатором
 export const deleteReviewById = async (prodId, reviewId) => {
     try {
         const res = await fetch(`${baseUrl}review/${prodId}/${reviewId}`, {
@@ -151,6 +165,7 @@ export const deleteReviewById = async (prodId, reviewId) => {
     }
 };
 
+// отправляет запрос GET на baseUrl, чтобы получить все отзывы о продукте с заданным идентификатором
 export const getReviewById = async (prodId) => {
     try {
         const res = await fetch(`${baseUrl}review/${prodId}`, {
@@ -164,7 +179,7 @@ export const getReviewById = async (prodId) => {
     }
 };
 
-// регистрация пользователей
+// отправляет запрос POST в regUrl для регистрации нового пользователя с заданными данными
 export const signupUser = async (newUser) => {
     try {
         const res = await fetch(`${regUrl}signup`, {
@@ -181,7 +196,7 @@ export const signupUser = async (newUser) => {
     }
 };
 
-// авторизация пользователей
+// отправляет запрос POST в regUrl для аутентификации пользователя с заданными учетными данными
 export const signinUser = async (user) => {
     try {
         const res = await fetch(`${regUrl}signin`, {
