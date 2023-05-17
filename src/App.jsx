@@ -22,6 +22,7 @@ import { NativeSelect } from "@mantine/core";
 import Products from "./components/Products";
 import Pagination from "./components/Pagination";
 import usePagination from "./hooks/usePagination";
+import RegForm from "./components/RegForm/RegForm";
 
 function App() {
     const { loading, allProducts, searchItem, sortMode, setSortMode } =
@@ -89,7 +90,7 @@ function App() {
         <div className="max-w-[90rem] h-full mx-auto flex flex-col">
             <Header />
 
-            <div className="w-4/6 mx-auto flex-initial py-16 lg:w-4/5 md:w-11/12 md:py-8">
+            <div className="w-4/6 mx-auto flex-initial py-10 lg:w-4/5 md:w-11/12 md:py-8">
                 {paginatedProds.length > 0 ? (
                     <>
                         <Routes>
@@ -173,6 +174,7 @@ function App() {
                                 path="/addproduct"
                                 element={<CreateProductForm />}
                             />
+                            <Route path="/registration" element={<RegForm />} />
                             <Route path="*" element={<Error404 />} />
                         </Routes>
                     </>

@@ -1,6 +1,7 @@
 import { TextInput, PasswordInput, Group, Box } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
+import { signinUser } from "../../api";
 
 function AuthForm() {
     const form = useForm({
@@ -23,11 +24,16 @@ function AuthForm() {
 
     const [visible, { toggle }] = useDisclosure(false);
 
+    const loginUser = async (values) => {
+        await signinUser(values);
+        console.log(values);
+    };
+
     return (
         <Box maw={300} mx="auto">
             <form
                 className="flex flex-col gap-y-3"
-                onSubmit={form.onSubmit((values) => console.log(values))}
+                onSubmit={form.onSubmit((values) => loginUser(values))}
             >
                 <TextInput
                     withAsterisk

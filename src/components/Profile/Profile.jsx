@@ -1,11 +1,11 @@
 import Back from "../Back/Back";
 import { getUserInfo } from "../../api";
 import { useEffect, useState, useContext } from "react";
-import RegForm from "../RegForm/RegForm";
 import { AuthContext } from "../../providers/AuthProvider";
 import AuthForm from "../AuthForm/AuthForm";
 import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
     const groupId = "group-12";
@@ -14,6 +14,11 @@ function Profile() {
     const [userData, setUserData] = useState({});
 
     const [opened, { open, close }] = useDisclosure(false);
+    const navigate = useNavigate();
+
+    const regUser = () => {
+        navigate("/registration");
+    };
 
     const loginUser = () => {
         open();
@@ -53,7 +58,7 @@ function Profile() {
                         Войти
                     </button>
                     <button
-                        // onClick={open}
+                        onClick={regUser}
                         className="text-md bg-gray-200 px-3 py-1 rounded-md hover:bg-gray-300 transition-all"
                     >
                         Регистрация

@@ -81,7 +81,7 @@ function Product() {
                     </div>
                 </Modal>
 
-                <div className="flex flex-col w-1/2 gap-y-10 md:w-full">
+                <div className="flex flex-col w-1/2 gap-y-7 md:w-full">
                     <div>
                         {product.discount > 0 ? (
                             <div className="relative">
@@ -113,9 +113,20 @@ function Product() {
                             }}
                         >
                             {product?.likes?.includes(userId) ? (
-                                <FaHeart className="text-red-500 text-xl absolute top-2 right-2" />
+                                <>
+                                    {" "}
+                                    <FaHeart className="text-red-500 text-xl absolute top-1 left-2" />
+                                    <span className="text-sm text-gray-400 absolute top-1 left-10">
+                                        В избранном
+                                    </span>
+                                </>
                             ) : (
-                                <FaRegHeart className="text-gray-400 text-xl absolute top-2 right-2" />
+                                <>
+                                    <FaRegHeart className="text-gray-400 text-xl absolute top-1 left-2" />
+                                    <span className="text-sm text-gray-400 absolute top-1 left-10">
+                                        В избранное
+                                    </span>
+                                </>
                             )}
                         </button>
                     </div>

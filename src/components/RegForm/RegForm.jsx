@@ -1,6 +1,7 @@
 import { TextInput, PasswordInput, Stack, Group, Box } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
+import { signupUser } from "../../api";
 
 function RegForm() {
     const form = useForm({
@@ -27,11 +28,16 @@ function RegForm() {
 
     const [visible, { toggle }] = useDisclosure(false);
 
+    const registrateUser = async (values) => {
+        await signupUser(values);
+        console.log(values);
+    };
+
     return (
         <Box maw={300} mx="auto">
             <form
                 className="flex flex-col gap-y-3"
-                onSubmit={form.onSubmit((values) => console.log(values))}
+                onSubmit={form.onSubmit((values) => registrateUser(values))}
             >
                 <TextInput
                     withAsterisk

@@ -1,3 +1,4 @@
+import React from "react";
 import Logo from "../Logo/Logo";
 import vk from "./img/vk.svg";
 import whatsapp from "./img/whatsapp.svg";
@@ -6,7 +7,7 @@ import instagram from "./img/instagram.svg";
 import telegram from "./img/telegram.svg";
 import { Link } from "react-router-dom";
 
-function Footer() {
+export const Footer = React.memo(() => {
     return (
         <div className="w-full h-[12.125rem] bg-yellow-300 px-4 py-10 mt-20 md:shrink">
             <div
@@ -61,5 +62,6 @@ function Footer() {
             </div>
         </div>
     );
-}
+});
+
 export default Footer;
