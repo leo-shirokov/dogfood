@@ -1,4 +1,11 @@
 {
-	"cSpell.words": ["dogfood", "mantine", "Mantine", "tailwindcss"],
-	"cSpell.ignoreWords": ["signin"]
+	"cSpell.words": [
+		"колбэк",
+		"dogfood",
+		"favourites",
+		"mantine",
+		"Mantine",
+		"tailwindcss"
+	],
+	"cSpell.ignoreWords": ["addproduct", "signin", "signup"]
 }

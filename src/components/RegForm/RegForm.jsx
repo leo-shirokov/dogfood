@@ -1,11 +1,4 @@
-import {
-	Box,
-	Group,
-	Modal,
-	PasswordInput,
-	Stack,
-	TextInput,
-} from '@mantine/core';
+import { Box, Group, Modal, PasswordInput, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { Link, useNavigate } from 'react-router-dom';
@@ -15,6 +8,7 @@ import TwoBanners from '../Banner/TwoBanners';
 function RegForm() {
 	const [opened, { open, close }] = useDisclosure(true);
 	const navigate = useNavigate();
+	const [visible, { toggle }] = useDisclosure(false);
 
 	const form = useForm({
 		initialValues: {
@@ -38,12 +32,17 @@ function RegForm() {
 		},
 	});
 
-	const [visible, { toggle }] = useDisclosure(false);
-
 	const handleSubmit = async (values) => {
-		await signupUser(values);
-		console.log(values);
-		navigate('/registration');
+		try {
+			console.log(values);
+			const valuesCopy = { ...values };
+			delete valuesCopy.confirmPassword;
+			const res = await signupUser(valuesCopy);
+			navigate('/auth');
+			console.log(res);
+		} catch (error) {
+			// TODO вывести `error.message` в модалочку
+		}
 	};
 
 	return (
@@ -75,25 +74,25 @@ function RegForm() {
 							placeholder='group-'
 							{...form.getInputProps('group')}
 						/>
-						<Stack maw={380} mx='auto'>
-							<PasswordInput
-								placeholder='Пароль'
-								label='Пароль'
-								description='Пароль длиной от 6 символов, содержащий буквы в верхнем и нижнем регистре, цифру и специальный знак'
-								visible={visible}
-								onVisibilityChange={toggle}
-								withAsterisk
-								{...form.getInputProps('password')}
-							/>
-							<PasswordInput
-								placeholder='Пароль'
-								label='Повторить пароль'
-								visible={visible}
-								onVisibilityChange={toggle}
-								withAsterisk
-								{...form.getInputProps('confirmPassword')}
-							/>
-						</Stack>
+
+						<PasswordInput
+							placeholder='Пароль'
+							label='Пароль'
+							description='Пароль длиной от 6 символов, содержащий буквы в верхнем и нижнем регистре, цифру и специальный знак'
+							visible={visible}
+							onVisibilityChange={toggle}
+							withAsterisk
+							{...form.getInputProps('password')}
+						/>
+						<PasswordInput
+							placeholder='Пароль'
+							label='Повторить пароль'
+							visible={visible}
+							onVisibilityChange={toggle}
+							withAsterisk
+							{...form.getInputProps('confirmPassword')}
+						/>
+
 						<Link
 							to='/auth'
 							className='cursor-pointer text-xs font-normal text-gray-600'

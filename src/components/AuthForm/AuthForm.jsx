@@ -32,10 +32,9 @@ function AuthForm() {
 
 	const [visible, { toggle }] = useDisclosure(false);
 
-	const loginUser = async (values) => {
+	const handleSubmit = async (values) => {
 		const userInfo = await signinUser(values);
 		setUser(userInfo);
-		console.log(values, userInfo);
 		navigate('/profile');
 	};
 
@@ -57,7 +56,9 @@ function AuthForm() {
 				<Box maw={300} mx='auto'>
 					<form
 						className='flex flex-col gap-y-3'
-						onSubmit={form.onSubmit((values) => loginUser(values))}
+						onSubmit={form.onSubmit((values) =>
+							handleSubmit(values)
+						)}
 					>
 						<TextInput
 							withAsterisk

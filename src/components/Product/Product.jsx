@@ -5,6 +5,7 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import { getProductByID } from '../../api';
 import productsContext from '../../context/productsContext';
+import { AuthContext } from '../../providers/AuthProvider';
 import Back from '../Back/Back';
 import Delivery from './Delivery';
 import Reviews from './Reviews';
@@ -16,7 +17,8 @@ function Product() {
 	const [textarea, setTextarea] = useState('');
 	const [rating, setRating] = useState(5);
 
-	const { toggleLike, userId } = useContext(productsContext);
+	const { toggleLike } = useContext(productsContext);
+	const { user } = useContext(AuthContext);
 
 	// const [isProductLoaded, setIsProductLoaded] = useState(false);
 
@@ -32,7 +34,7 @@ function Product() {
 	const loadProduct = useCallback(async () => {
 		if (!id) return;
 		try {
-			setProduct(await getProductByID(id));
+			setProduct(await getProductByID(user.token, id));
 		} catch (error) {
 			console.log(error);
 		}
@@ -123,7 +125,7 @@ function Product() {
 								await loadProduct();
 							}}
 						>
-							{product?.likes?.includes(userId) ? (
+							{product?.likes?.includes(user?.data?._id) ? (
 								<>
 									{' '}
 									<FaHeart className='absolute left-2 top-1 text-xl text-red-500' />
