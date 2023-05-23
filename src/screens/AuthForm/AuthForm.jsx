@@ -1,16 +1,16 @@
-import { Box, Group, Modal, PasswordInput, TextInput } from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { useDisclosure } from '@mantine/hooks';
-import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { signinUser } from '../../api';
-import { AuthContext } from '../../providers/AuthProvider';
-import TwoBanners from '../Banner/TwoBanners';
+import { Box, Group, Modal, PasswordInput, TextInput } from '@mantine/core'
+import { useForm } from '@mantine/form'
+import { useDisclosure } from '@mantine/hooks'
+import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { signinUser } from '../../api'
+import TwoBanners from '../../components/Banner/TwoBanners'
+import { AuthContext } from '../../providers/AuthProvider'
 
 function AuthForm() {
-	const [opened, { open, close }] = useDisclosure(true);
-	const navigate = useNavigate();
-	const { setUser } = useContext(AuthContext);
+	const [opened, { open, close }] = useDisclosure(true)
+	const navigate = useNavigate()
+	const { setUser } = useContext(AuthContext)
 
 	const form = useForm({
 		initialValues: {
@@ -28,15 +28,15 @@ function AuthForm() {
 					? null
 					: 'Недопустимый пароль',
 		},
-	});
+	})
 
-	const [visible, { toggle }] = useDisclosure(false);
+	const [visible, { toggle }] = useDisclosure(false)
 
 	const handleSubmit = async (values) => {
-		const userInfo = await signinUser(values);
-		setUser(userInfo);
-		navigate('/profile');
-	};
+		const userInfo = await signinUser(values)
+		setUser(userInfo)
+		navigate('/profile')
+	}
 
 	return (
 		<>
@@ -50,7 +50,7 @@ function AuthForm() {
 			<Modal
 				opened={opened}
 				onClose={close}
-				title='Аутентификация'
+				title='Личный кабинет'
 				centered
 			>
 				<Box maw={300} mx='auto'>
@@ -87,7 +87,7 @@ function AuthForm() {
 				</Box>
 			</Modal>
 		</>
-	);
+	)
 }
 
-export default AuthForm;
+export default AuthForm

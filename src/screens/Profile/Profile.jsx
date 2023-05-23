@@ -1,11 +1,11 @@
-import { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../providers/AuthProvider';
-import Back from '../Back/Back';
+import { useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import Back from '../../components/Back/Back'
+import { AuthContext } from '../../providers/AuthProvider'
 
 function Profile() {
-	const { user, logoutUser } = useContext(AuthContext);
-	const navigate = useNavigate();
+	const { user, logoutUser } = useContext(AuthContext)
+	const navigate = useNavigate()
 
 	return (
 		<>
@@ -54,7 +54,7 @@ function Profile() {
 				</>
 			)}
 		</>
-	);
+	)
 }
 
-export default Profile;
+export default Profile

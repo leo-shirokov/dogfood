@@ -1,12 +1,7 @@
 // доступ к RESTful API и взаимодействие с ним
-export const baseUrl = 'https://api.react-learning.ru/products/';
-export const regUrl = 'https://api.react-learning.ru/';
-
-// служебная функция, проверяющая имеет ли объект ответа из API код состояния ошибки
-export const printError = async (res) => {
-	if (!res.ok) throw new Error('Ошибка');
-	return res.json();
-};
+import printError from './utils/error'
+export const baseUrl = 'https://api.react-learning.ru/products/'
+export const regUrl = 'https://api.react-learning.ru/'
 
 // отправляет запрос GET на baseUrl для получения всех продуктов с сервера
 export const getAllProducts = async (token) => {
@@ -15,12 +10,12 @@ export const getAllProducts = async (token) => {
 			headers: {
 				authorization: token,
 			},
-		});
-		return printError(res);
+		})
+		return printError(res)
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 	}
-};
+}
 
 // отправляет запрос GET на baseUrl для поиска продуктов, соответствующих заданному поисковому запросу
 export const searchProducts = async (token, path) => {
@@ -29,12 +24,12 @@ export const searchProducts = async (token, path) => {
 			headers: {
 				authorization: token,
 			},
-		});
-		return printError(res);
+		})
+		return printError(res)
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 	}
-};
+}
 
 // отправляет запрос POST на baseUrl, чтобы добавить новый продукт на сервер
 export const addProduct = async (token, newProduct) => {
@@ -46,12 +41,12 @@ export const addProduct = async (token, newProduct) => {
 				authorization: token,
 			},
 			body: JSON.stringify(newProduct),
-		});
-		return printError(res);
+		})
+		return printError(res)
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 	}
-};
+}
 
 // отправляет запрос PUT на baseUrl, чтобы добавить лайк к продукту с заданным идентификатором
 export const addLike = async (token, id) => {
@@ -61,12 +56,12 @@ export const addLike = async (token, id) => {
 			headers: {
 				authorization: token,
 			},
-		});
-		return printError(res);
+		})
+		return printError(res)
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 	}
-};
+}
 
 // отправляет запрос DELETE на baseUrl для удаления лайка с товара с заданным ID
 export const deleteLike = async (token, id) => {
@@ -76,12 +71,12 @@ export const deleteLike = async (token, id) => {
 			headers: {
 				authorization: token,
 			},
-		});
-		return printError(res);
+		})
+		return printError(res)
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 	}
-};
+}
 
 // отправляет запрос PUT на baseUrl для обновления продукта с заданным идентификатором
 export const updateProduct = async (token, id) => {
@@ -93,12 +88,12 @@ export const updateProduct = async (token, id) => {
 				authorization: token,
 			},
 			body: JSON.stringify(),
-		});
-		return printError(res);
+		})
+		return printError(res)
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 	}
-};
+}
 
 // отправляет запрос GET на baseUrl для получения продукта с заданным идентификатором
 export const getProductByID = async (token, id) => {
@@ -107,12 +102,12 @@ export const getProductByID = async (token, id) => {
 			headers: {
 				authorization: token,
 			},
-		});
-		return printError(res);
+		})
+		return printError(res)
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 	}
-};
+}
 
 // отправляет запрос DELETE на baseUrl для удаления продукта с заданным идентификатором
 export const deleteProduct = async (token, id) => {
@@ -122,12 +117,12 @@ export const deleteProduct = async (token, id) => {
 			headers: {
 				authorization: token,
 			},
-		});
-		return printError(res);
+		})
+		return printError(res)
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 	}
-};
+}
 
 // отправляет POST-запрос на baseUrl, чтобы добавить отзыв к продукту с заданным идентификатором
 export const addReviewById = async (token, id, review, rating) => {
@@ -139,12 +134,12 @@ export const addReviewById = async (token, id, review, rating) => {
 				authorization: token,
 			},
 			body: JSON.stringify({ text: review, rating: rating }),
-		});
-		return printError(res);
+		})
+		return printError(res)
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 	}
-};
+}
 
 // отправляет запрос DELETE на baseUrl для удаления отзыва с заданным идентификатором для продукта с заданным идентификатором
 export const deleteReviewById = async (token, prodId, reviewId) => {
@@ -154,12 +149,12 @@ export const deleteReviewById = async (token, prodId, reviewId) => {
 			headers: {
 				authorization: token,
 			},
-		});
-		return printError(res);
+		})
+		return printError(res)
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 	}
-};
+}
 
 // отправляет запрос GET на baseUrl, чтобы получить все отзывы о продукте с заданным идентификатором
 export const getReviewById = async (token, prodId) => {
@@ -168,12 +163,12 @@ export const getReviewById = async (token, prodId) => {
 			headers: {
 				authorization: token,
 			},
-		});
-		return printError(res);
+		})
+		return printError(res)
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 	}
-};
+}
 
 // отправляет запрос POST в regUrl для регистрации нового пользователя с заданными данными
 export const signupUser = async (newUser) => {
@@ -183,9 +178,9 @@ export const signupUser = async (newUser) => {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify(newUser),
-	});
-	return printError(res);
-};
+	})
+	return printError(res)
+}
 
 // отправляет запрос POST в regUrl для аутентификации пользователя с заданными учетными данными
 export const signinUser = async (user) => {
@@ -196,12 +191,12 @@ export const signinUser = async (user) => {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(user),
-		});
-		return printError(res);
+		})
+		return printError(res)
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 	}
-};
+}
 
 // отправляет запрос POST в regUrl для сбрасывания (забытого) пароля
 export const resetPassword = async (email) => {
@@ -212,12 +207,12 @@ export const resetPassword = async (email) => {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(email),
-		});
-		return printError(res);
+		})
+		return printError(res)
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 	}
-};
+}
 
 // отправляет запрос PATCH в regUrl для изменения пароля с подтверждением токена
 export const changePassword = async (token, newPassword) => {
@@ -228,12 +223,12 @@ export const changePassword = async (token, newPassword) => {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(token, newPassword),
-		});
-		return printError(res);
+		})
+		return printError(res)
 	} catch (error) {
-		console.error(error);
+		console.error(error)
 	}
-};
+}
 
 const exports = {
 	getAllProducts,
@@ -251,5 +246,5 @@ const exports = {
 	signinUser,
 	resetPassword,
 	changePassword,
-};
-export default exports;
+}
+export default exports

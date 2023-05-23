@@ -3,11 +3,11 @@ import { useDisclosure } from '@mantine/hooks'
 import { Suspense, useCallback, useContext, useEffect, useState } from 'react'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
-import Loader from '../../Loader/Loader'
 import { getProductByID } from '../../api'
+import Back from '../../components/Back/Back'
+import Loader from '../../components/Loader/Loader'
 import productsContext from '../../context/productsContext'
 import { AuthContext } from '../../providers/AuthProvider'
-import Back from '../Back/Back'
 import Delivery from './Delivery'
 import Reviews from './Reviews'
 
@@ -186,6 +186,7 @@ function Product() {
 				</Paper>
 			</div>
 
+			{/* Добавляем компонент Suspense для фоновой загрузки отзывов на карточке товара */}
 			<Suspense fallback={<Loader />}>
 				<Reviews
 					product={product}
