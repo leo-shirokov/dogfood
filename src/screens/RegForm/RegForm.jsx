@@ -2,7 +2,7 @@ import { Box, Group, Modal, PasswordInput, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { Link, useNavigate } from 'react-router-dom'
-import { signupUser } from '../../api'
+import { signupUser } from '../../api-user'
 import TwoBanners from '../../components/Banner/TwoBanners'
 
 function RegForm() {
