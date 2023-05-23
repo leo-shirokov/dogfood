@@ -1,4 +1,5 @@
 import Back from '../../components/Back/Back'
+import useTop from '../../hooks/useTop'
 import food1 from './img/img-1.png'
 import food2 from './img/img-2.png'
 import food3 from './img/img-3.png'
@@ -8,6 +9,8 @@ import food6 from './img/img-6.png'
 import food7 from './img/img-7.png'
 
 function News() {
+	useTop()
+
 	return (
 		<>
 			<Back />

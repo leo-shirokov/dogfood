@@ -1,8 +1,11 @@
 import { CiDeliveryTruck } from 'react-icons/ci'
 import { MdPayment } from 'react-icons/md'
 import Back from '../../components/Back/Back'
+import useTop from '../../hooks/useTop'
 
 function Payment() {
+	useTop()
+
 	return (
 		<>
 			<Back />

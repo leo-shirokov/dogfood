@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import Back from '../../components/Back/Back'
+import useTop from '../../hooks/useTop'
 
 const FORM_ENDPOINT = ''
 
 function Feedback() {
+	useTop()
+
 	const [submitted, setSubmitted] = useState(false)
 	const handleSubmit = () => {
 		setTimeout(() => {

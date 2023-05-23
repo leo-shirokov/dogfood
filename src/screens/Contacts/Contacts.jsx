@@ -6,8 +6,11 @@ import {
 } from 'react-icons/fa'
 import { SlSocialVkontakte } from 'react-icons/sl'
 import Back from '../../components/Back/Back'
+import useTop from '../../hooks/useTop'
 
 function Contacts() {
+	useTop()
+
 	return (
 		<>
 			<Back />

@@ -1,7 +1,10 @@
 import { Accordion } from '@mantine/core'
 import Back from '../../components/Back/Back'
+import useTop from '../../hooks/useTop'
 
 function Faq() {
+	useTop()
+
 	return (
 		<>
 			<Back />

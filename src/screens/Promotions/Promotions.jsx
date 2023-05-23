@@ -1,10 +1,14 @@
 import { useContext } from 'react'
 import Back from '../../components/Back/Back'
 import productsContext from '../../context/productsContext'
+import useTop from '../../hooks/useTop'
 import ProductCard from '../ProductCard/ProductCard'
 
 function Promotions({ products = [] }) {
+	useTop()
+
 	const { allProducts } = useContext(productsContext)
+
 	return (
 		<>
 			<Back />
