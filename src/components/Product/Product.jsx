@@ -1,59 +1,48 @@
-import { Modal, NumberInput, Paper, Rating, Text } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { useCallback, useContext, useEffect, useState } from 'react';
-import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
-import { getProductByID } from '../../api';
-import productsContext from '../../context/productsContext';
-import { AuthContext } from '../../providers/AuthProvider';
-import Back from '../Back/Back';
-import Delivery from './Delivery';
-import Reviews from './Reviews';
+import { Modal, NumberInput, Paper, Rating, Text } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { Suspense, useCallback, useContext, useEffect, useState } from 'react'
+import { FaHeart, FaRegHeart } from 'react-icons/fa'
+import { useParams } from 'react-router-dom'
+import Loader from '../../Loader/Loader'
+import { getProductByID } from '../../api'
+import productsContext from '../../context/productsContext'
+import { AuthContext } from '../../providers/AuthProvider'
+import Back from '../Back/Back'
+import Delivery from './Delivery'
+import Reviews from './Reviews'
 
 function Product() {
-	const { id } = useParams();
-	const [product, setProduct] = useState({ reviews: [] });
-	const [opened, { open, close }] = useDisclosure(false);
-	const [textarea, setTextarea] = useState('');
-	const [rating, setRating] = useState(5);
+	const { id } = useParams()
+	const [product, setProduct] = useState({ reviews: [] })
+	const [opened, { open, close }] = useDisclosure(false)
+	const [textarea, setTextarea] = useState('')
+	const [rating, setRating] = useState(5)
 
-	const { toggleLike } = useContext(productsContext);
-	const { user } = useContext(AuthContext);
-
-	// const [isProductLoaded, setIsProductLoaded] = useState(false);
+	const { toggleLike } = useContext(productsContext)
+	const { user } = useContext(AuthContext)
 
 	// принимает цену в виде числа и возвращает ее в формате валюты
 	function stylePrice(arg) {
 		return new Intl.NumberFormat('ru-RU', {
 			style: 'currency',
 			currency: 'RUB',
-		}).format(arg);
+		}).format(arg)
 	}
 
 	// загружаем информацию о продукте из API по его id при помощи функции getProductByID, сохраняем результат в product
 	const loadProduct = useCallback(async () => {
-		if (!id) return;
+		if (!id) return
 		try {
-			setProduct(await getProductByID(user.token, id));
+			setProduct(await getProductByID(user.token, id))
 		} catch (error) {
-			console.log(error);
+			console.log(error)
 		}
-	}, [id]);
-
-	// const loadProduct = useCallback(async () => {
-	//   if (!id || isProductLoaded) return; // Если информация о продукте уже загружена, прекращаем выполнение функции
-	//   try {
-	//     setProduct(await getProductByID(id));
-	//     setIsProductLoaded(true); // Устанавливаем состояние isProductLoaded в true после загрузки информации о продукте
-	//   } catch (error) {
-	//     console.log(error);
-	//   }
-	// }, [id, isProductLoaded]);
+	}, [id])
 
 	// при загрузке компонента загрузить один раз информацию о продукте
 	useEffect(() => {
-		loadProduct();
-	}, [loadProduct]);
+		loadProduct()
+	}, [loadProduct])
 
 	return (
 		<>
@@ -121,8 +110,8 @@ function Product() {
 					<div className='relative'>
 						<button
 							onClick={async () => {
-								await toggleLike(product);
-								await loadProduct();
+								await toggleLike(product)
+								await loadProduct()
 							}}
 						>
 							{product?.likes?.includes(user?.data?._id) ? (
@@ -197,16 +186,18 @@ function Product() {
 				</Paper>
 			</div>
 
-			<Reviews
-				product={product}
-				loadProduct={loadProduct}
-				textarea={textarea}
-				setTextarea={setTextarea}
-				rating={rating}
-				setRating={setRating}
-			/>
+			<Suspense fallback={<Loader />}>
+				<Reviews
+					product={product}
+					loadProduct={loadProduct}
+					textarea={textarea}
+					setTextarea={setTextarea}
+					rating={rating}
+					setRating={setRating}
+				/>
+			</Suspense>
 		</>
-	);
+	)
 }
 
-export default Product;
+export default Product

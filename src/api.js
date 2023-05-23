@@ -203,22 +203,6 @@ export const signinUser = async (user) => {
 	}
 };
 
-// получение информации о пользователе
-// export const getUserInfo = async (groupId, userToken) => {
-// 	try {
-// 		const res = await fetch(`${regUrl}v2/${groupId}/users/me`, {
-// 			method: 'GET',
-// 			headers: {
-// 				'Content-Type': 'application/json',
-// 				authorization: userToken,
-// 			},
-// 		});
-// 		return printError(res);
-// 	} catch (error) {
-// 		console.error(error);
-// 	}
-// };
-
 // отправляет запрос POST в regUrl для сбрасывания (забытого) пароля
 export const resetPassword = async (email) => {
 	try {
@@ -265,7 +249,6 @@ const exports = {
 	deleteLike,
 	signupUser,
 	signinUser,
-	//getUserInfo,
 	resetPassword,
 	changePassword,
 };

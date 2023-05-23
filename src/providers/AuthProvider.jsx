@@ -1,9 +1,10 @@
-import { createContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useEffect, useMemo, useState } from 'react'
 
-// Константа аутентификации — JSON web token (JWT), который отправляется в качестве заголовка аутентификации с каждым запросом API
+// Константа аутентификации — JSON web token, которая отправляется в заголовке с каждым запросом пользователя к API; добавляем для незарегистрированного пользователя токен по умолчанию
 export const defaultToken =
-	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDNlZDE0NTMyOTFkNzkwYjNmMzRjZDIiLCJncm91cCI6Imdyb3VwLTEyIiwiaWF0IjoxNjgxODM4NDc0LCJleHAiOjE3MTMzNzQ0NzR9.GX6DSN6V_eJJ85fLMO_0T5J5KRD2a2pvmtYjHow3yRg';
+	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDNlZDE0NTMyOTFkNzkwYjNmMzRjZDIiLCJncm91cCI6Imdyb3VwLTEyIiwiaWF0IjoxNjgxODM4NDc0LCJleHAiOjE3MTMzNzQ0NzR9.GX6DSN6V_eJJ85fLMO_0T5J5KRD2a2pvmtYjHow3yRg'
 
+// Добавление пользователя - посетителя/гостя (id: 643ed1453291d790b3f34cd2)
 const defaultUser = {
 	token: defaultToken,
 	data: {
@@ -14,27 +15,28 @@ const defaultUser = {
 		avatar: 'https://react-learning.ru/image-compressed/default-image.jpg',
 		__v: 0,
 	},
-};
+}
 
-export const AuthContext = createContext();
+export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
-	const [user, setUser] = useState(defaultUser);
+	const [user, setUser] = useState(defaultUser)
 
+	// очистить local storage при выходе зарегистрированного пользователя, включить Гостя
 	const logoutUser = () => {
-		localStorage.removeItem('user');
-		setUser(defaultUser);
-	};
+		localStorage.removeItem('user')
+		setUser(defaultUser)
+	}
 
-	// synchronize with local storage
+	// синхронизация с local storage
 	useEffect(() => {
 		if (user.data._id === 0) {
-			const storageUser = JSON.parse(localStorage.getItem('user'));
-			if (storageUser) setUser(storageUser);
+			const storageUser = JSON.parse(localStorage.getItem('user'))
+			if (storageUser) setUser(storageUser)
 		} else {
-			localStorage.setItem('user', JSON.stringify(user));
+			localStorage.setItem('user', JSON.stringify(user))
 		}
-	}, [user]);
+	}, [user])
 
 	const value = useMemo(
 		() => ({
@@ -43,11 +45,9 @@ const AuthProvider = ({ children }) => {
 			logoutUser,
 		}),
 		[user]
-	);
+	)
 
-	return (
-		<AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-	);
-};
+	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+}
 
-export default AuthProvider;
+export default AuthProvider

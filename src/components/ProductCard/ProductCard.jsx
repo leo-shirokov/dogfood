@@ -93,6 +93,7 @@ function ProductCard({
 					<InactiveImage className='absolute right-2 top-2 text-xl text-gray-400' />
 				)}
 			</button>
+
 			{location.pathname === '/' && (
 				<div className=''>
 					<button

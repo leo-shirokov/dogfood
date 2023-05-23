@@ -43,7 +43,6 @@ function BurgerMenu() {
 				<Menu.Item>
 					<Link to='/contacts'>Контакты</Link>
 				</Menu.Item>
-				<Menu.Divider />
 			</Menu.Dropdown>
 		</Menu>
 	);

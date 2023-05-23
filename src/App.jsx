@@ -1,33 +1,34 @@
-import { NativeSelect } from '@mantine/core';
-import { useCallback, useContext } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Auth from './components/AuthForm/AuthForm';
-import TwoBanners from './components/Banner/TwoBanners';
-import Cart from './components/Cart/Cart';
-import Catalog from './components/Catalog/Catalog';
-import Contacts from './components/Contacts/Contacts';
-import CreateProductForm from './components/CreateProductForm/CreateProductForm';
-import Error404 from './components/Error404/Error404';
-import Faq from './components/Faq/Faq';
-import Feedback from './components/Feedback/Feedback';
-import Footer from './components/Footer/Footer';
-import Header from './components/Header/Header';
-import News from './components/News/News';
-import Pagination from './components/Pagination';
-import Payment from './components/Payment/Payment';
-import Product from './components/Product/Product';
-import ProductFavorite from './components/ProductFavorite/ProductFavorite';
-import Products from './components/Products';
-import Profile from './components/Profile/Profile';
-import Promotions from './components/Promotions/Promotions';
-import RegForm from './components/RegForm/RegForm';
-import Reviews from './components/Reviews/Reviews';
-import productsContext from './context/productsContext';
-import usePagination from './hooks/usePagination';
+import { NativeSelect } from '@mantine/core'
+import { useCallback, useContext } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import Loader from './Loader/Loader'
+import Auth from './components/AuthForm/AuthForm'
+import TwoBanners from './components/Banner/TwoBanners'
+import Cart from './components/Cart/Cart'
+import Catalog from './components/Catalog/Catalog'
+import Contacts from './components/Contacts/Contacts'
+import CreateProductForm from './components/CreateProductForm/CreateProductForm'
+import Error404 from './components/Error404/Error404'
+import Faq from './components/Faq/Faq'
+import Feedback from './components/Feedback/Feedback'
+import Footer from './components/Footer/Footer'
+import Header from './components/Header/Header'
+import News from './components/News/News'
+import Pagination from './components/Pagination'
+import Payment from './components/Payment/Payment'
+import Product from './components/Product/Product'
+import ProductFavorite from './components/ProductFavorite/ProductFavorite'
+import Products from './components/Products'
+import Profile from './components/Profile/Profile'
+import Promotions from './components/Promotions/Promotions'
+import RegForm from './components/RegForm/RegForm'
+import Reviews from './components/Reviews/Reviews'
+import productsContext from './context/productsContext'
+import usePagination from './hooks/usePagination'
 
 function App() {
 	const { loading, allProducts, searchItem, sortMode, setSortMode } =
-		useContext(productsContext);
+		useContext(productsContext)
 
 	// определяем варианты сортировки
 	const sortOptions = [
@@ -37,55 +38,55 @@ function App() {
 		{ group: 'most-expensive', title: 'Сначала дорогие' },
 		{ group: 'highest-rated', title: 'По рейтингу' },
 		{ group: 'discounted', title: 'По скидке' },
-	];
+	]
 	// определяем функцию сортировки в зависимости от варианта сортировки
 	const sort = useCallback(() => {
-		let sortedProducts;
+		let sortedProducts
 		switch (sortMode) {
 			case 'most-popular':
 				sortedProducts = allProducts.sort(
 					(a, b) => b.likes.length - a.likes.length
-				);
-				break;
+				)
+				break
 			case 'newest':
 				sortedProducts = allProducts.sort(
 					(a, b) =>
 						new Date(b.created_at).getTime() -
 						new Date(a.created_at).getTime()
-				);
-				break;
+				)
+				break
 			case 'cheapest':
-				sortedProducts = allProducts.sort((a, b) => a.price - b.price);
-				break;
+				sortedProducts = allProducts.sort((a, b) => a.price - b.price)
+				break
 			case 'most-expensive':
-				sortedProducts = allProducts.sort((a, b) => b.price - a.price);
-				break;
+				sortedProducts = allProducts.sort((a, b) => b.price - a.price)
+				break
 			case 'highest-rated':
 				sortedProducts = allProducts.sort((a, b) => {
 					const raitingA = a.reviews.reduce(
 						(prev, el) => (prev + el.rating) / a.reviews.length,
 						0
-					);
+					)
 					const raitingB = b.reviews.reduce(
 						(prev, el) => (prev + el.rating) / b.reviews.length,
 						0
-					);
-					return raitingA - raitingB;
-				});
-				break;
+					)
+					return raitingA - raitingB
+				})
+				break
 			case 'discounted':
 				sortedProducts = allProducts.sort(
 					(a, b) => b.discount - a.discount
-				);
-				break;
+				)
+				break
 			default:
-				sortedProducts = allProducts.sort((a, b) => a.order - b.order);
-				break;
+				sortedProducts = allProducts.sort((a, b) => a.order - b.order)
+				break
 		}
-		return sortedProducts;
-	}, [allProducts, sortMode]);
+		return sortedProducts
+	}, [allProducts, sortMode])
 
-	const paginatedProds = usePagination(sort());
+	const paginatedProds = usePagination(sort())
 
 	return (
 		<div className='mx-auto flex h-full max-w-[90rem] flex-col'>
@@ -186,21 +187,11 @@ function App() {
 
 				<TwoBanners banIndex1={2} banIndex2={3} />
 
-				{/* loader */}
-				{loading && (
-					<div
-						className='text-secondary inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]'
-						role='status'
-					>
-						<span className='!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]'>
-							Загрузка...
-						</span>
-					</div>
-				)}
+				{loading && <Loader />}
 			</div>
 			<Footer />
 		</div>
-	);
+	)
 }
 
-export default App;
+export default App
