@@ -172,22 +172,26 @@ function App() {
 							<Route path='/feedback' element={<Feedback />} />
 							<Route path='/contacts' element={<Contacts />} />
 							<Route path='/cart' element={<Cart />} />
-							<Route path='/profile' element={<Profile />} />
 							<Route
 								path='/addproduct'
 								element={<CreateProductForm />}
 							/>
-							<Route path='/registration' element={<RegForm />} />
-							<Route path='/auth' element={<Auth />} />
-							<Route
-								path='/reset-password'
-								element={<ResetForm />}
-							/>
+							<Route path='/profile' element={<Profile />}>
+								<Route
+									path='registration'
+									element={<RegForm />}
+								/>
+								<Route path='auth' element={<Auth />} />
+								<Route
+									path='reset-password'
+									element={<ResetForm />}
+								/>
+							</Route>
 							<Route path='*' element={<Error404 />} />
 						</Routes>
 					</>
 				) : (
-					<p>...</p>
+					<></>
 				)}
 
 				<TwoBanners banIndex1={2} banIndex2={3} />

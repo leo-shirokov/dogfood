@@ -4,8 +4,6 @@ import { useDisclosure } from '@mantine/hooks'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { changePassword, resetPassword } from '../../../api-user'
-import Back from '../../../components/Back/Back'
-import TwoBanners from '../../../components/Banner/TwoBanners'
 
 function ResetForm() {
 	const [isToken, setIsToken] = useState(false)
@@ -24,6 +22,11 @@ function ResetForm() {
 				/^\S+@\S+$/.test(value) ? null : 'Недопустимый email',
 		},
 	})
+
+	const closeForm = () => {
+		close()
+		navigate('/profile')
+	}
 
 	const handleSubmit = async (data) => {
 		if (data.token) {
@@ -44,17 +47,9 @@ function ResetForm() {
 
 	return (
 		<>
-			<Back />
-			<p
-				className='my-5 cursor-pointer text-sm font-normal text-gray-800'
-				onClick={open}
-			>
-				Сброс пароля
-			</p>
-			<TwoBanners banIndex1={0} banIndex2={1} />
 			<Modal
 				opened={opened}
-				onClose={close}
+				onClose={closeForm}
 				title='Изменение пароля'
 				centered
 			>
@@ -106,7 +101,7 @@ function ResetForm() {
 					</form>
 					{!isToken && (
 						<Link
-							to='/auth'
+							to='/profile/auth'
 							className='cursor-pointer text-xs font-normal text-gray-600 transition-all duration-200 hover:text-blue-600'
 						>
 							Вспомнил пароль

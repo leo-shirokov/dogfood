@@ -2,7 +2,7 @@ import { Group, Modal, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { changeAbout } from '../../api-user'
 import Back from '../../components/Back/Back'
 import { AuthContext } from '../../providers/AuthProvider'
@@ -101,13 +101,13 @@ function Profile() {
 					</p>
 					<div className='inline-flex flex-col gap-y-5'>
 						<button
-							onClick={() => navigate('/auth')}
+							onClick={() => navigate('/profile/auth')}
 							className='text-md rounded-md bg-gray-200 px-3 py-1 transition-all hover:bg-gray-300'
 						>
 							Войти
 						</button>
 						<button
-							onClick={() => navigate('/registration')}
+							onClick={() => navigate('/profile/registration')}
 							className='text-md rounded-md bg-gray-200 px-3 py-1 transition-all hover:bg-gray-300'
 						>
 							Регистрация
@@ -115,6 +115,7 @@ function Profile() {
 					</div>
 				</>
 			)}
+			<Outlet />
 		</>
 	)
 }

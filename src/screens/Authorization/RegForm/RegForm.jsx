@@ -5,8 +5,6 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { signupUser } from '../../../api-user'
 import Alert from '../../../components/Alert/Alert'
-import Back from '../../../components/Back/Back'
-import TwoBanners from '../../../components/Banner/TwoBanners'
 
 function RegForm() {
 	const [opened, { open, close }] = useDisclosure(true)
@@ -36,6 +34,11 @@ function RegForm() {
 		},
 	})
 
+	const closeForm = () => {
+		close()
+		navigate('/profile')
+	}
+
 	const handleSubmit = async (values) => {
 		try {
 			const valuesCopy = { ...values }
@@ -56,9 +59,12 @@ function RegForm() {
 
 	return (
 		<>
-			<Back />
-			<TwoBanners banIndex1={0} banIndex2={1} />
-			<Modal opened={opened} onClose={close} title='Регистрация' centered>
+			<Modal
+				opened={opened}
+				onClose={closeForm}
+				title='Регистрация'
+				centered
+			>
 				<Box maw={300} mx='auto'>
 					<form
 						className='flex flex-col gap-y-3'
@@ -98,7 +104,7 @@ function RegForm() {
 						/>
 
 						<Link
-							to='/auth'
+							to='/profile/auth'
 							className='cursor-pointer text-xs font-normal text-gray-600 transition-all hover:text-gray-800'
 						>
 							Я уже зарегистрирован
