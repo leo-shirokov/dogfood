@@ -56,7 +56,7 @@ export const changePassword = async (token, newPassword) => {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(token, newPassword),
+			body: JSON.stringify(newPassword),
 		})
 		return printError(res)
 	} catch (error) {

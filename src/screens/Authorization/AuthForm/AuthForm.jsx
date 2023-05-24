@@ -11,6 +11,7 @@ function AuthForm() {
 	const [opened, { open, close }] = useDisclosure(true)
 	const navigate = useNavigate()
 	const { setUser } = useContext(AuthContext)
+	const [visible, { toggle }] = useDisclosure(false)
 
 	const form = useForm({
 		initialValues: {
@@ -21,16 +22,8 @@ function AuthForm() {
 		validate: {
 			email: (value) =>
 				/^\S+@\S+$/.test(value) ? null : 'Недопустимый email',
-			password: (value) =>
-				/(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}/g.test(
-					value
-				)
-					? null
-					: 'Недопустимый пароль',
 		},
 	})
-
-	const [visible, { toggle }] = useDisclosure(false)
 
 	const handleSubmit = async (values) => {
 		const userInfo = await signinUser(values)
