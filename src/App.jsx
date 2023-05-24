@@ -11,7 +11,9 @@ import Pagination from './components/Pagination'
 import Products from './components/Products'
 import productsContext from './context/productsContext'
 import usePagination from './hooks/usePagination'
-import Auth from './screens/AuthForm/AuthForm'
+import Auth from './screens/Authorization/AuthForm/AuthForm'
+import RegForm from './screens/Authorization/RegForm/RegForm'
+import ResetForm from './screens/Authorization/ResetForm/ResetForm'
 import Catalog from './screens/Catalog/Catalog'
 import Contacts from './screens/Contacts/Contacts'
 import CreateProductForm from './screens/CreateProductForm/CreateProductForm'
@@ -23,7 +25,6 @@ import Product from './screens/Product/Product'
 import ProductFavorite from './screens/ProductFavorite/ProductFavorite'
 import Profile from './screens/Profile/Profile'
 import Promotions from './screens/Promotions/Promotions'
-import RegForm from './screens/RegForm/RegForm'
 import Reviews from './screens/Reviews/Reviews'
 
 function App() {
@@ -178,6 +179,10 @@ function App() {
 							/>
 							<Route path='/registration' element={<RegForm />} />
 							<Route path='/auth' element={<Auth />} />
+							<Route
+								path='/reset-password'
+								element={<ResetForm />}
+							/>
 							<Route path='*' element={<Error404 />} />
 						</Routes>
 					</>

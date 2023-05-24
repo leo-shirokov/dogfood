@@ -2,10 +2,10 @@ import { Box, Group, Modal, PasswordInput, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { signinUser } from '../../api-user'
-import TwoBanners from '../../components/Banner/TwoBanners'
-import { AuthContext } from '../../providers/AuthProvider'
+import { Link, useNavigate } from 'react-router-dom'
+import { signinUser } from '../../../api-user'
+import TwoBanners from '../../../components/Banner/TwoBanners'
+import { AuthContext } from '../../../providers/AuthProvider'
 
 function AuthForm() {
 	const [opened, { open, close }] = useDisclosure(true)
@@ -78,12 +78,18 @@ function AuthForm() {
 						<Group position='right' mt='md'>
 							<button
 								type='submit'
-								className='text-md rounded-md bg-gray-200 px-3 py-2 hover:bg-gray-300'
+								className='text-md rounded-md bg-gray-200 px-3 py-1 transition-all duration-200 hover:bg-gray-300'
 							>
 								Войти
 							</button>
 						</Group>
 					</form>
+					<Link
+						to='/reset-password'
+						className='cursor-pointer text-xs font-normal text-gray-600 transition-all duration-200 hover:text-blue-600'
+					>
+						Забыли пароль?
+					</Link>
 				</Box>
 			</Modal>
 		</>

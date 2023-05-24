@@ -1,14 +1,18 @@
 import { Box, Group, Modal, PasswordInput, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { signupUser } from '../../../api-user'
+import Alert from '../../../components/Alert/Alert'
+import Back from '../../../components/Back/Back'
 import TwoBanners from '../../../components/Banner/TwoBanners'
 
 function RegForm() {
 	const [opened, { open, close }] = useDisclosure(true)
 	const navigate = useNavigate()
 	const [visible, { toggle }] = useDisclosure(false)
+	const [isAlert, setIsAlert] = useState('')
 
 	const form = useForm({
 		initialValues: {
@@ -34,25 +38,25 @@ function RegForm() {
 
 	const handleSubmit = async (values) => {
 		try {
-			console.log(values)
 			const valuesCopy = { ...values }
 			delete valuesCopy.confirmPassword
 			const res = await signupUser(valuesCopy)
 			navigate('/auth')
 			console.log(res)
 		} catch (error) {
-			// TODO вывести `error.message` в модалочку
+			close()
+			setIsAlert(error.message)
 		}
+	}
+
+	const closeAlert = () => {
+		setIsAlert('')
+		open()
 	}
 
 	return (
 		<>
-			<p
-				className='md-5 inline cursor-pointer text-sm font-normal text-gray-800'
-				onClick={open}
-			>
-				Регистрация
-			</p>
+			<Back />
 			<TwoBanners banIndex1={0} banIndex2={1} />
 			<Modal opened={opened} onClose={close} title='Регистрация' centered>
 				<Box maw={300} mx='auto'>
@@ -111,6 +115,18 @@ function RegForm() {
 					</form>
 				</Box>
 			</Modal>
+			{/* Выводим предупреждение при ошибке обращения к API */}
+			{isAlert && (
+				<>
+					<Alert isAlert={isAlert} />
+					<p
+						className='mt-10 inline-block cursor-pointer text-sm font-bold text-gray-800 transition-all duration-200 hover:text-red-600'
+						onClick={closeAlert}
+					>
+						Повторить
+					</p>
+				</>
+			)}
 		</>
 	)
 }
