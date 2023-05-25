@@ -1,15 +1,15 @@
-import { useContext } from 'react';
-import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
-import productsContext from '../../context/productsContext';
-import { AuthContext } from '../../providers/AuthProvider';
+import { useContext } from 'react'
+import { FaHeart, FaRegHeart } from 'react-icons/fa'
+import { Link, useLocation } from 'react-router-dom'
+import productsContext from '../../context/productsContext'
+import { AuthContext } from '../../providers/AuthProvider'
 
 // форматируем отображаемую цену продукта с помощью Intl.NumberFormat
 function stylePrice(arg) {
 	return new Intl.NumberFormat('ru-RU', {
 		style: 'currency',
 		currency: 'RUB',
-	}).format(arg);
+	}).format(arg)
 }
 
 function ProductCard({
@@ -18,13 +18,13 @@ function ProductCard({
 	ActiveImage = FaHeart,
 	InactiveImage = FaRegHeart,
 }) {
-	const { toggleLike } = useContext(productsContext);
-	const { user } = useContext(AuthContext);
-	const isLiked = data?.likes?.includes(user?.data?._id);
-	const location = useLocation();
+	const { toggleLike } = useContext(productsContext)
+	const { user } = useContext(AuthContext)
+	const isLiked = data?.likes?.includes(user?.data?._id)
+	const location = useLocation()
 
 	return (
-		<div className='relative flex w-1/4 flex-col gap-y-2 px-3 py-6 hover:rounded-md hover:border hover:border-gray-100 hover:shadow-md md:mb-10 md:w-1/3 sm:w-1/2'>
+		<div className='relative flex w-1/4 flex-col gap-y-2 px-3 py-6 hover:rounded-md  hover:shadow-md md:mb-10 md:w-1/3 sm:w-1/2'>
 			<div className='mb-4 flex justify-center'>
 				<Link to={`/product/${data._id}`}>
 					<img
@@ -106,7 +106,7 @@ function ProductCard({
 				</div>
 			)}
 		</div>
-	);
+	)
 }
 
-export default ProductCard;
+export default ProductCard

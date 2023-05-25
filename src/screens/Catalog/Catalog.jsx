@@ -82,6 +82,7 @@ function Catalog() {
 							найдено {paginatedProds.length} товаров
 						</p>
 					)}
+
 					{/* сортировка при поиске товаров */}
 					{searchItem?.trim() && (
 						<div className='mb-10 flex items-center justify-start gap-x-4 rounded-md border border-gray-50 px-4 py-1 shadow-md md:hidden'>
@@ -96,6 +97,7 @@ function Catalog() {
 							))}
 						</div>
 					)}
+
 					{/* сортировка через select при поиске товаров на мобильном устройстве */}
 					{searchItem?.trim() && (
 						<div className='my-4 flex items-center justify-center 2xl:hidden xl:hidden lg:hidden md:block'>
