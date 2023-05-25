@@ -8,13 +8,13 @@ import RegForm from './screens/Authorization/RegForm/RegForm'
 import ResetForm from './screens/Authorization/ResetForm/ResetForm'
 import Catalog from './screens/Catalog/Catalog'
 import Contacts from './screens/Contacts/Contacts'
-import CreateProductForm from './screens/CreateProductForm/CreateProductForm'
+import CreateProduct from './screens/CreateProduct/CreateProduct'
 import Faq from './screens/Faq/Faq'
+import Favorites from './screens/Favorites/Favorites'
 import Feedback from './screens/Feedback/Feedback'
 import News from './screens/News/News'
-import Payment from './screens/Payment/Payment'
+import Payments from './screens/Payments/Payments'
 import Product from './screens/Product/Product'
-import ProductFavorite from './screens/ProductFavorite/ProductFavorite'
 import Profile from './screens/Profile/Profile'
 import Promotions from './screens/Promotions/Promotions'
 import Reviews from './screens/Reviews/Reviews'
@@ -29,21 +29,18 @@ function App() {
 					<Routes>
 						<Route index element={<Catalog />} />
 						<Route path='/product/:id' element={<Product />} />
-						<Route path='/favorite' element={<ProductFavorite />} />
+						<Route path='/favorite' element={<Favorites />} />
 						<Route path='/catalog' element={<Catalog />} />
 						<Route path='/promotions' element={<Promotions />} />
 						<Route path='/news' element={<News />} />
 						<Route path='/reviews' element={<Reviews />} />
-						<Route path='/payments' element={<Payment />} />
+						<Route path='/payments' element={<Payments />} />
 						<Route path='/faq' element={<Faq />} />
 						<Route path='/feedback' element={<Feedback />} />
 						<Route path='/contacts' element={<Contacts />} />
 						<Route path='/cart' element={<Cart />} />
 						<Route path='*' element={<Error404 />} />
-						<Route
-							path='/addproduct'
-							element={<CreateProductForm />}
-						/>
+						<Route path='/addproduct' element={<CreateProduct />} />
 						<Route path='/profile' element={<Profile />}>
 							<Route path='registration' element={<RegForm />} />
 							<Route path='auth' element={<Auth />} />
@@ -55,6 +52,7 @@ function App() {
 					</Routes>
 				</>
 			</main>
+
 			<Footer />
 		</div>
 	)

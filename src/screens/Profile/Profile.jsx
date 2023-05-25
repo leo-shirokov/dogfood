@@ -4,8 +4,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { useContext } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { changeAbout } from '../../api-user'
-import Back from '../../components/Back/Back'
-import TwoBanners from '../../components/Banner/TwoBanners'
+import TwoBanners from '../../components/Banners/TwoBanners'
 import { AuthContext } from '../../providers/AuthProvider'
 
 function Profile() {
@@ -29,8 +28,10 @@ function Profile() {
 
 	return (
 		<>
-			<Back />
-			<h2 className='mb-10 text-xl font-semibold'>Личный кабинет</h2>
+			<Link to='/' className='text-xs font-normal text-gray-600'>
+				На главную
+			</Link>
+			<h2 className='mb-10 mt-2 text-xl font-semibold'>Личный кабинет</h2>
 			{user.data._id !== 0 ? (
 				<>
 					<p className='text-lg font-semibold'>{user?.data?.name}</p>
@@ -109,7 +110,7 @@ function Profile() {
 						</button>
 						<button
 							onClick={() => navigate('/profile/registration')}
-							className='text-md rounded-md bg-gray-200 px-3 py-1 transition-all hover:bg-gray-300'
+							className='text-md mb-5 rounded-md bg-gray-200 px-3 py-1 transition-all hover:bg-gray-300'
 						>
 							Регистрация
 						</button>

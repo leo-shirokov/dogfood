@@ -1,6 +1,6 @@
 import { NativeSelect } from '@mantine/core'
 import { useCallback, useContext } from 'react'
-import TwoBanners from '../../components/Banner/TwoBanners'
+import TwoBanners from '../../components/Banners/TwoBanners'
 import Loader from '../../components/Loader/Loader'
 import Pagination from '../../components/Pagination'
 import Products from '../../components/Products'

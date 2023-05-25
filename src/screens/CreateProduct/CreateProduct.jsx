@@ -1,21 +1,22 @@
-import { Checkbox, NumberInput, TextInput } from '@mantine/core';
-import { useContext, useState } from 'react';
-import { addProduct } from '../../api';
-import { AuthContext } from '../../providers/AuthProvider';
+import { Checkbox, NumberInput, TextInput } from '@mantine/core'
+import { useContext, useState } from 'react'
+import { addProduct } from '../../api'
+import Back from '../../components/Back/Back'
+import { AuthContext } from '../../providers/AuthProvider'
 
-const CreateProductForm = () => {
-	const [available, setAvailable] = useState(false);
-	const [pictures, setPictures] = useState('');
-	const [name, setName] = useState('');
-	const [price, setPrice] = useState(0);
-	const [discount, setDiscount] = useState(0);
-	const [stock, setStock] = useState(0);
-	const [wight, setWight] = useState('');
-	const [description, setDescription] = useState('');
-	const { user } = useContext(AuthContext);
+const CreateProduct = () => {
+	const [available, setAvailable] = useState(false)
+	const [pictures, setPictures] = useState('')
+	const [name, setName] = useState('')
+	const [price, setPrice] = useState(0)
+	const [discount, setDiscount] = useState(0)
+	const [stock, setStock] = useState(0)
+	const [wight, setWight] = useState('')
+	const [description, setDescription] = useState('')
+	const { user } = useContext(AuthContext)
 
 	const createProduct = async (e) => {
-		e.preventDefault();
+		e.preventDefault()
 		await addProduct(user.token, {
 			available,
 			pictures,
@@ -25,19 +26,20 @@ const CreateProductForm = () => {
 			stock,
 			wight,
 			description,
-		});
-		setAvailable(false);
-		setPictures('');
-		setName('');
-		setPrice(0);
-		setDiscount(0);
-		setStock(0);
-		setWight('');
-		setDescription('');
-	};
+		})
+		setAvailable(false)
+		setPictures('')
+		setName('')
+		setPrice(0)
+		setDiscount(0)
+		setStock(0)
+		setWight('')
+		setDescription('')
+	}
 
 	return (
 		<>
+			<Back />
 			<h2 className='mb-10 text-lg font-semibold'>
 				Форма добавления товара
 			</h2>
@@ -117,7 +119,7 @@ const CreateProductForm = () => {
 				</div>
 			</form>
 		</>
-	);
-};
+	)
+}
 
-export default CreateProductForm;
+export default CreateProduct

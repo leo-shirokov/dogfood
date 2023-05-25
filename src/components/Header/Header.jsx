@@ -5,7 +5,7 @@ import productsContext from '../../context/productsContext'
 import BurgerMenu from '../Burger/BurgerMenu'
 import Logo from '../Logo/Logo'
 import { Search } from '../Search/Search'
-import HeaderIndex from './HeaderIndex'
+import HeaderSecondLevel from './HeaderSecondLevel'
 import iconCart from './img/cart.svg'
 import iconDog from './img/dog.svg'
 import iconLike from './img/favorites.svg'
@@ -78,7 +78,7 @@ function Header() {
 					)}
 				</div>
 			</div>
-			{location.pathname === '/' && <HeaderIndex />}
+			{location.pathname === '/' && <HeaderSecondLevel />}
 		</>
 	)
 }

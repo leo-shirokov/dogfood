@@ -4,7 +4,7 @@ import { BsHeart } from 'react-icons/bs'
 import { CgSmileSad } from 'react-icons/cg'
 import Back from '../../components/Back/Back'
 import productsContext from '../../context/productsContext'
-import ProductCard from '../../screens/ProductCard/ProductCard'
+import ProductCard from '../ProductCard/ProductCard'
 
 function ProductFavorite() {
 	const { favourites } = useContext(productsContext)
