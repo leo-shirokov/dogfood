@@ -5,6 +5,7 @@ import { useContext } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { changeAbout } from '../../api-user'
 import Back from '../../components/Back/Back'
+import TwoBanners from '../../components/Banner/TwoBanners'
 import { AuthContext } from '../../providers/AuthProvider'
 
 function Profile() {
@@ -116,6 +117,7 @@ function Profile() {
 				</>
 			)}
 			<Outlet />
+			<TwoBanners banIndex1={0} banIndex2={1} />
 		</>
 	)
 }

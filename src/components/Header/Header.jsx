@@ -1,28 +1,28 @@
-import { Badge } from '@mantine/core';
-import { useContext, useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import productsContext from '../../context/productsContext';
-import BurgerMenu from '../Burger/BurgerMenu';
-import Logo from '../Logo/Logo';
-import { Search } from '../Search/Search';
-import HeaderIndex from './HeaderIndex';
-import iconCart from './img/cart.svg';
-import iconDog from './img/dog.svg';
-import iconLike from './img/favorites.svg';
+import { Badge } from '@mantine/core'
+import { useContext, useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import productsContext from '../../context/productsContext'
+import BurgerMenu from '../Burger/BurgerMenu'
+import Logo from '../Logo/Logo'
+import { Search } from '../Search/Search'
+import HeaderIndex from './HeaderIndex'
+import iconCart from './img/cart.svg'
+import iconDog from './img/dog.svg'
+import iconLike from './img/favorites.svg'
 
 function Header() {
-	const { favourites } = useContext(productsContext);
-	const location = useLocation();
-	const [hidden, setHidden] = useState(true);
+	const { favourites } = useContext(productsContext)
+	const location = useLocation()
+	const [hidden, setHidden] = useState(true)
 
 	useEffect(() => {
 		const setVisibility = (e) => {
-			if (window.innerWidth < 768) setHidden(true);
-			else setHidden(false);
-		};
-		setVisibility();
-		window.addEventListener('resize', setVisibility);
-	}, []);
+			if (window.innerWidth < 768) setHidden(true)
+			else setHidden(false)
+		}
+		setVisibility()
+		window.addEventListener('resize', setVisibility)
+	}, [])
 
 	return (
 		<>
@@ -51,14 +51,18 @@ function Header() {
 									src={iconLike}
 									alt='favorite'
 								/>
-								<Badge
-									color='green'
-									size='xs'
-									variant='filled'
-									className='absolute -top-2 left-4 border border-yellow-300'
-								>
-									{favourites.length}
-								</Badge>
+								{favourites.length > 0 ? (
+									<Badge
+										color='green'
+										size='xs'
+										variant='filled'
+										className='absolute -top-2 left-4 border border-yellow-300'
+									>
+										{favourites.length}
+									</Badge>
+								) : (
+									<></>
+								)}
 							</Link>
 							<Link to='/cart'>
 								<img
@@ -76,7 +80,7 @@ function Header() {
 			</div>
 			{location.pathname === '/' && <HeaderIndex />}
 		</>
-	);
+	)
 }
 
-export default Header;
+export default Header
