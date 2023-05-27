@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Back from '../../components/Back/Back'
+import TwoBanners from '../../components/Banners/TwoBanners'
 import useTop from '../../hooks/useTop'
 
 const FORM_ENDPOINT = ''
@@ -8,17 +9,28 @@ function Feedback() {
 	useTop()
 
 	const [submitted, setSubmitted] = useState(false)
-	const handleSubmit = () => {
-		setTimeout(() => {
-			setSubmitted(true)
-		}, 100)
+	const nameRef = useRef(null)
+	const emailRef = useRef(null)
+	const messageRef = useRef(null)
+
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		const data = {
+			firstName: nameRef.current.value,
+			email: emailRef.current.value,
+			message: messageRef.current.value,
+		}
+		console.log(data)
+		setSubmitted(true)
 	}
 
 	if (submitted) {
 		return (
 			<>
-				<div className='text-2xl'>Thank you!</div>
-				<div className='text-md'>We'll be in touch soon.</div>
+				<div className='text-2xl'>Спасибо</div>
+				<div className='text-md'>Мы ответим вам как можно скорее</div>
+				<TwoBanners banIndex1={2} banIndex2={3} />
+				<TwoBanners banIndex1={0} banIndex2={1} />
 			</>
 		)
 	}
@@ -40,7 +52,8 @@ function Feedback() {
 						type='text'
 						placeholder='Имя'
 						name='name'
-						className='relative w-full rounded border-0 bg-white bg-white px-3 py-3 text-sm text-gray-600 placeholder-gray-400 shadow outline-none focus:outline-none focus:ring'
+						ref={nameRef}
+						className='relative w-full rounded border-0 bg-white px-3 py-3 text-sm text-gray-600 placeholder-gray-400 shadow outline-none focus:outline-none focus:ring'
 						required
 					/>
 				</div>
@@ -49,7 +62,8 @@ function Feedback() {
 						type='email'
 						placeholder='E-mail адрес'
 						name='email'
-						className='relative w-full rounded border-0 bg-white bg-white px-3 py-3 text-sm text-gray-600 placeholder-gray-400 shadow outline-none focus:outline-none focus:ring'
+						ref={emailRef}
+						className='relative w-full rounded border-0 bg-white px-3 py-3 text-sm text-gray-600 placeholder-gray-400 shadow outline-none focus:outline-none focus:ring'
 						required
 					/>
 				</div>
@@ -57,6 +71,7 @@ function Feedback() {
 					<textarea
 						placeholder='Сообщение'
 						name='message'
+						ref={messageRef}
 						className='relative w-full rounded border-0 bg-white px-3 py-3 text-sm text-gray-600 placeholder-gray-400 shadow outline-none focus:outline-none focus:ring'
 						required
 					/>

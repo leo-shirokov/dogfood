@@ -3,22 +3,16 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { Link, useLocation } from 'react-router-dom'
 import productsContext from '../../context/productsContext'
 import { AuthContext } from '../../providers/AuthProvider'
-
-// форматируем отображаемую цену продукта с помощью Intl.NumberFormat
-function stylePrice(arg) {
-	return new Intl.NumberFormat('ru-RU', {
-		style: 'currency',
-		currency: 'RUB',
-	}).format(arg)
-}
+import { CartContext } from '../../providers/CartProvider'
+import showPriceInRub from '../../utils/currency'
 
 function ProductCard({
 	data,
-	putProdToCart,
 	ActiveImage = FaHeart,
 	InactiveImage = FaRegHeart,
 }) {
 	const { toggleLike } = useContext(productsContext)
+	const { append } = useContext(CartContext)
 	const { user } = useContext(AuthContext)
 	const isLiked = data?.likes?.includes(user?.data?._id)
 	const location = useLocation()
@@ -37,10 +31,10 @@ function ProductCard({
 			{data.discount > 0 ? (
 				<div className='relative'>
 					<p className='absolute bottom-4 text-[.6875rem] font-normal text-black line-through'>
-						{stylePrice(data.price)}
+						{showPriceInRub(data.price)}
 					</p>
 					<h3 className='text-sm font-bold text-red-600'>
-						{stylePrice(
+						{showPriceInRub(
 							data.price - (data.price * data.discount) / 100
 						)}
 					</h3>
@@ -48,7 +42,7 @@ function ProductCard({
 			) : (
 				<div className=''>
 					<h3 className='text-sm font-bold'>
-						{stylePrice(data.price)}
+						{showPriceInRub(data.price)}
 					</h3>
 				</div>
 			)}
@@ -94,17 +88,15 @@ function ProductCard({
 				)}
 			</button>
 
-			{location.pathname === '/' && (
-				<div className=''>
-					<button
-						className='rounded-3xl bg-yellow-300 px-4 py-2 text-sm font-semibold shadow-md'
-						value={data._id}
-						onClick={putProdToCart}
-					>
-						В корзину
-					</button>
-				</div>
-			)}
+			<div className=''>
+				<button
+					className='rounded-3xl bg-yellow-300 px-4 py-2 text-sm font-semibold shadow-md'
+					value={data._id}
+					onClick={() => append(data, 1)}
+				>
+					В корзину
+				</button>
+			</div>
 		</div>
 	)
 }

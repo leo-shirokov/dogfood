@@ -1,5 +1,3 @@
-// доступ к RESTful API продуктов и взаимодействие с ним
-
 import printError from './utils/error'
 
 export const baseUrl = 'https://api.react-learning.ru/products/'

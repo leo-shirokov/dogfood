@@ -2,6 +2,7 @@ import { Badge } from '@mantine/core'
 import { useContext, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import productsContext from '../../context/productsContext'
+import { CartContext } from '../../providers/CartProvider'
 import BurgerMenu from '../Burger/BurgerMenu'
 import Logo from '../Logo/Logo'
 import { Search } from '../Search/Search'
@@ -12,6 +13,7 @@ import iconLike from './img/favorites.svg'
 
 function Header() {
 	const { favourites } = useContext(productsContext)
+	const { cartItems, totalItems } = useContext(CartContext)
 	const location = useLocation()
 	const [hidden, setHidden] = useState(true)
 
@@ -64,12 +66,24 @@ function Header() {
 									<></>
 								)}
 							</Link>
-							<Link to='/cart'>
+							<Link to='/cart' className='relative'>
 								<img
 									className='w-6'
 									src={iconCart}
 									alt='cart'
 								/>
+								{cartItems.length > 0 ? (
+									<Badge
+										color='green'
+										size='xs'
+										variant='filled'
+										className='absolute -top-2 left-4 border border-yellow-300'
+									>
+										{totalItems}
+									</Badge>
+								) : (
+									<></>
+								)}
 							</Link>
 							<Link to='/profile'>
 								<img className='w-6' src={iconDog} alt='dog' />

@@ -6,21 +6,17 @@ import Pagination from '../../components/Pagination'
 import Products from '../../components/Products'
 import productsContext from '../../context/productsContext'
 import usePagination from '../../hooks/usePagination'
+import { CartContext } from '../../providers/CartProvider'
+import sortOptions from '../../utils/sort'
+import ShowAlert from '../Cart/ShowAlert'
 
 function Catalog() {
 	const { loading, allProducts, searchItem, sortMode, setSortMode } =
 		useContext(productsContext)
+	const { showAlert } = useContext(CartContext)
 
-	// определяем варианты сортировки
-	const sortOptions = [
-		{ group: 'most-popular', title: 'По популярности' },
-		{ group: 'newest', title: 'Новинки' },
-		{ group: 'cheapest', title: 'Сначала дешевые' },
-		{ group: 'most-expensive', title: 'Сначала дорогие' },
-		{ group: 'highest-rated', title: 'По рейтингу' },
-		{ group: 'discounted', title: 'По скидке' },
-	]
-	// определяем функцию сортировки в зависимости от варианта сортировки
+	// определяем варианты и функцию сортировки в зависимости от этого варианта
+	const sortType = sortOptions
 	const sort = useCallback(() => {
 		let sortedProducts
 		switch (sortMode) {
@@ -70,7 +66,8 @@ function Catalog() {
 	const paginatedProds = usePagination(sort())
 
 	return (
-		<>
+		<div className='relative'>
+			{showAlert && <ShowAlert />}
 			{loading ? (
 				<Loader />
 			) : paginatedProds.length ? (
@@ -86,7 +83,7 @@ function Catalog() {
 					{/* сортировка при поиске товаров */}
 					{searchItem?.trim() && (
 						<div className='mb-10 flex items-center justify-start gap-x-4 rounded-md border border-gray-50 px-4 py-1 shadow-md md:hidden'>
-							{sortOptions.map((item) => (
+							{sortType.map((item) => (
 								<span
 									key={item.group}
 									onClick={() => setSortMode(item.group)}
@@ -102,7 +99,7 @@ function Catalog() {
 					{searchItem?.trim() && (
 						<div className='my-4 flex items-center justify-center 2xl:hidden xl:hidden lg:hidden md:block'>
 							<NativeSelect
-								data={sortOptions.map((item) => ({
+								data={sortType.map((item) => ({
 									label: item.title,
 									value: item.group,
 								}))}
@@ -114,15 +111,14 @@ function Catalog() {
 					)}
 
 					<Products products={paginatedProds} />
-
 					<Pagination />
 				</>
 			) : (
-				<p>Не удалось загрузить список товаров с сервера</p>
+				<p>Не удалось загрузить список товаров</p>
 			)}
 
 			<TwoBanners banIndex1={2} banIndex2={3} />
-		</>
+		</div>
 	)
 }
 

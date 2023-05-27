@@ -6,13 +6,7 @@ function Products({ products = [] }) {
 			{/* вывод товаров на странице */}
 			<div className='flex flex-wrap justify-start gap-y-5'>
 				{products.map((product) => (
-					<ProductCard
-						key={product._id}
-						data={product}
-						// putProdToCart={
-						//     putProdToCart
-						// }
-					/>
+					<ProductCard key={product._id} data={product} />
 				))}
 			</div>
 		</div>

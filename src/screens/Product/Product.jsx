@@ -8,6 +8,7 @@ import Back from '../../components/Back/Back'
 import Loader from '../../components/Loader/Loader'
 import productsContext from '../../context/productsContext'
 import { AuthContext } from '../../providers/AuthProvider'
+import showPriceInRub from '../../utils/currency'
 import Delivery from './Delivery'
 import Reviews from './Reviews'
 
@@ -20,14 +21,6 @@ function Product() {
 
 	const { toggleLike } = useContext(productsContext)
 	const { user } = useContext(AuthContext)
-
-	// принимает цену в виде числа и возвращает ее в формате валюты
-	function stylePrice(arg) {
-		return new Intl.NumberFormat('ru-RU', {
-			style: 'currency',
-			currency: 'RUB',
-		}).format(arg)
-	}
 
 	// загружаем информацию о продукте из API по его id при помощи функции getProductByID, сохраняем результат в product
 	const loadProduct = useCallback(async () => {
@@ -88,10 +81,10 @@ function Product() {
 						{product.discount > 0 ? (
 							<div className='relative'>
 								<p className='absolute bottom-5 text-sm font-normal text-black line-through'>
-									{stylePrice(product.price)}
+									{showPriceInRub(product.price)}
 								</p>
 								<h3 className='text-xl font-bold text-red-600'>
-									{stylePrice(
+									{showPriceInRub(
 										product.price -
 											(product.price * product.discount) /
 												100
@@ -101,7 +94,7 @@ function Product() {
 						) : (
 							<div className=''>
 								<h3 className='text-xl font-bold'>
-									{stylePrice(product.price)}
+									{showPriceInRub(product.price)}
 								</h3>
 							</div>
 						)}
@@ -179,7 +172,7 @@ function Product() {
 								{product.wight}
 							</p>
 							<p className='text-md font-normal'>
-								{stylePrice(product.price)}
+								{showPriceInRub(product.price)}
 							</p>
 						</div>
 					</div>

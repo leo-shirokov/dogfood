@@ -1,21 +1,38 @@
-import { Burger, Menu } from '@mantine/core';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Badge, Burger, Menu } from '@mantine/core'
+import { useContext, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { CartContext } from '../../providers/CartProvider'
 
 function BurgerMenu() {
-	const [opened, setOpened] = useState(false);
-	const toggle = () => setOpened((curr) => !curr);
+	const { cartItems, totalItems } = useContext(CartContext)
+	const [opened, setOpened] = useState(false)
+	const toggle = () => setOpened((curr) => !curr)
 	return (
 		<Menu shadow='md' width={200} onChange={setOpened}>
 			<Menu.Target>
 				<Burger opened={opened} onClick={toggle} size={30} />
 			</Menu.Target>
 			<Menu.Dropdown>
+				<Menu.Label>Личный кабинет</Menu.Label>
 				<Menu.Item>
 					<Link to='/profile'>Профиль</Link>
 				</Menu.Item>
 				<Menu.Item>
-					<Link to='/cart'>Корзина</Link>
+					<Link to='/cart'>
+						Корзина{' '}
+						{cartItems.length > 0 ? (
+							<Badge
+								color='yellow'
+								size='xs'
+								variant='filled'
+								className=''
+							>
+								{totalItems}
+							</Badge>
+						) : (
+							<></>
+						)}
+					</Link>
 				</Menu.Item>
 				<Menu.Divider />
 				<Menu.Label>Меню</Menu.Label>
@@ -45,7 +62,7 @@ function BurgerMenu() {
 				</Menu.Item>
 			</Menu.Dropdown>
 		</Menu>
-	);
+	)
 }
 
-export default BurgerMenu;
+export default BurgerMenu
