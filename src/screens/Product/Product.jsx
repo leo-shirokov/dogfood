@@ -1,6 +1,13 @@
 import { Modal, NumberInput, Paper, Rating, Text } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { Suspense, useCallback, useContext, useEffect, useState } from 'react'
+import {
+	Suspense,
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 import { getProductByID } from '../../api'
@@ -17,12 +24,11 @@ function Product() {
 	const [product, setProduct] = useState({ reviews: [] })
 	const [opened, { open, close }] = useDisclosure(false)
 	const [textarea, setTextarea] = useState('')
-	const [rating, setRating] = useState(5)
-
+	const [rating, setRating] = useState(0)
 	const { toggleLike } = useContext(productsContext)
 	const { user } = useContext(AuthContext)
 
-	// загружаем информацию о продукте из API по его id при помощи функции getProductByID, сохраняем результат в product
+	// Загружаем информацию о продукте из API по его id при помощи функции getProductByID, сохраняем результат в product
 	const loadProduct = useCallback(async () => {
 		if (!id) return
 		try {
@@ -30,28 +36,40 @@ function Product() {
 		} catch (error) {
 			console.log(error)
 		}
-	}, [id])
+	}, [id, user.token])
 
 	// при загрузке компонента загрузить один раз информацию о продукте
 	useEffect(() => {
 		loadProduct()
 	}, [loadProduct])
 
+	// Вычисляем средний рейтинг продукта
+	const rate = useMemo(
+		() =>
+			product.reviews.reduce(
+				(prev, review, i, arr) => prev + review.rating / arr.length,
+				0
+			),
+		[product]
+	)
+
 	return (
 		<>
 			<Back />
 			<h1 className='mb-2 text-xl font-bold'>{product?.name}</h1>
 			<div className='flex items-center justify-start gap-x-5'>
-				<Rating className='' value={rating} size='xs' readOnly />
+				<Rating className='' value={rate} size='xs' readOnly />
 
 				<a
 					href='#reviews'
 					className='text-xs text-yellow-600 hover:underline'
-				>{`отзывов: ${product.reviews.length}`}</a>
+				>
+					{`отзывов: ${product.reviews.length}`}
+				</a>
 			</div>
 
 			<div className='flex w-full gap-x-10 py-10 md:flex-col'>
-				<div className='w-1/2 cursor-pointer rounded-lg hover:border hover:border-gray-100 hover:shadow-md md:w-full'>
+				<div className='w-1/2 cursor-pointer rounded-lg p-3 hover:shadow-md md:w-full'>
 					<img
 						className='object-scale-down'
 						src={product.pictures}
@@ -145,7 +163,6 @@ function Product() {
 						</div>
 					</div>
 
-					{/* Выведение информации о доставке и гарантии качества */}
 					<Delivery />
 				</div>
 			</div>

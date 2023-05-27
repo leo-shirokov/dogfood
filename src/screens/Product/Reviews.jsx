@@ -19,7 +19,7 @@ function Reviews({
 		await addReviewById(user.token, product._id, textarea, rating)
 		loadProduct()
 		setTextarea('')
-		setRating(5)
+		setRating(0)
 	}
 
 	const deleteReview = async (reviewId) => {
@@ -35,9 +35,17 @@ function Reviews({
 
 			{/* создание нового отзыва */}
 			<details className='mb-10'>
-				<summary className='text-md mb-2 cursor-pointer font-semibold'>
+				<summary className='text-md mb-5 cursor-pointer font-semibold'>
 					Оставить отзыв
 				</summary>
+				<div className='mb-5 flex items-center justify-start gap-x-5'>
+					<span className='text-sm font-semibold'>
+						Оцените товар:
+					</span>
+					<span>
+						<Rating value={rating} onChange={setRating} />
+					</span>
+				</div>
 				<div className='mb-4 flex flex-col gap-y-4'>
 					<Textarea
 						placeholder='Введите текст'
@@ -48,14 +56,6 @@ function Reviews({
 						value={textarea}
 						onChange={(e) => setTextarea(e.currentTarget.value)}
 					/>
-					<div className='flex items-center justify-start gap-x-5'>
-						<span className='text-sm font-semibold'>
-							Оцените товар:
-						</span>
-						<span>
-							<Rating value={rating} onChange={setRating} />
-						</span>
-					</div>
 				</div>
 				<Button
 					className='transition-all hover:text-gray-600'
