@@ -5,7 +5,7 @@ import { CartContext } from '../../providers/CartProvider'
 import showPriceInRub from '../../utils/currency'
 
 function CartItem(prod) {
-	const { remove, append } = useContext(CartContext)
+	const { removeItemFromCart, addItemToCart } = useContext(CartContext)
 	// const [quantity, setQuantity] = useState(0)
 
 	return (
@@ -35,7 +35,6 @@ function CartItem(prod) {
 						</h3>
 					</div>
 				)}
-				{/* <p>{prod.discount > 0 && prod.discount + '%'}</p> */}
 			</div>
 			<div className='w-basis-1/5'>
 				<NumberInput
@@ -45,7 +44,7 @@ function CartItem(prod) {
 					placeholder='1'
 					radius='xl'
 					size='xs'
-					onChange={(value) => append(prod, value, true)}
+					onChange={(value) => addItemToCart(prod, value, true)}
 					min={1}
 					max={99}
 				/>
@@ -53,7 +52,7 @@ function CartItem(prod) {
 			<div className='basis-1/5'>
 				<p
 					className='text-md cursor-pointer'
-					onClick={() => remove(prod._id)}
+					onClick={() => removeItemFromCart(prod._id)}
 				>
 					{<RiDeleteBin5Line />}
 				</p>

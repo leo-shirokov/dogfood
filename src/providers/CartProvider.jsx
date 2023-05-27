@@ -23,15 +23,13 @@ const CartProvider = ({ children }) => {
 		setCartItems(localStorageItems)
 	}, [])
 
-	// Записываем корзину в local storage
-	const saveCart = useCallback((cart) => {
+	const saveCartToLocalStorage = useCallback((cart) => {
 		if (!Array.isArray(cart)) return
 		const localStorageItems = JSON.stringify(cart)
 		localStorage.setItem('cart', localStorageItems)
 	}, [])
 
-	// функция добавления продукта в корзину
-	const append = useCallback(
+	const addItemToCart = useCallback(
 		// если указан параметр replace = true, то quantity будет перезаписано на новое, а если false то старое и новое количества суммируются
 		(product, quantity = 1, replace = false) => {
 			// Проверяем, нет ли уже такого товара в корзине
@@ -44,21 +42,20 @@ const CartProvider = ({ children }) => {
 			} else {
 				cartCopy.push({ ...product, quantity })
 			}
-			saveCart(cartCopy)
+			saveCartToLocalStorage(cartCopy)
 			setCartItems(cartCopy)
 			setShowAlert(`${product.name} добавлен в корзину`)
 		},
-		[cartItems, saveCart]
+		[cartItems, saveCartToLocalStorage]
 	)
 
-	// функция удаления продукта из корзины
-	const remove = useCallback(
+	const removeItemFromCart = useCallback(
 		(id) => {
 			const newCart = cartItems.filter((item) => item._id !== id)
-			saveCart(newCart)
+			saveCartToLocalStorage(newCart)
 			setCartItems(newCart)
 		},
-		[cartItems, saveCart]
+		[cartItems, saveCartToLocalStorage]
 	)
 
 	const hideAlert = () => setShowAlert(null)
@@ -66,13 +63,13 @@ const CartProvider = ({ children }) => {
 	const value = useMemo(
 		() => ({
 			cartItems,
-			append,
-			remove,
+			addItemToCart,
+			removeItemFromCart,
 			showAlert,
 			hideAlert,
 			totalItems,
 		}),
-		[append, cartItems, remove, showAlert, totalItems]
+		[addItemToCart, cartItems, removeItemFromCart, showAlert, totalItems]
 	)
 
 	return <CartContext.Provider value={value}>{children}</CartContext.Provider>

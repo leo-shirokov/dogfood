@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import productsContext from '../../context/productsContext'
 import { AuthContext } from '../../providers/AuthProvider'
 import { CartContext } from '../../providers/CartProvider'
@@ -12,10 +12,9 @@ function ProductCard({
 	InactiveImage = FaRegHeart,
 }) {
 	const { toggleLike } = useContext(productsContext)
-	const { append } = useContext(CartContext)
+	const { addItemToCart } = useContext(CartContext)
 	const { user } = useContext(AuthContext)
 	const isLiked = data?.likes?.includes(user?.data?._id)
-	const location = useLocation()
 
 	return (
 		<div className='relative flex w-1/4 flex-col gap-y-2 px-3 py-6 hover:rounded-md  hover:shadow-md md:mb-10 md:w-1/3 sm:w-1/2'>
@@ -92,7 +91,7 @@ function ProductCard({
 				<button
 					className='rounded-3xl bg-yellow-300 px-4 py-2 text-sm font-semibold shadow-md'
 					value={data._id}
-					onClick={() => append(data, 1)}
+					onClick={() => addItemToCart(data, 1)}
 				>
 					В корзину
 				</button>

@@ -15,6 +15,7 @@ import Back from '../../components/Back/Back'
 import Loader from '../../components/Loader/Loader'
 import productsContext from '../../context/productsContext'
 import { AuthContext } from '../../providers/AuthProvider'
+import { CartContext } from '../../providers/CartProvider'
 import showPriceInRub from '../../utils/currency'
 import Delivery from './Delivery'
 import Reviews from './Reviews'
@@ -27,6 +28,8 @@ function Product() {
 	const [rating, setRating] = useState(0)
 	const { toggleLike } = useContext(productsContext)
 	const { user } = useContext(AuthContext)
+	const { addItemToCart } = useContext(CartContext)
+	const [itemsQuantity, setItemsQuantity] = useState(0)
 
 	// Загружаем информацию о продукте из API по его id при помощи функции getProductByID, сохраняем результат в product
 	const loadProduct = useCallback(async () => {
@@ -147,17 +150,22 @@ function Product() {
 					<div className='flex items-center justify-start gap-x-10'>
 						<NumberInput
 							className='w-20'
-							defaultValue={10}
+							value={itemsQuantity}
+							onChange={setItemsQuantity}
 							type='number'
-							placeholder='1'
+							placeholder='0'
 							radius='xl'
 							size='md'
-							// onChange={}
 							min={1}
 							max={99}
 						/>
 						<div>
-							<button className='w-26 shrink rounded-[3.75rem] bg-yellow-300 px-6 py-3 font-bold shadow-md'>
+							<button
+								onClick={() =>
+									addItemToCart(product, itemsQuantity, true)
+								}
+								className='w-26 shrink rounded-[3.75rem] bg-yellow-300 px-6 py-3 font-bold shadow-md'
+							>
 								В корзину
 							</button>
 						</div>

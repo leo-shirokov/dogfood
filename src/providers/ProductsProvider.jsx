@@ -44,7 +44,7 @@ function ProductsProvider({ children }) {
 				setLoading(false)
 			}
 		})()
-	}, [trimmedItem])
+	}, [trimmedItem, user.token])
 
 	// Создаем состояние favourites, которое фильтрует все продукты на те, которые были добавлены в избранное
 	const favourites = allProducts?.filter((prod) =>

@@ -7,7 +7,7 @@ import { changePassword, resetPassword } from '../../../api-user'
 
 function ResetForm() {
 	const [isToken, setIsToken] = useState(false)
-	const [opened, { open, close }] = useDisclosure(true)
+	const [opened, { close }] = useDisclosure(true)
 	const [visible, { toggle }] = useDisclosure(false)
 	const navigate = useNavigate()
 
