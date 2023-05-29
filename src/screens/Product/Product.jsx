@@ -8,6 +8,7 @@ import {
 	useMemo,
 	useState,
 } from 'react'
+import { BsZoomIn } from 'react-icons/bs'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 import { getProductByID } from '../../api'
@@ -72,13 +73,14 @@ function Product() {
 			</div>
 
 			<div className='flex w-full gap-x-10 py-10 md:flex-col'>
-				<div className='w-1/2 cursor-pointer rounded-lg p-3 hover:shadow-md md:w-full'>
+				<div className='relative w-1/2 cursor-pointer rounded-lg p-3 hover:shadow-md md:w-full'>
 					<img
 						className='object-scale-down'
 						src={product.pictures}
 						alt={product.name}
 						onClick={open}
 					/>
+					<p className='absolute bottom-5 left-3'>{<BsZoomIn />}</p>
 				</div>
 
 				<Modal

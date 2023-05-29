@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
+import ChangeAvatar from './components/ChangeAvatar/ChangeAvatar'
 import Error404 from './components/Error404/Error404'
 import Footer from './components/Footer/Footer'
 import Header from './components/Header/Header'
@@ -48,6 +49,7 @@ function App() {
 								path='reset-password'
 								element={<ResetForm />}
 							/>
+							<Route path='avatar' element={<ChangeAvatar />} />
 						</Route>
 					</Routes>
 				</>

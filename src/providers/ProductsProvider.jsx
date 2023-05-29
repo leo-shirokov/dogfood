@@ -4,7 +4,6 @@ import ProductsContext from '../context/productsContext'
 import { AuthContext } from './AuthProvider'
 
 function ProductsProvider({ children }) {
-	// Инициализируем состояния
 	const [allProducts, setAllProducts] = useState([])
 	const [total, setTotal] = useState(0)
 	const [searchItem, setSearchItem] = useState('')
@@ -14,7 +13,6 @@ function ProductsProvider({ children }) {
 	const [activePage, setActivePage] = useState(1)
 	const [sortMode, setSortMode] = useState('all')
 
-	// Обрезаем поисковый запрос от пробелов
 	const trimmedItem = searchItem.trim()
 
 	// Создаем useEffect, который получает все продукты, если пользователем не активирован поиск, иначе - ищет продукты, соответствующие запросу
@@ -46,12 +44,11 @@ function ProductsProvider({ children }) {
 		})()
 	}, [trimmedItem, user.token])
 
-	// Создаем состояние favourites, которое фильтрует все продукты на те, которые были добавлены в избранное
 	const favourites = allProducts?.filter((prod) =>
 		prod.likes.includes(user?.data?._id)
 	)
 
-	// Создаем колбэк, принимающий productData, вызывающийся при нажатии на лайк; функция изменяет состояние allProducts, чтобы обновить список избранных продуктов; если продукт уже был добавлен в избранное, он удаляется из списка, иначе - добавляется
+	// Обновляем избранное: если продукт уже был добавлен, он удаляется из списка, иначе - добавляется
 	const toggleLike = useCallback(
 		async (productData) => {
 			const userId = user?.data?._id
@@ -77,7 +74,6 @@ function ProductsProvider({ children }) {
 		[user]
 	)
 
-	// Кэшируем контекст для оптимизации производительности
 	const value = useMemo(
 		() => ({
 			allProducts,
@@ -109,7 +105,6 @@ function ProductsProvider({ children }) {
 	)
 
 	return (
-		// Создаем контекст ProductsContext, в который передаем объект value
 		<ProductsContext.Provider value={value}>
 			{children}
 		</ProductsContext.Provider>

@@ -1,12 +1,12 @@
 import { NumberInput } from '@mantine/core'
 import { useContext } from 'react'
 import { RiDeleteBin5Line } from 'react-icons/ri'
+import { Link } from 'react-router-dom'
 import { CartContext } from '../../providers/CartProvider'
 import showPriceInRub from '../../utils/currency'
 
 function CartItem(prod) {
 	const { removeItemFromCart, addItemToCart } = useContext(CartContext)
-	// const [quantity, setQuantity] = useState(0)
 
 	return (
 		<div className='mb-5 flex items-center justify-start gap-x-10 border-b py-5'>
@@ -14,9 +14,11 @@ function CartItem(prod) {
 				<img className='w-20' src={prod.pictures} alt='product' />
 			</div>
 			<div className='basis-2/5'>
-				<p className='text-md mb-3 font-semibold md:text-sm md:font-normal'>
-					{prod.name}
-				</p>
+				<Link to={`/product/${prod._id}`}>
+					<p className='text-md mb-3 font-semibold md:text-sm md:font-normal'>
+						{prod.name}
+					</p>
+				</Link>
 				{prod.discount > 0 ? (
 					<div className='relative'>
 						<p className='absolute bottom-4 text-[.6875rem] font-normal text-black line-through'>

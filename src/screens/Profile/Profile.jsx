@@ -3,7 +3,7 @@ import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useContext } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
-import { changeAbout } from '../../api-user'
+import { changeUserInfo } from '../../api-user'
 import TwoBanners from '../../components/Banners/TwoBanners'
 import { AuthContext } from '../../providers/AuthProvider'
 
@@ -21,7 +21,11 @@ function Profile() {
 	})
 
 	const handleSubmit = async (values) => {
-		const userInfo = await changeAbout(user.token, user.data.group, values)
+		const userInfo = await changeUserInfo(
+			user.token,
+			user.data.group,
+			values
+		)
 		setUser((prev) => ({ ...prev, data: userInfo }))
 		close()
 	}
@@ -38,6 +42,19 @@ function Profile() {
 					<p className='mb-4 text-xs text-gray-400'>
 						{user?.data?.group}
 					</p>
+					<div className='flex flex-col'>
+						<p
+							onClick={() => navigate('/profile/avatar')}
+							className='cursor-pointer text-xs text-gray-400 transition-all duration-200 hover:text-gray-600'
+						>
+							изменить
+						</p>
+						<img
+							className='w-40 rounded-md'
+							src={user?.data?.avatar}
+							alt={user?.data?.name}
+						/>
+					</div>
 					<div className='flex gap-x-5'>
 						<p className='text-md mb-2'>{user?.data?.about}</p>
 						<p
@@ -61,6 +78,7 @@ function Profile() {
 							Выйти
 						</button>
 					</div>
+
 					<Modal
 						opened={opened}
 						onClose={close}

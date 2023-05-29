@@ -87,7 +87,7 @@ function ProductCard({
 				)}
 			</button>
 
-			<div className=''>
+			<div>
 				<button
 					className='rounded-3xl bg-yellow-300 px-4 py-2 text-sm font-semibold shadow-md'
 					value={data._id}

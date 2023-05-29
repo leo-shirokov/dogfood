@@ -64,8 +64,8 @@ export const changePassword = async (token, newPassword) => {
 	}
 }
 
-// отправляет запрос PATCH для изменения поля about пользователя
-export const changeAbout = async (token, groupId, newAbout) => {
+// отправляет запрос PATCH для изменения имени пользователя и поля about
+export const changeUserInfo = async (token, groupId, newAbout) => {
 	try {
 		const res = await fetch(`${regUrl}v2/${groupId}/users/me`, {
 			method: 'PATCH',
@@ -81,10 +81,29 @@ export const changeAbout = async (token, groupId, newAbout) => {
 	}
 }
 
+// отправляет запрос PATCH для изменения аватара
+export const changeAvatar = async (token, groupId, link) => {
+	try {
+		const res = await fetch(`${regUrl}v2/${groupId}/users/me/avatar`, {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				authorization: token,
+			},
+			body: JSON.stringify(link),
+		})
+		return printError(res)
+	} catch (error) {
+		console.error(error)
+	}
+}
+
 const exports = {
 	signupUser,
 	signinUser,
 	resetPassword,
 	changePassword,
+	changeUserInfo,
+	changeAvatar,
 }
 export default exports

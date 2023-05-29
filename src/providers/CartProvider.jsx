@@ -6,16 +6,13 @@ const CartProvider = ({ children }) => {
 	const [cartItems, setCartItems] = useState([]) // все товары, которые сейчас в корзине
 	const [showAlert, setShowAlert] = useState('') // сообщение после добавления в корзину
 
-	// общее количество товаров в корзине, включая количество одинаковых продуктов
 	const totalItems = useMemo(
 		() => cartItems.reduce((prev, item) => prev + (item?.quantity ?? 1), 0),
 		[cartItems]
-	)
+	) // общее количество товаров в корзине, включая количество одинаковых продуктов
 
-	// Читаем корзину из local storage один раз при загрузке
 	useEffect(() => {
 		let localStorageItems = []
-		// Оборачиваем в try-catch потому что JSON.parse может не сработать
 		try {
 			const items = JSON.parse(localStorage.getItem('cart'))
 			if (Array.isArray(items)) localStorageItems = items

@@ -1,6 +1,5 @@
 import { createContext, useEffect, useMemo, useState } from 'react'
 
-// Константа аутентификации — JSON web token, которая отправляется в заголовке с каждым запросом пользователя к API; добавляем для незарегистрированного пользователя токен по умолчанию
 export const defaultToken =
 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDNlZDE0NTMyOTFkNzkwYjNmMzRjZDIiLCJncm91cCI6Imdyb3VwLTEyIiwiaWF0IjoxNjgxODM4NDc0LCJleHAiOjE3MTMzNzQ0NzR9.GX6DSN6V_eJJ85fLMO_0T5J5KRD2a2pvmtYjHow3yRg'
 
@@ -22,13 +21,11 @@ export const AuthContext = createContext()
 const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(defaultUser)
 
-	// очистить local storage при выходе зарегистрированного пользователя, включить Гостя
 	const logoutUser = () => {
 		localStorage.removeItem('user')
 		setUser(defaultUser)
 	}
 
-	// синхронизация с local storage
 	useEffect(() => {
 		if (user.data._id === 0) {
 			const storageUser = JSON.parse(localStorage.getItem('user'))
