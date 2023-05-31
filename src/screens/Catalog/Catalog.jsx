@@ -7,6 +7,7 @@ import Products from '../../components/Products'
 import productsContext from '../../context/productsContext'
 import usePagination from '../../hooks/usePagination'
 import { CartContext } from '../../providers/CartProvider'
+import { useGetAllProductsQuery } from '../../store/API/products.api'
 import sortOptions from '../../utils/sort'
 import ShowAlert from '../Cart/ShowAlert'
 
@@ -64,6 +65,8 @@ function Catalog() {
 	}, [allProducts, sortMode])
 
 	const paginatedProds = usePagination(sort())
+
+	const { data, error, isLoading } = useGetAllProductsQuery()
 
 	return (
 		<div className='relative'>

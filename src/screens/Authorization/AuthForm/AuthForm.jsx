@@ -5,11 +5,13 @@ import { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { signinUser } from '../../../api-user'
 import { AuthContext } from '../../../providers/AuthProvider'
+import { CartContext } from '../../../providers/CartProvider'
 
 function AuthForm() {
 	const [opened, { close }] = useDisclosure(true)
 	const navigate = useNavigate()
 	const { setUser } = useContext(AuthContext)
+	const { cleanCart } = useContext(CartContext)
 	const [visible, { toggle }] = useDisclosure(false)
 
 	const form = useForm({
@@ -30,6 +32,7 @@ function AuthForm() {
 	}
 
 	const handleSubmit = async (values) => {
+		cleanCart()
 		const userInfo = await signinUser(values)
 		setUser(userInfo)
 		navigate('/profile')

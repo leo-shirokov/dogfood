@@ -55,6 +55,11 @@ const CartProvider = ({ children }) => {
 		[cartItems, saveCartToLocalStorage]
 	)
 
+	const cleanCart = useCallback(() => {
+		localStorage.removeItem('cart')
+		setCartItems([])
+	}, [])
+
 	const hideAlert = () => setShowAlert(null)
 
 	const value = useMemo(
@@ -65,8 +70,16 @@ const CartProvider = ({ children }) => {
 			showAlert,
 			hideAlert,
 			totalItems,
+			cleanCart,
 		}),
-		[addItemToCart, cartItems, removeItemFromCart, showAlert, totalItems]
+		[
+			addItemToCart,
+			cartItems,
+			cleanCart,
+			removeItemFromCart,
+			showAlert,
+			totalItems,
+		]
 	)
 
 	return <CartContext.Provider value={value}>{children}</CartContext.Provider>

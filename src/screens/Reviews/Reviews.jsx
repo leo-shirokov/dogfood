@@ -1,4 +1,4 @@
-import { Carousel } from '@mantine/carousel'
+//import { Carousel } from '@mantine/carousel'
 import { Rating } from '@mantine/core'
 import { useContext, useMemo, useState } from 'react'
 import Back from '../../components/Back/Back'
@@ -34,7 +34,7 @@ function Reviews() {
 			<p className='mb-6 text-sm font-semibold'>
 				Фотографии наших покупателей
 			</p>
-			<Carousel
+			{/* <Carousel
 				align='start'
 				slideSize='25%'
 				height={80}
@@ -57,7 +57,7 @@ function Reviews() {
 						></img>
 					</Carousel.Slide>
 				))}
-			</Carousel>
+			</Carousel> */}
 
 			<div className='my-10 flex flex-col justify-start gap-y-5'>
 				{reviews.slice(0, visible).map((review) => (
