@@ -1,39 +1,39 @@
 import { NumberInput } from '@mantine/core'
-import { useContext } from 'react'
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
-import { CartContext } from '../../providers/CartProvider'
+import useActions from '../../hooks/useActions'
 import showPriceInRub from '../../utils/currency'
 
-function CartItem(prod) {
-	const { removeItemFromCart, addItemToCart } = useContext(CartContext)
+function CartItem(product) {
+	const { addToCart, removeItemFromCart } = useActions()
 
 	return (
 		<div className='mb-5 flex items-center justify-start gap-x-10 border-b py-5'>
 			<div className='basis-1/5'>
-				<img className='w-20' src={prod.pictures} alt='product' />
+				<img className='w-20' src={product.pictures} alt='product' />
 			</div>
 			<div className='basis-2/5'>
-				<Link to={`/product/${prod._id}`}>
+				<Link to={`/product/${product._id}`}>
 					<p className='text-md mb-3 font-semibold md:text-sm md:font-normal'>
-						{prod.name}
+						{product.name}
 					</p>
 				</Link>
-				{prod.discount > 0 ? (
+				{product.discount > 0 ? (
 					<div className='relative'>
 						<p className='absolute bottom-4 text-[.6875rem] font-normal text-black line-through'>
-							{showPriceInRub(prod.price)}
+							{showPriceInRub(product.price)}
 						</p>
 						<h3 className='text-sm font-bold text-red-600'>
 							{showPriceInRub(
-								prod.price - (prod.price * prod.discount) / 100
+								product.price -
+									(product.price * product.discount) / 100
 							)}
 						</h3>
 					</div>
 				) : (
 					<div className=''>
 						<h3 className='text-sm font-bold'>
-							{showPriceInRub(prod.price)}
+							{showPriceInRub(product.price)}
 						</h3>
 					</div>
 				)}
@@ -41,12 +41,18 @@ function CartItem(prod) {
 			<div className='w-basis-1/5'>
 				<NumberInput
 					className='mb-3 w-20'
-					value={prod?.quantity ?? 0}
+					value={product?.quantity ?? 0}
 					type='number'
 					placeholder='1'
 					radius='xl'
 					size='xs'
-					onChange={(value) => addItemToCart(prod, value, true)}
+					onChange={(value) =>
+						addToCart({
+							product,
+							quantity: value,
+							replace: true,
+						})
+					}
 					min={1}
 					max={99}
 				/>
@@ -54,7 +60,7 @@ function CartItem(prod) {
 			<div className='basis-1/5'>
 				<p
 					className='text-md cursor-pointer'
-					onClick={() => removeItemFromCart(prod._id)}
+					onClick={() => removeItemFromCart(product._id)}
 				>
 					{<RiDeleteBin5Line />}
 				</p>

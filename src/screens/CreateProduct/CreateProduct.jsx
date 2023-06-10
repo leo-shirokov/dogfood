@@ -1,10 +1,10 @@
 import { Checkbox, NumberInput, TextInput } from '@mantine/core'
-import { useContext, useState } from 'react'
-import { addProduct } from '../../api'
+import { useState } from 'react'
 import Back from '../../components/Back/Back'
-import { AuthContext } from '../../providers/AuthProvider'
+import { useAddProductMutation } from '../../store/products/products.api'
 
 const CreateProduct = () => {
+	const [addProduct] = useAddProductMutation()
 	const [available, setAvailable] = useState(false)
 	const [pictures, setPictures] = useState('')
 	const [name, setName] = useState('')
@@ -13,11 +13,21 @@ const CreateProduct = () => {
 	const [stock, setStock] = useState(0)
 	const [wight, setWight] = useState('')
 	const [description, setDescription] = useState('')
-	const { user } = useContext(AuthContext)
+
+	const clearForm = () => {
+		setAvailable(false)
+		setPictures('')
+		setName('')
+		setPrice(0)
+		setDiscount(0)
+		setStock(0)
+		setWight('')
+		setDescription('')
+	}
 
 	const createProduct = async (e) => {
 		e.preventDefault()
-		await addProduct(user.token, {
+		await addProduct({
 			available,
 			pictures,
 			name,
@@ -27,14 +37,7 @@ const CreateProduct = () => {
 			wight,
 			description,
 		})
-		setAvailable(false)
-		setPictures('')
-		setName('')
-		setPrice(0)
-		setDiscount(0)
-		setStock(0)
-		setWight('')
-		setDescription('')
+		clearForm()
 	}
 
 	return (

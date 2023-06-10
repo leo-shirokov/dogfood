@@ -1,15 +1,16 @@
 import { Paper } from '@mantine/core'
 import { ethers } from 'ethers'
-import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import Back from '../../components/Back/Back'
 import TwoBanners from '../../components/Banners/TwoBanners'
-import { CartContext } from '../../providers/CartProvider'
+import useActions from '../../hooks/useActions'
+import useCart from '../../hooks/useCart'
 import showPriceInRub from '../../utils/currency'
 import CartItem from './CartItem'
 
 function Cart() {
-	const { cartItems, setCartItems, totalItems } = useContext(CartContext)
+	const { cartItems, totalItems } = useCart()
+	const { cleanCart } = useActions()
 
 	const cost = cartItems.reduce(
 		(sum, item) =>
@@ -37,7 +38,7 @@ function Cart() {
 				value: weiAmount,
 			})
 			console.log(res)
-			setCartItems([])
+			cleanCart()
 			localStorage.removeItem('cart')
 		} catch (error) {
 			console.error(error)

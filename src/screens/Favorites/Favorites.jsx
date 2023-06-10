@@ -1,14 +1,12 @@
-import { useContext } from 'react'
 import { BiTrashAlt } from 'react-icons/bi'
 import { BsHeart } from 'react-icons/bs'
 import { CgSmileSad } from 'react-icons/cg'
 import Back from '../../components/Back/Back'
-import productsContext from '../../context/productsContext'
+import useProducts from '../../hooks/useProducts'
 import ProductCard from '../ProductCard/ProductCard'
 
 function ProductFavorite() {
-	const { favourites } = useContext(productsContext)
-
+	const { favourites } = useProducts()
 	return (
 		<div>
 			<Back />

@@ -1,14 +1,14 @@
 //import { Carousel } from '@mantine/carousel'
 import { Rating } from '@mantine/core'
-import { useContext, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import Back from '../../components/Back/Back'
-import productsContext from '../../context/productsContext'
+import useProducts from '../../hooks/useProducts'
 import useTop from '../../hooks/useTop'
 
 function Reviews() {
 	useTop()
 
-	const { allProducts } = useContext(productsContext)
+	const allProducts = useProducts().products
 	const [visible, setVisible] = useState(6)
 
 	const showMoreItems = () => {

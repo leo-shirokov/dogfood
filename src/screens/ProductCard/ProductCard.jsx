@@ -1,9 +1,8 @@
-import { useContext } from 'react'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import productsContext from '../../context/productsContext'
-import { AuthContext } from '../../providers/AuthProvider'
-import { CartContext } from '../../providers/CartProvider'
+import useActions from '../../hooks/useActions'
+import useUser from '../../hooks/useUser'
+import { useSetLikeMutation } from '../../store/products/products.api'
 import showPriceInRub from '../../utils/currency'
 
 function ProductCard({
@@ -11,9 +10,9 @@ function ProductCard({
 	ActiveImage = FaHeart,
 	InactiveImage = FaRegHeart,
 }) {
-	const { toggleLike } = useContext(productsContext)
-	const { addItemToCart } = useContext(CartContext)
-	const { user } = useContext(AuthContext)
+	const { addToCart } = useActions()
+	const [setLike] = useSetLikeMutation()
+	const { user } = useUser()
 	const isLiked = data?.likes?.includes(user?.data?._id)
 
 	return (
@@ -79,7 +78,12 @@ function ProductCard({
 				</div>
 			)}
 
-			<button onClick={() => toggleLike(data)}>
+			<button
+				onClick={() => {
+					const id = data?._id
+					setLike({ id, isLiked: !isLiked })
+				}}
+			>
 				{isLiked ? (
 					<ActiveImage className='absolute right-2 top-2 text-xl text-red-500' />
 				) : (
@@ -91,7 +95,7 @@ function ProductCard({
 				<button
 					className='rounded-3xl bg-yellow-300 px-4 py-2 text-sm font-semibold shadow-md'
 					value={data._id}
-					onClick={() => addItemToCart(data, 1)}
+					onClick={() => addToCart({ product: data, quantity: 1 })}
 				>
 					В корзину
 				</button>

@@ -1,25 +1,26 @@
-import { useContext } from "react";
-import productsContext from "../../context/productsContext";
+import { useDispatch, useSelector } from 'react-redux'
+import { setKeyWord } from '../../store/search/search.slice'
 
 export const Search = () => {
-    const { searchItem, setSearchItem, setActivePage, setSortMode } =
-        useContext(productsContext);
+	const dispatch = useDispatch()
+	const { keyWord } = useSelector((state) => state.search)
 
-    const onChange = (e) => {
-        const searchText = e.target.value;
-        setSearchItem(searchText);
-        setActivePage(1);
-        if (searchText === "") {
-            setSortMode("all");
-        }
-    };
-    return (
-        <input
-            className="rounded-3xl bg-white w-full h-[2.625rem] caret-yellow-300 
-            text-base text-gray-900 py-5 px-5 border-solid border-transparent"
-            placeholder="Поиск"
-            value={searchItem}
-            onChange={onChange}
-        />
-    );
-};
+	const onChange = (e) => {
+		const searchText = e.target.value
+		dispatch(setKeyWord(searchText))
+		// setSearchItem(searchText)
+		// setActivePage(1)
+		// if (searchText === '') {
+		// 	setSortMode('all')
+		// }
+	}
+	return (
+		<input
+			className='h-[2.625rem] w-full rounded-3xl border-solid border-transparent 
+            bg-white px-5 py-5 text-base text-gray-900 caret-yellow-300'
+			placeholder='Поиск'
+			value={keyWord}
+			onChange={onChange}
+		/>
+	)
+}

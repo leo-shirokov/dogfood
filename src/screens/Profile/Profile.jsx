@@ -1,14 +1,14 @@
 import { Group, Modal, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
-import { useContext } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
-import { changeUserInfo } from '../../api-user'
 import TwoBanners from '../../components/Banners/TwoBanners'
-import { AuthContext } from '../../providers/AuthProvider'
+import useActions from '../../hooks/useActions'
+import useUser from '../../hooks/useUser'
 
 function Profile() {
-	const { user, logoutUser, setUser } = useContext(AuthContext)
+	const { logoutUser, changeUserInfo } = useActions()
+	const { user } = useUser()
 	const [opened, { open, close }] = useDisclosure(false)
 	const navigate = useNavigate()
 
@@ -21,13 +21,11 @@ function Profile() {
 	})
 
 	const handleSubmit = async (values) => {
-		const userInfo = await changeUserInfo(
-			user.token,
-			user.data.group,
-			values
-		)
-		setUser((prev) => ({ ...prev, data: userInfo }))
 		close()
+		changeUserInfo({
+			groupId: user.data.group,
+			info: values,
+		})
 	}
 
 	return (
@@ -72,7 +70,7 @@ function Profile() {
 							<Link to='/addproduct'>Добавить новый товар</Link>
 						</div>
 						<button
-							onClick={logoutUser}
+							onClick={() => logoutUser()}
 							className='mt-5 rounded-md bg-gray-200 px-3 py-px text-sm font-normal text-gray-500 shadow-md transition-all duration-200 hover:bg-gray-300 hover:text-gray-600'
 						>
 							Выйти

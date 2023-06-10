@@ -1,30 +1,37 @@
 import { Button, Rating, Textarea } from '@mantine/core'
-import { useContext } from 'react'
 import { BsTrash } from 'react-icons/bs'
-import { addReviewById, deleteReviewById } from '../../api'
-import { AuthContext } from '../../providers/AuthProvider'
+import useUser from '../../hooks/useUser'
+import {
+	useAddReviewByIdMutation,
+	useDeleteReviewByIdMutation,
+} from '../../store/products/products.api'
 
-function Reviews({
-	product,
-	loadProduct,
-	textarea,
-	setTextarea,
-	rating,
-	setRating,
-}) {
-	const { user } = useContext(AuthContext)
+function Reviews({ product, textarea, setTextarea, rating, setRating }) {
+	const { user } = useUser()
+	const [addReviewById] = useAddReviewByIdMutation()
+	const [deleteReviewById] = useDeleteReviewByIdMutation()
 
-	// обработчик кнопки "Добавить отзыв". Добавляет отзыв через API; снова вызывает ф-цию загрузки продукта чтобы обновить инфо о продукте
-	const addReview = async () => {
-		await addReviewById(user.token, product._id, textarea, rating)
-		loadProduct()
+	const clearForm = () => {
 		setTextarea('')
 		setRating(0)
 	}
 
+	// обработчик кнопки "Добавить отзыв". Добавляет отзыв через API; снова вызывает ф-цию загрузки продукта чтобы обновить инфо о продукте
+	const addReview = async () => {
+		await addReviewById({
+			id: product._id,
+			review: textarea,
+			rating,
+		})
+		clearForm()
+	}
+
 	const deleteReview = async (reviewId) => {
-		await deleteReviewById(user.token, product._id, reviewId)
-		loadProduct()
+		await deleteReviewById({
+			id: product._id,
+			reviewId,
+		})
+		clearForm()
 	}
 
 	return (
