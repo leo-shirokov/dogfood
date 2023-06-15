@@ -9,6 +9,7 @@ export const store = configureStore({
 		user: userReducers,
 		cart: cartReducers,
 		search: searchReducers,
+		// RTK query
 		[productsApi.reducerPath]: productsApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>

@@ -6,6 +6,7 @@ import {
 } from 'react-icons/fa'
 import { SlSocialVkontakte } from 'react-icons/sl'
 import Back from '../../components/Back/Back'
+import TwoBanners from '../../components/Banners/TwoBanners'
 import useTop from '../../hooks/useTop'
 
 function Contacts() {
@@ -41,6 +42,7 @@ function Contacts() {
 					<SlSocialVkontakte />
 				</a>
 			</div>
+			<TwoBanners banIndex1={2} banIndex2={3} />
 		</>
 	)
 }

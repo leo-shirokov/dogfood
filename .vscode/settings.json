@@ -8,5 +8,11 @@
 		"Mantine",
 		"tailwindcss"
 	],
-	"cSpell.ignoreWords": ["addproduct", "raiting", "signin", "signup"]
+	"cSpell.ignoreWords": [
+		"addproduct",
+		"raiting",
+		"reduxjs",
+		"signin",
+		"signup"
+	]
 }
