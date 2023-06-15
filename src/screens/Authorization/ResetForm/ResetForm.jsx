@@ -3,9 +3,10 @@ import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { changePassword, resetPassword } from '../../../api-user'
+import useActions from '../../../hooks/useActions'
 
 function ResetForm() {
+	const { changePassword, resetPassword } = useActions()
 	const [isToken, setIsToken] = useState(false)
 	const [opened, { close }] = useDisclosure(true)
 	const [visible, { toggle }] = useDisclosure(false)
@@ -32,9 +33,7 @@ function ResetForm() {
 		if (data.token) {
 			const dataCopy = { ...data }
 			delete dataCopy.email
-			await changePassword(dataCopy.token, {
-				password: dataCopy.password,
-			})
+			await changePassword(dataCopy.password)
 			navigate('/profile')
 		} else {
 			const dataCopy = { ...data }

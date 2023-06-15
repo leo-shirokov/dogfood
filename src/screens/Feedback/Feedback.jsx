@@ -85,6 +85,7 @@ function Feedback() {
 					</button>
 				</div>
 			</form>
+			<TwoBanners banIndex1={2} banIndex2={3} />
 		</>
 	)
 }

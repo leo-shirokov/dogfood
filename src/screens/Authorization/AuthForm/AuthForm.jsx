@@ -1,15 +1,13 @@
 import { Box, Group, Modal, PasswordInput, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
-import { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { signinUser } from '../../../api-user'
-import { AuthContext } from '../../../providers/AuthProvider'
+import useActions from '../../../hooks/useActions'
 
 function AuthForm() {
-	const [opened, { close }] = useDisclosure(true)
+	const { cleanCart, signinUser } = useActions()
 	const navigate = useNavigate()
-	const { setUser } = useContext(AuthContext)
+	const [opened, { close }] = useDisclosure(true)
 	const [visible, { toggle }] = useDisclosure(false)
 
 	const form = useForm({
@@ -30,8 +28,8 @@ function AuthForm() {
 	}
 
 	const handleSubmit = async (values) => {
-		const userInfo = await signinUser(values)
-		setUser(userInfo)
+		await signinUser(values)
+		cleanCart()
 		navigate('/profile')
 	}
 

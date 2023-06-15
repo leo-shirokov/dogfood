@@ -1,29 +1,26 @@
-import { useContext } from "react";
-import productsContext from "../context/productsContext";
-import { Pagination as MantinePagination } from "@mantine/core";
-import { useNavigate } from "react-router-dom";
+import { Pagination as MantinePagination } from '@mantine/core'
+import { useNavigate } from 'react-router-dom'
 
-function Pagination() {
-  const { searchItem, activePage, setActivePage } = useContext(productsContext);
+const ITEMS_ON_PAGE = 12
 
-  const navigate = useNavigate();
-  const nav = (num) => {
-    navigate(`/?page=${num}`);
-    setActivePage(num);
-  };
+function Pagination({ activePage, setActivePage, totalItems }) {
+	const navigate = useNavigate()
+	const nav = (num) => {
+		navigate(`/?page=${num}`)
+		setActivePage(num)
+	}
+	const totalPages = Math.floor(totalItems / ITEMS_ON_PAGE)
 
-  return (
-    <div className="flex justify-center my-10">
-      {!searchItem && (
-        <MantinePagination
-          value={activePage}
-          onChange={nav}
-          total={15}
-          color="yellow"
-        />
-      )}
-    </div>
-  );
+	return (
+		<div className='my-10 flex justify-center'>
+			<MantinePagination
+				value={activePage}
+				onChange={nav}
+				total={totalPages}
+				color='yellow'
+			/>
+		</div>
+	)
 }
 
-export default Pagination;
+export default Pagination

@@ -1,10 +1,10 @@
 import { Badge, Burger, Menu } from '@mantine/core'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { CartContext } from '../../providers/CartProvider'
+import useCart from '../../hooks/useCart'
 
 function BurgerMenu() {
-	const { cartItems, totalItems } = useContext(CartContext)
+	const { cartItems, totalItems } = useCart()
 	const [opened, setOpened] = useState(false)
 	const toggle = () => setOpened((curr) => !curr)
 	return (

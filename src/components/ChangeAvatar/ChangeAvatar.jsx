@@ -1,13 +1,13 @@
 import { Group, Modal, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
-import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { changeAvatar } from '../../api-user'
-import { AuthContext } from '../../providers/AuthProvider'
+import useActions from '../../hooks/useActions'
+import useUser from '../../hooks/useUser'
 
 function ChangeAvatar() {
-	const { user, setUser } = useContext(AuthContext)
+	const { user } = useUser()
+	const { changeAvatar } = useActions()
 	const [opened, { close }] = useDisclosure(true)
 	const navigate = useNavigate()
 
@@ -19,8 +19,7 @@ function ChangeAvatar() {
 	})
 
 	const handleSubmit = async (values) => {
-		const userInfo = await changeAvatar(user.token, user.data.group, values)
-		setUser((prev) => ({ ...prev, data: userInfo }))
+		await changeAvatar({ groupId: user.data.group, link: values })
 		close()
 		navigate('/profile')
 	}

@@ -3,10 +3,11 @@ import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { signupUser } from '../../../api-user'
 import Alert from '../../../components/Alert/Alert'
+import useActions from '../../../hooks/useActions'
 
 function RegForm() {
+	const { signupUser, getUserInfo } = useActions()
 	const [opened, { open, close }] = useDisclosure(true)
 	const navigate = useNavigate()
 	const [visible, { toggle }] = useDisclosure(false)
@@ -43,9 +44,9 @@ function RegForm() {
 		try {
 			const valuesCopy = { ...values }
 			delete valuesCopy.confirmPassword
-			const res = await signupUser(valuesCopy)
+			await signupUser(valuesCopy)
+			await getUserInfo({ groupId: values.groupId })
 			navigate('/auth')
-			console.log(res)
 		} catch (error) {
 			close()
 			setIsAlert(error.message)

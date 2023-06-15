@@ -1,8 +1,8 @@
 import { Badge } from '@mantine/core'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import productsContext from '../../context/productsContext'
-import { CartContext } from '../../providers/CartProvider'
+import useCart from '../../hooks/useCart'
+import useProducts from '../../hooks/useProducts'
 import BurgerMenu from '../Burger/BurgerMenu'
 import Logo from '../Logo/Logo'
 import { Search } from '../Search/Search'
@@ -12,8 +12,6 @@ import iconDog from './img/dog.svg'
 import iconLike from './img/favorites.svg'
 
 function Header() {
-	const { favourites } = useContext(productsContext)
-	const { cartItems, totalItems } = useContext(CartContext)
 	const location = useLocation()
 	const [hidden, setHidden] = useState(true)
 
@@ -25,6 +23,9 @@ function Header() {
 		setVisibility()
 		window.addEventListener('resize', setVisibility)
 	}, [])
+
+	const { favourites } = useProducts()
+	const { cartItems, totalItems } = useCart()
 
 	return (
 		<>

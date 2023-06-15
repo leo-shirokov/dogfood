@@ -1,63 +1,47 @@
 import { Modal, NumberInput, Paper, Rating, Text } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import {
-	Suspense,
-	useCallback,
-	useContext,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react'
+import { Suspense, useMemo, useState } from 'react'
 import { BsZoomIn } from 'react-icons/bs'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
-import { getProductByID } from '../../api'
 import Back from '../../components/Back/Back'
 import Loader from '../../components/Loader/Loader'
-import productsContext from '../../context/productsContext'
-import { AuthContext } from '../../providers/AuthProvider'
-import { CartContext } from '../../providers/CartProvider'
+import useActions from '../../hooks/useActions'
+import useUser from '../../hooks/useUser'
+import {
+	useGetProductByIdQuery,
+	useSetLikeMutation,
+} from '../../store/products/products.api'
 import showPriceInRub from '../../utils/currency'
 import Delivery from './Delivery'
 import Reviews from './Reviews'
 
 function Product() {
 	const { id } = useParams()
-	const [product, setProduct] = useState({ reviews: [] })
+	const { user } = useUser()
+	const { data: product } = useGetProductByIdQuery({ id })
+	const { addToCart } = useActions()
+	const [setLike] = useSetLikeMutation()
+
 	const [opened, { open, close }] = useDisclosure(false)
 	const [textarea, setTextarea] = useState('')
 	const [rating, setRating] = useState(0)
-	const { toggleLike } = useContext(productsContext)
-	const { user } = useContext(AuthContext)
-	const { addItemToCart } = useContext(CartContext)
+
 	const [itemsQuantity, setItemsQuantity] = useState(0)
-
-	// Загружаем информацию о продукте из API по его id при помощи функции getProductByID, сохраняем результат в product
-	const loadProduct = useCallback(async () => {
-		if (!id) return
-		try {
-			setProduct(await getProductByID(user.token, id))
-		} catch (error) {
-			console.log(error)
-		}
-	}, [id, user.token])
-
-	// при загрузке компонента загрузить один раз информацию о продукте
-	useEffect(() => {
-		loadProduct()
-	}, [loadProduct])
 
 	// Вычисляем средний рейтинг продукта
 	const rate = useMemo(
 		() =>
-			product.reviews.reduce(
+			product?.reviews?.reduce(
 				(prev, review, i, arr) => prev + review.rating / arr.length,
 				0
 			),
 		[product]
 	)
 
-	return (
+	const isLiked = product?.likes?.includes(user?.data?._id) ?? false
+
+	return product ? (
 		<>
 			<Back />
 			<h1 className='mb-2 text-xl font-bold'>{product?.name}</h1>
@@ -125,12 +109,11 @@ function Product() {
 
 					<div className='relative'>
 						<button
-							onClick={async () => {
-								await toggleLike(product)
-								await loadProduct()
-							}}
+							onClick={() =>
+								setLike({ id: product._id, isLiked: !isLiked })
+							}
 						>
-							{product?.likes?.includes(user?.data?._id) ? (
+							{isLiked ? (
 								<>
 									{' '}
 									<FaHeart className='absolute left-2 top-1 text-xl text-red-500' />
@@ -164,7 +147,11 @@ function Product() {
 						<div>
 							<button
 								onClick={() =>
-									addItemToCart(product, itemsQuantity, true)
+									addToCart({
+										product,
+										quantity: itemsQuantity,
+										replace: true,
+									})
 								}
 								className='w-26 shrink rounded-[3.75rem] bg-yellow-300 px-6 py-3 font-bold shadow-md'
 							>
@@ -210,7 +197,6 @@ function Product() {
 			<Suspense fallback={<Loader />}>
 				<Reviews
 					product={product}
-					loadProduct={loadProduct}
 					textarea={textarea}
 					setTextarea={setTextarea}
 					rating={rating}
@@ -218,6 +204,8 @@ function Product() {
 				/>
 			</Suspense>
 		</>
+	) : (
+		<></>
 	)
 }
 
