@@ -5,6 +5,7 @@ import { Link, Outlet, useNavigate } from 'react-router-dom'
 import TwoBanners from '../../components/Banners/TwoBanners'
 import useActions from '../../hooks/useActions'
 import useUser from '../../hooks/useUser'
+import Chart from './Chart'
 
 function Profile() {
 	const { logoutUser, changeUserInfo } = useActions()
@@ -63,18 +64,19 @@ function Profile() {
 						</p>
 					</div>
 					<p>{user?.data?.email}</p>
-					<hr className='my-5' />
 
 					<div className='flex flex-col items-start'>
-						<div className='cursor-pointer text-sm font-normal text-green-600 transition-all duration-200 hover:text-green-800'>
-							<Link to='/addproduct'>Добавить новый товар</Link>
-						</div>
 						<button
 							onClick={() => logoutUser()}
 							className='mt-5 rounded-md bg-gray-200 px-3 py-px text-sm font-normal text-gray-500 shadow-md transition-all duration-200 hover:bg-gray-300 hover:text-gray-600'
 						>
 							Выйти
 						</button>
+						<br />
+					</div>
+					<Chart />
+					<div className='inline cursor-pointer text-sm font-normal text-red-600 transition-all duration-200 hover:text-red-800'>
+						<Link to='/addproduct'>Добавить новый товар</Link>
 					</div>
 
 					<Modal

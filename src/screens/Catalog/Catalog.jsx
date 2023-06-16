@@ -6,8 +6,7 @@ import Loader from '../../components/Loader/Loader'
 import Pagination from '../../components/Pagination'
 import Products from '../../components/Products'
 import { useGetAllProductsQuery } from '../../store/products/products.api'
-import { paginate, sort } from '../../store/products/utils'
-import sortOptions from '../../utils/sort'
+import { paginate, sort, sortOptions } from '../../utils/sort'
 
 function Catalog() {
 	const [page, setPage] = useState(1)
