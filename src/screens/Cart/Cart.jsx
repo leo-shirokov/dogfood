@@ -12,12 +12,17 @@ function Cart() {
 	const { cartItems, totalItems } = useCart()
 	const { cleanCart } = useActions()
 
-	const cost = cartItems.reduce(
-		(sum, item) =>
-			sum +
-			(item.price - (item.price * item.discount) / 100) * item.quantity,
-		0
-	) // общая стоимость товаров в корзине с учетом скидки
+	const cost = cartItems.reduce((sum, item) => {
+		if (item.stock > 0) {
+			return (
+				sum +
+				(item.price - (item.price * item.discount) / 100) *
+					item.quantity
+			)
+		} else {
+			return sum
+		}
+	}, 0) // общая стоимость товаров в корзине с учетом скидки и наличия товара
 
 	const costInEth = (cost * 0.01) / 1000
 

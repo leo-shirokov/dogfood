@@ -32,10 +32,19 @@ function CartItem(product) {
 					</div>
 				) : (
 					<div className=''>
-						<h3 className='text-sm font-bold'>
+						<h3 className='text-xs font-bold'>
 							{showPriceInRub(product.price)}
 						</h3>
 					</div>
+				)}
+				{product.stock > 0 ? (
+					<p className='text-[.625rem]'>
+						Количество товара на складе: {product.stock}
+					</p>
+				) : (
+					<p className='text-[.625rem] text-red-800'>
+						Товара нет в наличии
+					</p>
 				)}
 			</div>
 			<div className='w-basis-1/5'>
