@@ -108,28 +108,35 @@ function Product() {
 					</div>
 
 					<div className='relative'>
-						<button
-							onClick={() =>
-								setLike({ id: product._id, isLiked: !isLiked })
-							}
-						>
-							{isLiked ? (
-								<>
-									{' '}
-									<FaHeart className='absolute left-2 top-1 text-xl text-red-500' />
-									<span className='absolute left-10 top-1 text-sm text-gray-400'>
-										В избранном
-									</span>
-								</>
-							) : (
-								<>
-									<FaRegHeart className='absolute left-2 top-1 text-xl text-gray-400' />
-									<span className='absolute left-10 top-1 text-sm text-gray-400'>
-										В избранное
-									</span>
-								</>
-							)}
-						</button>
+						{user?.data?.name !== 'Guest' ? (
+							<button
+								onClick={() =>
+									setLike({
+										id: product._id,
+										isLiked: !isLiked,
+									})
+								}
+							>
+								{isLiked ? (
+									<>
+										{' '}
+										<FaHeart className='absolute left-2 top-1 text-xl text-red-500' />
+										<span className='absolute left-10 top-1 text-sm text-gray-400'>
+											В избранном
+										</span>
+									</>
+								) : (
+									<>
+										<FaRegHeart className='absolute left-2 top-1 text-xl text-gray-400' />
+										<span className='absolute left-10 top-1 text-sm text-gray-400'>
+											В избранное
+										</span>
+									</>
+								)}
+							</button>
+						) : (
+							<></>
+						)}
 					</div>
 
 					<div className='flex items-center justify-start gap-x-10'>

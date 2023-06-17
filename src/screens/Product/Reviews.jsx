@@ -1,5 +1,7 @@
 import { Button, Rating, Textarea } from '@mantine/core'
+import { useState } from 'react'
 import { BsTrash } from 'react-icons/bs'
+import Notification from '../../components/Notification/Notification'
 import useUser from '../../hooks/useUser'
 import {
 	useAddReviewByIdMutation,
@@ -10,13 +12,13 @@ function Reviews({ product, textarea, setTextarea, rating, setRating }) {
 	const { user } = useUser()
 	const [addReviewById] = useAddReviewByIdMutation()
 	const [deleteReviewById] = useDeleteReviewByIdMutation()
+	const [notificationText, setNotificationText] = useState('')
 
 	const clearForm = () => {
 		setTextarea('')
 		setRating(0)
 	}
 
-	// обработчик кнопки "Добавить отзыв". Добавляет отзыв через API; снова вызывает ф-цию загрузки продукта чтобы обновить инфо о продукте
 	const addReview = async () => {
 		await addReviewById({
 			id: product._id,
@@ -24,6 +26,7 @@ function Reviews({ product, textarea, setTextarea, rating, setRating }) {
 			rating,
 		})
 		clearForm()
+		setNotificationText('Отзыв добавлен')
 	}
 
 	const deleteReview = async (reviewId) => {
@@ -115,6 +118,11 @@ function Reviews({ product, textarea, setTextarea, rating, setRating }) {
 							</div>
 						</div>
 					))}
+
+					<Notification
+						message={notificationText}
+						setMessage={setNotificationText}
+					/>
 				</>
 			)}
 		</>

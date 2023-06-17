@@ -1,6 +1,7 @@
 import { NativeSelect } from '@mantine/core'
 import { useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 import TwoBanners from '../../components/Banners/TwoBanners'
 import Loader from '../../components/Loader/Loader'
 import Pagination from '../../components/Pagination'
@@ -9,7 +10,8 @@ import { useGetAllProductsQuery } from '../../store/products/products.api'
 import { paginate, sort, sortOptions } from '../../utils/sort'
 
 function Catalog() {
-	const [page, setPage] = useState(1)
+	const [searchParams] = useSearchParams()
+	const page = Number(searchParams.get('page')) || 1
 	const [sortType, setSortType] = useState('')
 
 	const { keyWord } = useSelector((state) => state.search)
@@ -65,11 +67,7 @@ function Catalog() {
 					)}
 
 					<Products products={products} />
-					<Pagination
-						activePage={page}
-						setActivePage={setPage}
-						totalItems={data.length}
-					/>
+					<Pagination totalItems={data.length} />
 				</>
 			) : (
 				<p>Не удалось загрузить список товаров</p>

@@ -1,10 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
+import {
+	clearLocalStorage,
+	getDefaultOrLocalStorage,
+	setLocalStorage,
+} from '../../utils/localStorage'
 
 const initialState = []
 
 export const cartSlice = createSlice({
 	name: 'cart',
-	initialState,
+	initialState: getDefaultOrLocalStorage(initialState, 'cart'),
 	reducers: {
 		addToCart: (state, { payload }) => {
 			const { product, quantity = 1, replace = false } = payload
@@ -16,6 +21,7 @@ export const cartSlice = createSlice({
 			} else {
 				state.push({ ...product, quantity })
 			}
+			setLocalStorage([...state], 'cart')
 		},
 		removeItemFromCart: (state, { payload }) => {
 			const productId = payload
@@ -24,6 +30,7 @@ export const cartSlice = createSlice({
 		},
 		cleanCart: (state) => {
 			state.length = 0
+			clearLocalStorage('cart')
 		},
 	},
 })

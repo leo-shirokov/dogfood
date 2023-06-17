@@ -1,13 +1,14 @@
 import { Pagination as MantinePagination } from '@mantine/core'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 const ITEMS_ON_PAGE = 12
 
-function Pagination({ activePage, setActivePage, totalItems }) {
+function Pagination({ totalItems }) {
+	const [searchParams] = useSearchParams()
+	const activePage = Number(searchParams.get('page')) || 1
 	const navigate = useNavigate()
 	const nav = (num) => {
 		navigate(`/?page=${num}`)
-		setActivePage(num)
 	}
 	const totalPages = Math.floor(totalItems / ITEMS_ON_PAGE)
 

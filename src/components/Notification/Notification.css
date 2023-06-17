@@ -1,0 +1,36 @@
+.notification {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	background-color: #fff;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
+	padding: 10px;
+	max-width: 300px;
+	opacity: 0;
+	transition: opacity 0.3s ease-in-out;
+	z-index: 9999;
+}
+
+.notification.show {
+	opacity: 1;
+}
+
+.notification-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.notification-message {
+	margin-right: 10px;
+}
+
+.notification-close {
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 18px;
+	color: #888;
+	padding: 0;
+}

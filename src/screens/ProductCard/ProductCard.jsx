@@ -78,18 +78,22 @@ function ProductCard({
 				</div>
 			)}
 
-			<button
-				onClick={() => {
-					const id = data?._id
-					setLike({ id, isLiked: !isLiked })
-				}}
-			>
-				{isLiked ? (
-					<ActiveImage className='absolute right-2 top-2 text-xl text-red-500' />
-				) : (
-					<InactiveImage className='absolute right-2 top-2 text-xl text-gray-400' />
-				)}
-			</button>
+			{user?.data?.name !== 'Guest' ? (
+				<button
+					onClick={() => {
+						const id = data?._id
+						setLike({ id, isLiked: !isLiked })
+					}}
+				>
+					{isLiked ? (
+						<ActiveImage className='absolute right-2 top-2 text-xl text-red-500' />
+					) : (
+						<InactiveImage className='absolute right-2 top-2 text-xl text-gray-400' />
+					)}
+				</button>
+			) : (
+				<></>
+			)}
 
 			<div>
 				<button
