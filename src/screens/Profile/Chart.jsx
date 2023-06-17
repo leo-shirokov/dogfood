@@ -67,6 +67,10 @@ function Chart() {
 		}
 
 		const chartId = document.getElementById('chartId')
+		if (chartId === null) {
+			return
+		}
+		echarts.dispose(chartId)
 		const pieChart = echarts.init(chartId)
 		option && pieChart.setOption(option)
 	}, [chartData])

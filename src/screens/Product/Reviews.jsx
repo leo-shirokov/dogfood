@@ -1,6 +1,7 @@
 import { Button, Rating, Textarea } from '@mantine/core'
 import { useState } from 'react'
 import { BsTrash } from 'react-icons/bs'
+import { Link } from 'react-router-dom'
 import Notification from '../../components/Notification/Notification'
 import useUser from '../../hooks/useUser'
 import {
@@ -43,47 +44,61 @@ function Reviews({ product, textarea, setTextarea, rating, setRating }) {
 				Отзывы
 			</h3>
 
-			{/* создание нового отзыва */}
-			<details className='mb-10'>
-				<summary className='text-md mb-5 cursor-pointer font-semibold'>
-					Оставить отзыв
-				</summary>
-				<div className='mb-5 flex items-center justify-start gap-x-5'>
-					<span className='text-sm font-semibold'>
-						Оцените товар:
-					</span>
-					<span>
-						<Rating value={rating} onChange={setRating} />
-					</span>
-				</div>
-				<div className='mb-4 flex flex-col gap-y-4'>
-					<Textarea
-						placeholder='Введите текст'
-						label='Новый отзыв'
-						withAsterisk
-						autosize
-						minRows={2}
-						value={textarea}
-						onChange={(e) => setTextarea(e.currentTarget.value)}
-					/>
-				</div>
-				<Button
-					className='transition-all hover:text-gray-600'
-					type='button'
-					onClick={addReview}
-					variant='outline'
-					color='gray'
-					compact
-				>
-					Отправить
-				</Button>
-			</details>
+			{user?.data?.name !== 'Guest' ? (
+				<details className='mb-10'>
+					<summary className='text-md mb-5 cursor-pointer font-semibold'>
+						Оставить отзыв
+					</summary>
+					<div className='mb-5 flex items-center justify-start gap-x-5'>
+						<span className='text-sm font-semibold'>
+							Оцените товар:
+						</span>
+						<span>
+							<Rating value={rating} onChange={setRating} />
+						</span>
+					</div>
+					<div className='mb-4 flex flex-col gap-y-4'>
+						<Textarea
+							placeholder='Введите текст'
+							label='Новый отзыв'
+							withAsterisk
+							autosize
+							minRows={2}
+							value={textarea}
+							onChange={(e) => setTextarea(e.currentTarget.value)}
+						/>
+					</div>
+					<Button
+						className='transition-all hover:text-gray-600'
+						type='button'
+						onClick={addReview}
+						variant='outline'
+						color='gray'
+						compact
+					>
+						Отправить
+					</Button>
+				</details>
+			) : (
+				<>
+					<p className='py-3 text-sm'>
+						{' '}
+						Отзывы могут оставлять только зарегистрированные
+						пользователи
+					</p>
+					<Link
+						to='/profile'
+						className='text-sm text-red-700 transition-all duration-300 hover:text-red-900'
+					>
+						Войти
+					</Link>
+				</>
+			)}
 
-			{/* отображение отзывов по товару */}
 			{product?.reviews?.length > 0 && (
 				<>
 					{product.reviews.map((review) => (
-						<div key={review._id} className='border-t py-2'>
+						<div key={review._id} className='border-t py-5'>
 							<span className='font-semibold'>
 								{review.author.name}&nbsp;
 							</span>

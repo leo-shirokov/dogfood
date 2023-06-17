@@ -1,6 +1,5 @@
 import { NativeSelect } from '@mantine/core'
 import { useMemo, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import TwoBanners from '../../components/Banners/TwoBanners'
 import Loader from '../../components/Loader/Loader'
@@ -12,10 +11,9 @@ import { paginate, sort, sortOptions } from '../../utils/sort'
 function Catalog() {
 	const [searchParams] = useSearchParams()
 	const page = Number(searchParams.get('page')) || 1
+	const query = searchParams.get('search')
 	const [sortType, setSortType] = useState('')
-
-	const { keyWord } = useSelector((state) => state.search)
-	const { data, isLoading } = useGetAllProductsQuery(keyWord)
+	const { data, isLoading } = useGetAllProductsQuery(query)
 
 	const products = useMemo(() => {
 		if (!data) return []
@@ -28,16 +26,16 @@ function Catalog() {
 				<Loader />
 			) : data?.length ? (
 				<>
-					{keyWord && (
+					{query && (
 						<p className='mb-5 text-lg text-gray-700'>
 							По запросу{' '}
-							<span className='font-bold'>{keyWord}</span> найдено{' '}
+							<span className='font-bold'>{query}</span> найдено{' '}
 							{data.length} товаров
 						</p>
 					)}
 
 					{/* сортировка при поиске товаров */}
-					{keyWord && (
+					{query && (
 						<div className='mb-10 flex items-center justify-start gap-x-4 rounded-md border border-gray-50 px-4 py-1 shadow-md md:hidden'>
 							{sortOptions.map((item) => (
 								<span
@@ -52,7 +50,7 @@ function Catalog() {
 					)}
 
 					{/* сортировка через select при поиске товаров на мобильном устройстве */}
-					{keyWord && (
+					{query && (
 						<div className='my-4 flex items-center justify-center 2xl:hidden xl:hidden lg:hidden md:block'>
 							<NativeSelect
 								data={sortOptions.map((item) => ({
