@@ -9,7 +9,9 @@ function Pagination({ totalItems }) {
 	const queryStr = searchParams.get('search')
 	const navigate = useNavigate()
 	const nav = (num) => {
-		navigate(`/?page=${num}${queryStr ? `&search=${queryStr}` : ''}`)
+		navigate({
+			search: `page=${num}${queryStr ? `&search=${queryStr}` : ''}`,
+		})
 	}
 	const totalPages = Math.floor(totalItems / ITEMS_ON_PAGE)
 

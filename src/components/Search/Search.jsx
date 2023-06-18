@@ -7,7 +7,9 @@ export const Search = () => {
 	// debounce
 	useEffect(() => {
 		const timeout = setTimeout(() => {
-			navigate(`/?page=1${searchText ? `&search=${searchText}` : ''}`)
+			navigate({
+				search: `${searchText ? `search=${searchText}` : ''}`,
+			})
 		}, 1000)
 		return () => clearTimeout(timeout)
 	}, [navigate, searchText])

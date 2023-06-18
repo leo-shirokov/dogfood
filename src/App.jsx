@@ -22,10 +22,10 @@ import Reviews from './screens/Reviews/Reviews'
 
 function App() {
 	return (
-		<div className='mx-auto flex h-full max-w-[90rem] flex-col'>
+		<div className='mx-auto flex min-h-screen max-w-[90rem] flex-col'>
 			<Header />
 
-			<main className='mx-auto w-4/6 flex-initial py-10 lg:w-4/5 md:w-11/12 md:py-8'>
+			<main className='mx-auto w-4/6 flex-initial shrink-0 grow basis-auto py-10 lg:w-4/5 md:w-11/12 md:py-8'>
 				<>
 					<Routes>
 						<Route index element={<Catalog />} />

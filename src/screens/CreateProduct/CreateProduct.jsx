@@ -46,6 +46,7 @@ const CreateProduct = () => {
 			<h2 className='mb-10 text-lg font-semibold'>
 				Форма добавления товара
 			</h2>
+
 			<form
 				className='mx-auto flex w-full flex-col gap-y-5'
 				onSubmit={createProduct}

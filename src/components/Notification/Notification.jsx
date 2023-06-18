@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react'
-import './Notification.css'
+import { useEffect } from 'react'
 
 const Notification = ({ message, setMessage, duration = 3000 }) => {
 	useEffect(() => {
-		// Закрытие уведомления после указанной продолжительности
 		const timer = setTimeout(() => {
 			setMessage(false)
 		}, duration)
@@ -19,11 +17,11 @@ const Notification = ({ message, setMessage, duration = 3000 }) => {
 
 	return (
 		message && (
-			<div className={`notification ${message ? 'show' : ''}`}>
-				<div className='notification-content'>
-					<span className='notification-message'>{message}</span>
+			<div className='max-w-80 fixed right-3 top-5 z-50 rounded-lg bg-white p-2.5 opacity-90 shadow-lg transition-all duration-300'>
+				<div className='flex items-center justify-between'>
+					<span className='mr-2.5'>{message}</span>
 					<button
-						className='notification-close'
+						className='cursor-pointer border-none bg-transparent p-0 text-lg text-gray-700'
 						onClick={closeNotification}
 					>
 						&times;

@@ -29,11 +29,10 @@ function Header() {
 
 	return (
 		<>
-			<div className='flex h-20 w-full items-center justify-between gap-x-8 bg-yellow-300 px-4 py-10'>
+			<div className='flex h-20 w-full shrink-0 grow-0 basis-auto items-center justify-between gap-x-8 bg-yellow-300 px-4 py-10'>
 				<div className='md:w-10'>
 					<Logo />
 				</div>
-				{/* поле поиска */}
 				<div className='grow'>
 					{['/', '/catalog'].includes(location.pathname) && (
 						<Search />

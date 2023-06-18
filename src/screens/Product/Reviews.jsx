@@ -36,6 +36,7 @@ function Reviews({ product, textarea, setTextarea, rating, setRating }) {
 			reviewId,
 		})
 		clearForm()
+		setNotificationText('Отзыв удален')
 	}
 
 	return (

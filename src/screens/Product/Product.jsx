@@ -87,9 +87,9 @@ function Product() {
 					<div>
 						{product.discount > 0 ? (
 							<div className='relative'>
-								<p className='absolute bottom-5 text-sm font-normal text-black line-through'>
+								<del className='absolute bottom-5 text-sm font-normal text-black'>
 									{showPriceInRub(product.price)}
-								</p>
+								</del>
 								<h3 className='text-xl font-bold text-red-600'>
 									{showPriceInRub(
 										product.price -
