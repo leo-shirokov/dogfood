@@ -5,20 +5,24 @@ import { useNavigate } from 'react-router-dom'
 import useActions from '../../hooks/useActions'
 import useUser from '../../hooks/useUser'
 
-function ChangeAvatar() {
-	const { user } = useUser()
-	const { changeAvatar } = useActions()
+function ChangeProfile() {
+	const { changeUserInfo } = useActions()
 	const [opened, { close }] = useDisclosure(true)
+	const { user } = useUser()
 	const navigate = useNavigate()
 
 	const form = useForm({
 		initialValues: {
-			avatar: '',
+			name: '',
+			about: '',
 		},
 	})
 
 	const handleSubmit = async (values) => {
-		changeAvatar({ groupId: user.data.group, link: values })
+		changeUserInfo({
+			groupId: user.data.group,
+			info: values,
+		})
 		close()
 		navigate('/profile')
 	}
@@ -27,7 +31,7 @@ function ChangeAvatar() {
 		<Modal
 			opened={opened}
 			onClose={close}
-			title='Изменение аватара'
+			title='Редактирование профиля'
 			centered
 		>
 			<form
@@ -36,9 +40,15 @@ function ChangeAvatar() {
 			>
 				<TextInput
 					withAsterisk
-					label='Ссылка на изображение'
-					placeholder='Введите адрес ссылки'
-					{...form.getInputProps('avatar')}
+					label='Имя'
+					placeholder='Введите текст'
+					{...form.getInputProps('name')}
+				/>
+				<TextInput
+					withAsterisk
+					label='Обо мне'
+					placeholder='Введите текст'
+					{...form.getInputProps('about')}
 				/>
 				<Group position='right' mt='md'>
 					<button
@@ -53,4 +63,4 @@ function ChangeAvatar() {
 	)
 }
 
-export default ChangeAvatar
+export default ChangeProfile

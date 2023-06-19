@@ -30,58 +30,39 @@ export const changeUserInfo = createAsyncThunk(
 	}
 )
 
-export const getUserInfo = createAsyncThunk(
-	'user/getInfo',
-	async ({ groupId }, { getState }) => {
-		const { token } = getState().user
-		const response = await fetch(`${API_URL}/v2/${groupId}/users/me`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				authorization: token,
-			},
-		})
-		return response.json()
-	}
-)
-
 export const signupUser = createAsyncThunk('user/signup', async (newUser) => {
-	const response = await fetch(`${API_URL}/signup`, {
+	await fetch(`${API_URL}/signup`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify(newUser),
 	})
-	return response.json()
 })
 
 export const resetPassword = createAsyncThunk(
 	'user/resetPassword',
 	async (email) => {
-		const response = await fetch(`${API_URL}/forgot-password`, {
+		await fetch(`${API_URL}/forgot-password`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(email),
 		})
-		return response.json()
 	}
 )
 
 export const changePassword = createAsyncThunk(
 	'user/changePassword',
-	async (newPassword, { getState }) => {
-		const { token } = getState().user
-		const response = await fetch(`${API_URL}/password-reset/${token}`, {
+	async ({ newPassword, token }) => {
+		await fetch(`${API_URL}/password-reset/${token}`, {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(newPassword),
+			body: JSON.stringify({ password: newPassword }),
 		})
-		return response.json()
 	}
 )
 

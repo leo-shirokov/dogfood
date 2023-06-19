@@ -9,10 +9,13 @@
 		"tailwindcss"
 	],
 	"cSpell.ignoreWords": [
+		"Vkontakte",
 		"addproduct",
+		"echarts",
 		"raiting",
 		"reduxjs",
 		"signin",
-		"signup"
+		"signup",
+		"testid"
 	]
 }

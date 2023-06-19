@@ -16,6 +16,7 @@ export const Search = () => {
 
 	return (
 		<input
+			data-testid='search-input'
 			className='h-[2.625rem] w-full rounded-3xl border-solid border-transparent 
             bg-white px-5 py-5 text-base text-gray-900 caret-yellow-300'
 			placeholder='Поиск'

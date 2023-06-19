@@ -29,7 +29,6 @@ function Product() {
 
 	const [itemsQuantity, setItemsQuantity] = useState(0)
 
-	// Вычисляем средний рейтинг продукта
 	const rate = useMemo(
 		() =>
 			product?.reviews?.reduce(
@@ -200,7 +199,6 @@ function Product() {
 				</Paper>
 			</div>
 
-			{/* Добавляем компонент Suspense для фоновой загрузки отзывов на карточке товара */}
 			<Suspense fallback={<Loader />}>
 				<Reviews
 					product={product}

@@ -7,7 +7,7 @@ import Alert from '../../../components/Alert/Alert'
 import useActions from '../../../hooks/useActions'
 
 function RegForm() {
-	const { signupUser, getUserInfo } = useActions()
+	const { signupUser } = useActions()
 	const [opened, { open, close }] = useDisclosure(true)
 	const navigate = useNavigate()
 	const [visible, { toggle }] = useDisclosure(false)
@@ -42,11 +42,11 @@ function RegForm() {
 
 	const handleSubmit = async (values) => {
 		try {
+			console.log('данные пользователя', values)
 			const valuesCopy = { ...values }
 			delete valuesCopy.confirmPassword
 			await signupUser(valuesCopy)
-			await getUserInfo({ groupId: values.groupId })
-			navigate('/auth')
+			navigate('/profile/auth')
 		} catch (error) {
 			close()
 			setIsAlert(error.message)
@@ -122,7 +122,7 @@ function RegForm() {
 					</form>
 				</Box>
 			</Modal>
-			{/* Выводим предупреждение при ошибке обращения к API */}
+
 			{isAlert && (
 				<>
 					<Alert isAlert={isAlert} />

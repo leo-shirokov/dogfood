@@ -33,7 +33,10 @@ function ResetForm() {
 		if (data.token) {
 			const dataCopy = { ...data }
 			delete dataCopy.email
-			await changePassword(dataCopy.password)
+			await changePassword({
+				token: dataCopy.token,
+				newPassword: dataCopy.password,
+			})
 			navigate('/profile')
 		} else {
 			const dataCopy = { ...data }

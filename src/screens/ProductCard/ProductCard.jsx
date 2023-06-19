@@ -33,9 +33,9 @@ function ProductCard({
 				</div>
 				{data.discount > 0 ? (
 					<div className='relative'>
-						<p className='absolute bottom-4 text-[.6875rem] font-normal text-black line-through'>
+						<del className='absolute bottom-4 text-[.6875rem] font-normal text-black'>
 							{showPriceInRub(data.price)}
-						</p>
+						</del>
 						<h3 className='text-sm font-bold text-red-600'>
 							{showPriceInRub(
 								data.price - (data.price * data.discount) / 100

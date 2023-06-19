@@ -27,6 +27,7 @@ export const cartSlice = createSlice({
 			const productId = payload
 			const index = state.findIndex((item) => item._id === productId)
 			state.splice(index, 1)
+			setLocalStorage([...state], 'cart')
 		},
 		cleanCart: (state) => {
 			state.length = 0

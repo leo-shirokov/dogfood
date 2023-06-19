@@ -1,6 +1,6 @@
 import { NativeSelect } from '@mantine/core'
 import { useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 import TwoBanners from '../../components/Banners/TwoBanners'
 import Loader from '../../components/Loader/Loader'
 import Pagination from '../../components/Pagination'
@@ -9,6 +9,7 @@ import { useGetAllProductsQuery } from '../../store/products/products.api'
 import { paginate, sort, sortOptions } from '../../utils/sort'
 
 function Catalog() {
+	const location = useLocation()
 	const [searchParams] = useSearchParams()
 	const page = Number(searchParams.get('page')) || 1
 	const query = searchParams.get('search')
@@ -35,7 +36,7 @@ function Catalog() {
 					)}
 
 					{/* сортировка при поиске товаров */}
-					{query && (
+					{location.pathname === '/catalog' && (
 						<div className='mb-10 flex items-center justify-start gap-x-4 rounded-md border border-gray-50 px-4 py-1 shadow-md md:hidden'>
 							{sortOptions.map((item) => (
 								<span

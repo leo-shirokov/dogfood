@@ -9,7 +9,6 @@ import {
 	changeAvatar,
 	changePassword,
 	changeUserInfo,
-	getUserInfo,
 	resetPassword,
 	signinUser,
 	signupUser,
@@ -26,29 +25,18 @@ export const userSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(signupUser.fulfilled, (state, { payload }) => {
-			state.data = payload.data
-			state.token = payload.token
-			setLocalStorage(payload, 'user')
-		})
 		builder.addCase(signinUser.fulfilled, (state, { payload }) => {
 			state.data = payload.data
 			state.token = payload.token
 			setLocalStorage(payload, 'user')
 		})
-		builder.addCase(getUserInfo.fulfilled, (state, { payload }) => {
-			state.data = payload
-		})
-		builder.addCase(changeAvatar.fulfilled, (state, { payload }) => {
-			state.data = payload
-		})
-		builder.addCase(changePassword.fulfilled, (state, { payload }) => {
-			state.data = payload
-		})
 		builder.addCase(changeUserInfo.fulfilled, (state, { payload }) => {
 			state.data = payload
 		})
-		builder.addCase(resetPassword.fulfilled, (state, { payload }) => {
+		builder.addCase(signupUser.fulfilled, (state, { payload }) => {})
+		builder.addCase(resetPassword.fulfilled, (state, { payload }) => {})
+		builder.addCase(changePassword.fulfilled, (state, { payload }) => {})
+		builder.addCase(changeAvatar.fulfilled, (state, { payload }) => {
 			state.data = payload
 		})
 	},
