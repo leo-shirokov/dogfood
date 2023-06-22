@@ -18,6 +18,8 @@
 
 Проект реализован на **React**
 
+Управление состоянием: Redux Toolkit + RTK Query.
+
 Стилизация **Tailwind CSS** - CSS-фреймворк, создающий пользовательский интерфейс с помощью настраиваемых классов.
 
 Библиотека компонентов **Mantine** со следующими зависимостями:
@@ -26,12 +28,14 @@
 -   @mantine/form: Компонент форм библиотеки Mantine, который предоставляет функционал для создания и валидации форм,
 -   @mantine/hooks: Коллекция хуков библиотеки Mantine, содержащая различные пользовательские хуки для упрощения работы с React-компонентами.
 
+Библиотека Apache ECharts для создания графиков и интерактивного взаимодействия с ними.
+
 ![badge](https://img.shields.io/badge/Dogfood-Магазин%20корма%20для%20собак-yellow)
 
 ### Настройка проекта
 
-git clone github.com/leo-shirokov/dogfood .
+git clone github.com/leo-shirokov/dogfood
 
-npm install
+yarn
 
-npm run start
+yarn start
