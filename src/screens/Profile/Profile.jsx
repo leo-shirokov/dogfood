@@ -17,52 +17,57 @@ function Profile() {
 			<h2 className='mb-10 mt-2 text-xl font-semibold'>Личный кабинет</h2>
 			{user.data._id !== 0 ? (
 				<>
-					<div className='border-b py-5'>
-						<p className='text-lg font-semibold'>
-							{user?.data?.name}
-						</p>
-						<p className='mb-4 text-xs text-gray-400'>
-							{user?.data?.group}
-						</p>
-						<div className='flex flex-col'>
-							<p
-								onClick={() => navigate('/profile/avatar')}
-								className='cursor-pointer text-[.65rem] text-gray-400 transition-all duration-200 hover:text-gray-600'
-							>
-								изменить
+					<div className='flex flex-row justify-between md:flex-col'>
+						<div className='basis-1/4 py-5 md:basis-0'>
+							<p className='text-lg font-semibold'>
+								{user?.data?.name}
 							</p>
-							<img
-								className='w-40 rounded-md'
-								src={user?.data?.avatar}
-								alt={user?.data?.name}
-							/>
-						</div>
-						<br />
-						<div className='flex gap-x-5'>
-							<p className='text-md mb-2'>{user?.data?.about}</p>
-							<p
-								onClick={() => navigate('/profile/change')}
-								className='cursor-pointer text-[.65rem] text-gray-400 transition-all duration-200 hover:text-gray-600'
-							>
-								изменить
+							<p className='mb-4 text-xs text-gray-400'>
+								{user?.data?.group}
 							</p>
+							<div className='flex flex-col'>
+								<p
+									onClick={() => navigate('/profile/avatar')}
+									className='cursor-pointer text-[.65rem] text-gray-400 transition-all duration-200 hover:text-gray-600'
+								>
+									изменить
+								</p>
+								<img
+									className='w-40 rounded-md'
+									src={user?.data?.avatar}
+									alt={user?.data?.name}
+								/>
+							</div>
+							<br />
+							<div className='flex gap-x-5'>
+								<p className='text-md mb-2'>
+									{user?.data?.about}
+								</p>
+								<p
+									onClick={() => navigate('/profile/change')}
+									className='cursor-pointer text-[.65rem] text-gray-400 transition-all duration-200 hover:text-gray-600'
+								>
+									изменить
+								</p>
+							</div>
+							<br />
+							<p className='text-xs'>{user?.data?.email}</p>
+							<br />
+							<div className='inline cursor-pointer text-sm font-normal text-red-600 transition-all duration-200 hover:text-red-800'>
+								<Link to='/addproduct'>
+									Добавить новый товар
+								</Link>
+							</div>
+							<div className='flex flex-col items-start'>
+								<button
+									onClick={() => logoutUser()}
+									className='mt-5 rounded-md bg-gray-200 px-3 py-px text-sm font-normal text-gray-500 shadow-md transition-all duration-200 hover:bg-gray-300 hover:text-gray-600'
+								>
+									Выйти
+								</button>
+							</div>
 						</div>
-						<br />
-						<p className='text-xs'>{user?.data?.email}</p>
-
-						<div className='flex flex-col items-start'>
-							<button
-								onClick={() => logoutUser()}
-								className='mt-5 rounded-md bg-gray-200 px-3 py-px text-sm font-normal text-gray-500 shadow-md transition-all duration-200 hover:bg-gray-300 hover:text-gray-600'
-							>
-								Выйти
-							</button>
-						</div>
-					</div>
-					<br />
-					<Chart />
-					<div className='inline cursor-pointer text-sm font-normal text-red-600 transition-all duration-200 hover:text-red-800'>
-						<Link to='/addproduct'>Добавить новый товар</Link>
+						<Chart className='basis-3/4 md:basis-0' />
 					</div>
 				</>
 			) : (

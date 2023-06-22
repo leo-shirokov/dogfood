@@ -27,42 +27,37 @@ function App() {
 			<Header data-testid='header' />
 
 			<main className='mx-auto w-4/6 flex-initial shrink-0 grow basis-auto py-10 lg:w-4/5 md:w-11/12 md:py-8'>
-				<>
-					<Routes>
-						<Route index element={<Catalog />} />
-						<Route path='/product/:id' element={<Product />} />
-						<Route path='/favorite' element={<Favorites />} />
-						<Route
-							path='/catalog'
-							data-testid='catalog'
-							element={<Catalog />}
-						/>
-						<Route path='/promotions' element={<Promotions />} />
-						<Route path='/news' element={<News />} />
-						<Route path='/reviews' element={<Reviews />} />
-						<Route path='/payments' element={<Payments />} />
-						<Route path='/faq' element={<Faq />} />
-						<Route path='/feedback' element={<Feedback />} />
-						<Route path='/contacts' element={<Contacts />} />
-						<Route path='/cart' element={<Cart />} />
-						<Route
-							path='*'
-							data-testid='error404'
-							element={<Error404 />}
-						/>
-						<Route path='/addproduct' element={<CreateProduct />} />
-						<Route path='/profile' element={<Profile />}>
-							<Route path='registration' element={<RegForm />} />
-							<Route path='auth' element={<Auth />} />
-							<Route
-								path='reset-password'
-								element={<ResetForm />}
-							/>
-							<Route path='avatar' element={<ChangeAvatar />} />
-							<Route path='change' element={<ChangeProfile />} />
-						</Route>
-					</Routes>
-				</>
+				<Routes>
+					<Route index element={<Catalog />} />
+					<Route path='/product/:id' element={<Product />} />
+					<Route path='/favorite' element={<Favorites />} />
+					<Route
+						path='/catalog'
+						data-testid='catalog'
+						element={<Catalog />}
+					/>
+					<Route path='/promotions' element={<Promotions />} />
+					<Route path='/news' element={<News />} />
+					<Route path='/reviews' element={<Reviews />} />
+					<Route path='/payments' element={<Payments />} />
+					<Route path='/faq' element={<Faq />} />
+					<Route path='/feedback' element={<Feedback />} />
+					<Route path='/contacts' element={<Contacts />} />
+					<Route path='/cart' element={<Cart />} />
+					<Route
+						path='*'
+						data-testid='error404'
+						element={<Error404 />}
+					/>
+					<Route path='/addproduct' element={<CreateProduct />} />
+					<Route path='/profile' element={<Profile />}>
+						<Route path='registration' element={<RegForm />} />
+						<Route path='auth' element={<Auth />} />
+						<Route path='reset-password' element={<ResetForm />} />
+						<Route path='avatar' element={<ChangeAvatar />} />
+						<Route path='change' element={<ChangeProfile />} />
+					</Route>
+				</Routes>
 			</main>
 
 			<Footer data-testid='footer' />

@@ -43,6 +43,7 @@ function Chart() {
 			legend: {
 				orient: 'vertical',
 				left: 'left',
+				top: 'bottom',
 			},
 			series: [
 				{
@@ -75,7 +76,7 @@ function Chart() {
 		option && pieChart.setOption(option)
 	}, [chartData])
 
-	return <div id='chartId' className='h-[40rem] w-[40rem] md:hidden'></div>
+	return <div id='chartId' className='h-[30rem] w-[30rem] md:hidden'></div>
 }
 
 export default Chart
