@@ -88,7 +88,7 @@ function Reviews({ product, textarea, setTextarea, rating, setRating }) {
 						пользователи
 					</p>
 					<Link
-						to='/profile'
+						to='/profile/auth'
 						className='text-sm text-red-700 transition-all duration-300 hover:text-red-900'
 					>
 						Войти

@@ -6,17 +6,21 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 import Back from '../../components/Back/Back'
 import Loader from '../../components/Loader/Loader'
+import Notification from '../../components/Notification/Notification'
 import useActions from '../../hooks/useActions'
+import useTop from '../../hooks/useTop'
 import useUser from '../../hooks/useUser'
 import {
 	useGetProductByIdQuery,
 	useSetLikeMutation,
 } from '../../store/products/products.api'
 import showPriceInRub from '../../utils/currency'
+import Carousel from './Carousel'
 import Delivery from './Delivery'
 import Reviews from './Reviews'
 
 function Product() {
+	useTop()
 	const { id } = useParams()
 	const { user } = useUser()
 	const { data: product } = useGetProductByIdQuery({ id })
@@ -28,6 +32,7 @@ function Product() {
 	const [rating, setRating] = useState(0)
 
 	const [itemsQuantity, setItemsQuantity] = useState(0)
+	const [notificationText, setNotificationText] = useState('')
 
 	const rate = useMemo(
 		() =>
@@ -152,13 +157,16 @@ function Product() {
 						/>
 						<div>
 							<button
-								onClick={() =>
+								onClick={() => {
 									addToCart({
 										product,
 										quantity: itemsQuantity,
 										replace: true,
 									})
-								}
+									setNotificationText(
+										'Товар добавлен в корзину'
+									)
+								}}
 								className='w-26 shrink rounded-[3.75rem] bg-yellow-300 px-6 py-3 font-bold shadow-md'
 							>
 								В корзину
@@ -180,7 +188,7 @@ function Product() {
 				<Paper shadow='xs' p='sm'>
 					<h2 className='mb-2 text-xl font-semibold'>Описание</h2>
 					<Text className='text-md font-normal'>
-						{product.description}
+						{product?.description}
 					</Text>
 				</Paper>
 
@@ -195,15 +203,19 @@ function Product() {
 						</div>
 						<div>
 							<p className='text-md font-normal'>
-								{product.wight}
+								{product?.wight}
 							</p>
 							<p className='text-md font-normal'>
-								{showPriceInRub(product.price)}
+								{showPriceInRub(product?.price)}
 							</p>
 						</div>
 					</div>
 				</Paper>
 			</div>
+
+			<Carousel />
+			<br />
+			<br />
 
 			<Suspense fallback={<Loader />}>
 				<Reviews
@@ -214,6 +226,11 @@ function Product() {
 					setRating={setRating}
 				/>
 			</Suspense>
+
+			<Notification
+				message={notificationText}
+				setMessage={setNotificationText}
+			/>
 		</>
 	) : (
 		<></>

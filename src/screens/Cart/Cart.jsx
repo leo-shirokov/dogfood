@@ -1,5 +1,4 @@
 import { Paper } from '@mantine/core'
-import { ethers } from 'ethers'
 import { GiShoppingCart } from 'react-icons/gi'
 import { Link } from 'react-router-dom'
 import Back from '../../components/Back/Back'
@@ -7,6 +6,7 @@ import TwoBanners from '../../components/Banners/TwoBanners'
 import useActions from '../../hooks/useActions'
 import useCart from '../../hooks/useCart'
 import showPriceInRub from '../../utils/currency'
+import Carousel from './Carousel'
 import CartItem from './CartItem'
 
 function Cart() {
@@ -27,28 +27,9 @@ function Cart() {
 
 	const costInEth = (cost * 0.01) / 1000
 
-	function ethToWei(eth) {
-		const wei = ethers.utils.parseEther(eth.toString())
-		return wei
-	}
-	const weiAmount = ethToWei(costInEth)
-
-	const payViaMetamask = async () => {
-		try {
-			const provider = new ethers.providers.Web3Provider(window.ethereum)
-			await provider.send('eth_requestAccounts', [])
-			const signer = provider.getSigner()
-			await signer.getAddress()
-			const res = await signer.sendTransaction({
-				to: '0x424F5da8978D9E6A917350B55698d6a4079deD38',
-				value: weiAmount,
-			})
-			console.log(res)
-			cleanCart()
-			localStorage.removeItem('cart')
-		} catch (error) {
-			console.error(error)
-		}
+	function checkout() {
+		cleanCart()
+		localStorage.removeItem('cart')
 	}
 
 	return (
@@ -82,12 +63,14 @@ function Cart() {
 						</div>
 						<button
 							className='rounded-3xl bg-yellow-300 px-4 py-2 text-sm font-semibold shadow-md transition-all duration-200 hover:ring-2'
-							onClick={payViaMetamask}
+							onClick={checkout}
 							title={`К оплате через кошелек Metamask ${costInEth} ETH`}
 						>
 							Оформить заказ
 						</button>
 					</Paper>
+					<br />
+					<Carousel />
 				</>
 			) : (
 				<>
