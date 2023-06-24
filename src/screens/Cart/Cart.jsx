@@ -1,5 +1,6 @@
 import { Paper } from '@mantine/core'
 import { ethers } from 'ethers'
+import { GiShoppingCart } from 'react-icons/gi'
 import { Link } from 'react-router-dom'
 import Back from '../../components/Back/Back'
 import TwoBanners from '../../components/Banners/TwoBanners'
@@ -90,17 +91,21 @@ function Cart() {
 				</>
 			) : (
 				<>
-					<p>Ваша корзина пуста</p>
+					<p className='flex justify-center'>Ваша корзина пуста</p>
+					<br />
+					<p className='flex justify-center text-4xl'>
+						{<GiShoppingCart />}
+					</p>
+					<br />
 					<Link
 						to='/catalog'
-						className='text-md font-bold text-yellow-400'
+						className='flex justify-center text-xl font-bold text-gray-600 hover:text-gray-800'
 					>
 						Добавить товары
 					</Link>
 				</>
 			)}
 
-			<TwoBanners banIndex1={0} banIndex2={1} />
 			<TwoBanners banIndex1={2} banIndex2={3} />
 		</>
 	)

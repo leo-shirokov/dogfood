@@ -11,7 +11,7 @@ function HeaderSecondLevel() {
 				</h1>
 				<p className='mb-10 shrink font-extralight'>
 					Всегда свежие лакомства ручной <br /> работы с доставкой по
-					России и Миру
+					России
 				</p>
 				<button
 					onClick={() => navigate('/catalog')}

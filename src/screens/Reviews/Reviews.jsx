@@ -1,4 +1,3 @@
-//import { Carousel } from '@mantine/carousel'
 import { Rating } from '@mantine/core'
 import { useMemo, useState } from 'react'
 import Back from '../../components/Back/Back'
@@ -8,7 +7,7 @@ import useTop from '../../hooks/useTop'
 function Reviews() {
 	useTop()
 
-	const allProducts = useProducts().products
+	const { products } = useProducts()
 	const [visible, setVisible] = useState(6)
 
 	const showMoreItems = () => {
@@ -17,14 +16,14 @@ function Reviews() {
 
 	const reviews = useMemo(
 		() =>
-			allProducts.reduce((p, prod) => {
-				const reviews = prod.reviews.map((r) => ({
-					...r,
+			products?.reduce((prev, prod) => {
+				const reviews = prod.reviews.map((review) => ({
+					...review,
 					prodName: prod.name,
 				}))
-				return [...p, ...reviews]
+				return [...prev, ...reviews]
 			}, []),
-		[allProducts]
+		[products]
 	)
 
 	return (
@@ -34,7 +33,10 @@ function Reviews() {
 			<div className='my-10 flex flex-col justify-start gap-y-5'>
 				{reviews.slice(0, visible).map((review) => (
 					<div key={review._id} className='border-t px-2 py-4'>
-						<span className='text-md font-semibold'>
+						<p className='text-md text-gray-500'>
+							{review.prodName}
+						</p>
+						<span className='text-sm font-semibold'>
 							{review.author.name}
 						</span>
 						&nbsp;
@@ -49,9 +51,6 @@ function Reviews() {
 							)}
 						</span>
 						<Rating value={review.rating} size='xs' readOnly />
-						<p className='text-xs text-gray-500'>
-							{review.prodName}
-						</p>
 						<p>{review.text}</p>
 					</div>
 				))}

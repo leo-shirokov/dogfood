@@ -15,28 +15,28 @@ function Profile() {
 				На главную
 			</Link>
 			<h2 className='mb-10 mt-2 text-xl font-semibold'>Личный кабинет</h2>
-			{user.data._id !== 0 ? (
+			{user?.data?._id !== 0 ? (
 				<>
 					<div className='flex flex-row justify-between md:flex-col'>
 						<div className='basis-1/4 py-5 md:basis-0'>
 							<p className='text-lg font-semibold'>
 								{user?.data?.name}
 							</p>
-							<p className='mb-4 text-xs text-gray-400'>
+							<p className='mb-4 text-xs text-gray-800'>
 								{user?.data?.group}
 							</p>
-							<div className='flex flex-col'>
-								<p
-									onClick={() => navigate('/profile/avatar')}
-									className='cursor-pointer text-[.65rem] text-gray-400 transition-all duration-200 hover:text-gray-600'
-								>
-									изменить
-								</p>
+							<div className='relative flex gap-x-5'>
 								<img
 									className='w-40 rounded-md'
 									src={user?.data?.avatar}
 									alt={user?.data?.name}
 								/>
+								<p
+									onClick={() => navigate('/profile/avatar')}
+									className='absolute right-16 top-0 cursor-pointer text-[.65rem] text-gray-400 transition-all duration-200 hover:text-gray-600 md:left-28'
+								>
+									изменить
+								</p>
 							</div>
 							<br />
 							<div className='flex gap-x-5'>
@@ -60,7 +60,10 @@ function Profile() {
 							</div>
 							<div className='flex flex-col items-start'>
 								<button
-									onClick={() => logoutUser()}
+									onClick={() => {
+										logoutUser()
+										navigate('/catalog')
+									}}
 									className='mt-5 rounded-md bg-gray-200 px-3 py-px text-sm font-normal text-gray-500 shadow-md transition-all duration-200 hover:bg-gray-300 hover:text-gray-600'
 								>
 									Выйти
@@ -75,20 +78,6 @@ function Profile() {
 					<p className='text-md mb-10 font-normal text-gray-800'>
 						Пожалуйста войдите или зарегистрируйтесь
 					</p>
-					<div className='inline-flex flex-col gap-y-5'>
-						<button
-							onClick={() => navigate('/profile/auth')}
-							className='text-md rounded-md bg-gray-200 px-3 py-1 transition-all hover:bg-gray-300'
-						>
-							Войти
-						</button>
-						<button
-							onClick={() => navigate('/profile/registration')}
-							className='text-md mb-5 rounded-md bg-gray-200 px-3 py-1 transition-all hover:bg-gray-300'
-						>
-							Регистрация
-						</button>
-					</div>
 				</>
 			)}
 			<Outlet />

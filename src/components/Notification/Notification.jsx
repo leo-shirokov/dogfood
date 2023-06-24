@@ -17,7 +17,7 @@ const Notification = ({ message, setMessage, duration = 3000 }) => {
 
 	return (
 		message && (
-			<div className='max-w-80 fixed right-3 top-5 z-50 rounded-lg bg-white p-2.5 opacity-90 shadow-lg transition-all duration-300'>
+			<div className='max-w-80 fixed right-1 top-20 z-50 rounded-lg bg-white p-2.5 opacity-90 shadow-lg transition-all duration-300'>
 				<div className='flex items-center justify-between'>
 					<span className='mr-2.5'>{message}</span>
 					<button

@@ -4,10 +4,13 @@ import { CgSmileSad } from 'react-icons/cg'
 import Back from '../../components/Back/Back'
 import TwoBanners from '../../components/Banners/TwoBanners'
 import useProducts from '../../hooks/useProducts'
+import useUser from '../../hooks/useUser'
 import ProductCard from '../ProductCard/ProductCard'
 
 function ProductFavorite() {
 	const { favourites } = useProducts()
+	const { user } = useUser()
+
 	return (
 		<div>
 			<Back />
@@ -39,6 +42,13 @@ function ProductFavorite() {
 						<span className='text-2xl text-red-600'>
 							<BsHeart />
 						</span>
+						<br />
+						{user?.data?.name === 'Guest' && (
+							<p>
+								Чтобы добавлять товары в Избранное, необходимо
+								авторизоваться или зарегистрироваться
+							</p>
+						)}
 					</div>
 				)}
 			</div>

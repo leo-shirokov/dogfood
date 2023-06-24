@@ -63,7 +63,7 @@ function CartItem(product) {
 						})
 					}
 					min={1}
-					max={99}
+					max={product?.stock}
 				/>
 			</div>
 			<div className='basis-1/5'>

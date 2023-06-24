@@ -148,7 +148,7 @@ function Product() {
 							radius='xl'
 							size='md'
 							min={1}
-							max={99}
+							max={product?.stock}
 						/>
 						<div>
 							<button
@@ -165,6 +165,12 @@ function Product() {
 							</button>
 						</div>
 					</div>
+
+					{product?.stock === 0 && (
+						<p className='text-xs text-red-900'>
+							Товара нет в наличии
+						</p>
+					)}
 
 					<Delivery />
 				</div>

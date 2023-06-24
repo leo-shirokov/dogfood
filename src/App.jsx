@@ -12,7 +12,6 @@ import Contacts from './screens/Contacts/Contacts'
 import CreateProduct from './screens/CreateProduct/CreateProduct'
 import Faq from './screens/Faq/Faq'
 import Favorites from './screens/Favorites/Favorites'
-import Feedback from './screens/Feedback/Feedback'
 import News from './screens/News/News'
 import Payments from './screens/Payments/Payments'
 import Product from './screens/Product/Product'
@@ -41,7 +40,6 @@ function App() {
 					<Route path='/reviews' element={<Reviews />} />
 					<Route path='/payments' element={<Payments />} />
 					<Route path='/faq' element={<Faq />} />
-					<Route path='/feedback' element={<Feedback />} />
 					<Route path='/contacts' element={<Contacts />} />
 					<Route path='/cart' element={<Cart />} />
 					<Route

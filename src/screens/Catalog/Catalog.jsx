@@ -1,5 +1,6 @@
 import { NativeSelect } from '@mantine/core'
 import { useMemo, useState } from 'react'
+import { GrSort } from 'react-icons/gr'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import TwoBanners from '../../components/Banners/TwoBanners'
 import Loader from '../../components/Loader/Loader'
@@ -35,14 +36,15 @@ function Catalog() {
 						</p>
 					)}
 
-					{/* сортировка при поиске товаров */}
-					{location.pathname === '/catalog' && (
+					{/* сортировка в каталоге и при поиске товаров */}
+					{(location.pathname === '/catalog' || query) && (
 						<div className='mb-10 flex items-center justify-start gap-x-4 rounded-md border border-gray-50 px-4 py-1 shadow-md md:hidden'>
+							{<GrSort />}
 							{sortOptions.map((item) => (
 								<span
 									key={item.group}
 									onClick={() => setSortType(item.group)}
-									className='text-md cursor-pointer whitespace-nowrap text-gray-500 hover:text-gray-700 md:text-sm'
+									className='text-md cursor-pointer whitespace-nowrap text-gray-500 hover:text-gray-700 xl:text-sm md:text-sm'
 								>
 									{item.title}
 								</span>
@@ -51,7 +53,7 @@ function Catalog() {
 					)}
 
 					{/* сортировка через select при поиске товаров на мобильном устройстве */}
-					{query && (
+					{(location.pathname === '/catalog' || query) && (
 						<div className='my-4 flex items-center justify-center 2xl:hidden xl:hidden lg:hidden md:block'>
 							<NativeSelect
 								data={sortOptions.map((item) => ({

@@ -9,7 +9,7 @@ import whatsapp from './img/whatsapp.svg'
 
 export const Footer = React.memo(() => {
 	return (
-		<div className='mt-20 h-[12.125rem] w-full shrink-0 grow-0 basis-auto bg-yellow-300 px-4 py-10'>
+		<div className='mt-20 h-40 w-full shrink-0 grow-0 basis-auto bg-yellow-300 px-4 py-10'>
 			<div
 				className='mx-auto flex max-w-[62rem] items-center justify-between 
             md:justify-center md:text-center'
@@ -25,23 +25,65 @@ export const Footer = React.memo(() => {
 				</div>
 
 				<div className='grid gap-y-3 md:hidden'>
-					<Link to='/catalog'>Каталог</Link>
-					<Link to='/promotions'>Акции</Link>
-					<Link to='/news'>Новости</Link>
-					<Link to='/reviews'>Отзывы</Link>
+					<Link
+						to='/promotions'
+						className='text-gray-950 transition-all hover:text-gray-600'
+					>
+						Акции
+					</Link>
+					<Link
+						to='/news'
+						className='text-gray-950 transition-all hover:text-gray-600'
+					>
+						Новости
+					</Link>
+					<Link
+						to='/reviews'
+						className='text-gray-950 transition-all hover:text-gray-600'
+					>
+						Отзывы
+					</Link>
 				</div>
 				<div className='grid gap-y-3 md:hidden'>
-					<Link to='/payments'>Оплата и доставка</Link>
-					<Link to='/faq'>Часто спрашивают</Link>
-					<Link to='/feedback'>Обратная связь</Link>
-					<Link to='/contacts'>Контакты</Link>
+					<Link
+						to='/payments'
+						className='text-gray-950 transition-all hover:text-gray-600'
+					>
+						Оплата и доставка
+					</Link>
+					<Link
+						to='/faq'
+						className='text-gray-950 transition-all hover:text-gray-600'
+					>
+						Часто спрашивают
+					</Link>
+					<Link
+						to='/contacts'
+						className='text-gray-950 transition-all hover:text-gray-600'
+					>
+						Контакты
+					</Link>
 				</div>
 
 				<div className='grid gap-y-3'>
-					<h3 className='text-lg font-semibold'>Мы на связи</h3>
-					<a href='tel:+7999000000'>+7(999)123-45-67</a>
-					<a href='mailto:dogfood@gmail.com'>dogfood@gmail.com</a>
-					<address className='flex justify-between gap-x-3 opacity-50'>
+					<a
+						title='Позвонить'
+						href='tel:+7999000000'
+						className='text-gray-950 transition-all hover:text-gray-600'
+					>
+						+7 (999) 123-45-67
+					</a>
+					<a
+						title='Отправить письмо'
+						href='mailto:dogfood@gmail.com'
+						className='text-gray-950 transition-all hover:text-gray-600'
+					>
+						dogfood@gmail.com
+					</a>
+					<address
+						title='Социальные сети'
+						className='flex justify-between gap-x-3 opacity-50 transition-all hover:opacity-80'
+					>
 						<a href='tg://resolve?domain=only_to_top'>
 							<img src={telegram} alt='telegram' />
 						</a>

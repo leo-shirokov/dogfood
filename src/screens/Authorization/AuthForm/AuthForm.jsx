@@ -24,7 +24,7 @@ function AuthForm() {
 
 	const closeForm = () => {
 		close()
-		navigate('/profile')
+		navigate('/catalog')
 	}
 
 	const handleSubmit = async (values) => {
@@ -69,11 +69,18 @@ function AuthForm() {
 						</button>
 					</Group>
 				</form>
+
+				<Link
+					to='/profile/registration'
+					className='mb-3 block cursor-pointer text-xs font-normal text-gray-600 transition-all duration-200 hover:text-blue-600'
+				>
+					Зарегистрироваться
+				</Link>
 				<Link
 					to='/profile/reset-password'
-					className='cursor-pointer text-xs font-normal text-gray-600 transition-all duration-200 hover:text-blue-600'
+					className='block cursor-pointer text-xs font-normal text-gray-600 transition-all duration-200 hover:text-blue-600'
 				>
-					Забыли пароль?
+					Забыл пароль
 				</Link>
 			</Box>
 		</Modal>

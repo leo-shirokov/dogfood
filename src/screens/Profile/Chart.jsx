@@ -76,7 +76,9 @@ function Chart() {
 		option && pieChart.setOption(option)
 	}, [chartData])
 
-	return <div id='chartId' className='h-[30rem] w-[30rem] md:hidden'></div>
+	return (
+		<div id='chartId' className='h-[30rem] w-[30rem] md:h-96 md:w-96'></div>
+	)
 }
 
 export default Chart

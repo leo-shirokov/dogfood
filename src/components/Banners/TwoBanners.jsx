@@ -13,7 +13,7 @@ const TwoBanners = React.memo(({ banIndex1, banIndex2 }) => {
 			<>
 				<Link
 					className='w-1/2 lg:w-full'
-					to='product/622c781277d63f6e70967d28'
+					to='/product/622c781277d63f6e70967d28'
 				>
 					<img
 						className='object-contain'
@@ -23,7 +23,7 @@ const TwoBanners = React.memo(({ banIndex1, banIndex2 }) => {
 				</Link>
 				<Link
 					className='w-1/2 lg:hidden'
-					to='product/6451e4038fbc473fa8a24d50'
+					to='/product/6451e4038fbc473fa8a24d50'
 				>
 					<img
 						className='object-contain'

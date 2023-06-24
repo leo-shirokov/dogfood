@@ -17,9 +17,9 @@ function News() {
 			<h2 className='mb-10 text-xl font-semibold'>Новости</h2>
 			<div className='flex flex-col gap-y-10'>
 				<div className='flex flex-col justify-start gap-y-4'>
-					<div className='w-20'>
+					<div className='w-40'>
 						<img
-							className='object-contain'
+							className='rounded object-contain'
 							src={food1}
 							alt='собачий корм'
 						></img>
@@ -40,9 +40,9 @@ function News() {
 					</div>
 				</div>
 				<div className='flex flex-col justify-start gap-y-4'>
-					<div className='w-20'>
+					<div className='w-40'>
 						<img
-							className='object-contain'
+							className='rounded object-contain'
 							src={food2}
 							alt='собачий корм'
 						></img>
@@ -61,9 +61,9 @@ function News() {
 					</div>
 				</div>
 				<div className='flex flex-col justify-start gap-y-4'>
-					<div className='w-20'>
+					<div className='w-40'>
 						<img
-							className='object-contain'
+							className='rounded object-contain'
 							src={food3}
 							alt='собачий корм'
 						></img>
@@ -86,9 +86,9 @@ function News() {
 					</div>
 				</div>
 				<div className='flex flex-col justify-start gap-y-4'>
-					<div className='w-20'>
+					<div className='w-40'>
 						<img
-							className='object-contain'
+							className='rounded object-contain'
 							src={food4}
 							alt='собачий корм'
 						></img>
@@ -108,9 +108,9 @@ function News() {
 					</div>
 				</div>
 				<div className='flex flex-col justify-start gap-y-4'>
-					<div className='w-20'>
+					<div className='w-40'>
 						<img
-							className='object-contain'
+							className='rounded object-contain'
 							src={food5}
 							alt='собачий корм'
 						></img>
@@ -133,9 +133,9 @@ function News() {
 					</div>
 				</div>
 				<div className='flex flex-col justify-start gap-y-4'>
-					<div className='w-20'>
+					<div className='w-40'>
 						<img
-							className='object-contain'
+							className='rounded object-contain'
 							src={food6}
 							alt='собачий корм'
 						></img>
@@ -156,9 +156,9 @@ function News() {
 					</div>
 				</div>
 				<div className='flex flex-col justify-start gap-y-4'>
-					<div className='w-20'>
+					<div className='w-40'>
 						<img
-							className='object-contain'
+							className='rounded object-contain'
 							src={food7}
 							alt='собачий корм'
 						></img>

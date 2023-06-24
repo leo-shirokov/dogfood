@@ -1,19 +1,21 @@
 import { Badge } from '@mantine/core'
 import { useEffect, useState } from 'react'
+import { BsCart4 } from 'react-icons/bs'
+import { GrFavorite } from 'react-icons/gr'
+import { TbUser } from 'react-icons/tb'
 import { Link, useLocation } from 'react-router-dom'
 import useCart from '../../hooks/useCart'
 import useProducts from '../../hooks/useProducts'
+import useUser from '../../hooks/useUser'
 import BurgerMenu from '../Burger/BurgerMenu'
 import Logo from '../Logo/Logo'
 import { Search } from '../Search/Search'
 import HeaderSecondLevel from './HeaderSecondLevel'
-import iconCart from './img/cart.svg'
-import iconDog from './img/dog.svg'
-import iconLike from './img/favorites.svg'
 
 function Header() {
 	const location = useLocation()
 	const [hidden, setHidden] = useState(true)
+	const { user } = useUser()
 
 	useEffect(() => {
 		const setVisibility = (e) => {
@@ -39,7 +41,7 @@ function Header() {
 					)}
 				</div>
 
-				<div className='flex items-center justify-between gap-x-10'>
+				<div className='flex items-center justify-between gap-x-7'>
 					{/* включение меню бургер на мобильных устройствах */}
 					{hidden ? (
 						<BurgerMenu />
@@ -48,11 +50,7 @@ function Header() {
 							{/* меню в header на больших экранах */}
 							<Link to='/favorite' className='relative'>
 								{' '}
-								<img
-									className='w-6'
-									src={iconLike}
-									alt='favorite'
-								/>
+								<p className='text-2xl'>{<GrFavorite />}</p>
 								{favourites.length > 0 ? (
 									<Badge
 										color='green'
@@ -67,11 +65,7 @@ function Header() {
 								)}
 							</Link>
 							<Link to='/cart' className='relative'>
-								<img
-									className='w-6'
-									src={iconCart}
-									alt='cart'
-								/>
+								<p className='text-2xl'>{<BsCart4 />}</p>
 								{cartItems.length > 0 ? (
 									<Badge
 										color='green'
@@ -85,8 +79,14 @@ function Header() {
 									<></>
 								)}
 							</Link>
-							<Link to='/profile'>
-								<img className='w-6' src={iconDog} alt='dog' />
+							<Link
+								to={
+									user?.data?._id === 0
+										? '/profile/auth'
+										: '/profile'
+								}
+							>
+								<p className='text-2xl'>{<TbUser />}</p>
 							</Link>
 						</>
 					)}
