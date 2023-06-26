@@ -17,6 +17,7 @@ import {
 import showPriceInRub from '../../utils/currency'
 import Carousel from './Carousel'
 import Delivery from './Delivery'
+import Returns from './Returns'
 import Reviews from './Reviews'
 
 function Product() {
@@ -167,7 +168,7 @@ function Product() {
 										'Товар добавлен в корзину'
 									)
 								}}
-								className='w-26 shrink rounded-[3.75rem] bg-yellow-300 px-6 py-3 font-bold shadow-md'
+								className='w-26 shrink rounded-[3.75rem] border-transparent bg-yellow-300 px-6 py-3 font-bold shadow-md ring-blue-600 transition-all duration-300 hover:bg-yellow-200 hover:ring-2'
 							>
 								В корзину
 							</button>
@@ -184,7 +185,9 @@ function Product() {
 				</div>
 			</div>
 
-			<div className='flex flex-col gap-y-10 py-20'>
+			<Returns />
+
+			<div className='flex flex-col gap-y-10 pb-10'>
 				<Paper shadow='xs' p='sm'>
 					<h2 className='mb-2 text-xl font-semibold'>Описание</h2>
 					<Text className='text-md font-normal'>

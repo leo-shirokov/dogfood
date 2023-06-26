@@ -26,6 +26,12 @@ export const Footer = React.memo(() => {
 
 				<div className='grid gap-y-3 md:hidden'>
 					<Link
+						to='/catalog'
+						className='text-gray-950 transition-all hover:text-gray-600'
+					>
+						Каталог
+					</Link>
+					<Link
 						to='/promotions'
 						className='text-gray-950 transition-all hover:text-gray-600'
 					>
@@ -36,12 +42,6 @@ export const Footer = React.memo(() => {
 						className='text-gray-950 transition-all hover:text-gray-600'
 					>
 						Новости
-					</Link>
-					<Link
-						to='/reviews'
-						className='text-gray-950 transition-all hover:text-gray-600'
-					>
-						Отзывы
 					</Link>
 				</div>
 				<div className='grid gap-y-3 md:hidden'>

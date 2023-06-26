@@ -18,7 +18,6 @@ import Product from './screens/Product/Product'
 import ChangeProfile from './screens/Profile/ChangeProfile'
 import Profile from './screens/Profile/Profile'
 import Promotions from './screens/Promotions/Promotions'
-import Reviews from './screens/Reviews/Reviews'
 
 function App() {
 	return (
@@ -37,7 +36,6 @@ function App() {
 					/>
 					<Route path='/promotions' element={<Promotions />} />
 					<Route path='/news' element={<News />} />
-					<Route path='/reviews' element={<Reviews />} />
 					<Route path='/payments' element={<Payments />} />
 					<Route path='/faq' element={<Faq />} />
 					<Route path='/contacts' element={<Contacts />} />

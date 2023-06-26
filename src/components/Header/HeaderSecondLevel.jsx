@@ -15,7 +15,7 @@ function HeaderSecondLevel() {
 				</p>
 				<button
 					onClick={() => navigate('/catalog')}
-					className='w-32 shrink rounded-[3.75rem] border-transparent bg-white px-2 py-3 font-bold shadow-md ring-blue-600 transition-all hover:bg-yellow-50 hover:ring-2'
+					className='w-32 shrink rounded-[3.75rem] border-transparent bg-white px-2 py-3 font-bold shadow-md ring-blue-600 transition-all duration-300 hover:bg-yellow-100 hover:ring-2'
 				>
 					<span className='text-md flex items-center justify-center'>
 						Каталог

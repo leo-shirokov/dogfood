@@ -15,6 +15,12 @@ function Reviews({ product, textarea, setTextarea, rating, setRating }) {
 	const [deleteReviewById] = useDeleteReviewByIdMutation()
 	const [notificationText, setNotificationText] = useState('')
 
+	const [visible, setVisible] = useState(5)
+
+	const showMoreItems = () => {
+		setVisible((prevValue) => prevValue + 5)
+	}
+
 	const clearForm = () => {
 		setTextarea('')
 		setRating(0)
@@ -98,7 +104,7 @@ function Reviews({ product, textarea, setTextarea, rating, setRating }) {
 
 			{product?.reviews?.length > 0 && (
 				<>
-					{product.reviews.map((review) => (
+					{product.reviews.slice(0, visible).map((review) => (
 						<div key={review._id} className='border-t py-5'>
 							<span className='font-semibold'>
 								{review.author.name}&nbsp;
@@ -135,6 +141,11 @@ function Reviews({ product, textarea, setTextarea, rating, setRating }) {
 						</div>
 					))}
 
+					{product?.reviews?.length - visible > 0 && (
+						<button className='text-sm' onClick={showMoreItems}>
+							Загрузить ещё
+						</button>
+					)}
 					<Notification
 						message={notificationText}
 						setMessage={setNotificationText}
