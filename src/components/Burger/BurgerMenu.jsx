@@ -46,16 +46,10 @@ function BurgerMenu() {
 					<Link to='/news'>Новости</Link>
 				</Menu.Item>
 				<Menu.Item>
-					<Link to='/reviews'>Отзывы</Link>
-				</Menu.Item>
-				<Menu.Item>
 					<Link to='/payments'>Оплата и доставка</Link>
 				</Menu.Item>
 				<Menu.Item>
 					<Link to='/faq'>Часто спрашивают</Link>
-				</Menu.Item>
-				<Menu.Item>
-					<Link to='/feedback'>Обратная связь</Link>
 				</Menu.Item>
 				<Menu.Item>
 					<Link to='/contacts'>Контакты</Link>
